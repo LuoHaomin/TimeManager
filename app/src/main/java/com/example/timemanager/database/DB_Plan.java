@@ -1,8 +1,5 @@
 package com.example.timemanager.database;
 
-import com.example.timemanager.bean.Schedule;
-
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,34 +7,33 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
-
+import com.example.timemanager.bean.Schedule;
+import com.example.timemanager.bean.Plan;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressLint("DefaultLocale")
-public class DB_Schedule extends SQLiteOpenHelper {
-    private static final String TAG = "DB_Schedule";
-    private static final String DB_NAME = "Schedule.db"; // 数据库的名称
+public class DB_Plan extends SQLiteOpenHelper {
+    private static final String TAG = "DB_Plan";
+    private static final String DB_NAME = "Plan.db"; // 数据库的名称
     private static final int DB_VERSION = 1; // 数据库的版本号
-    private static DB_Schedule mHelper = null; // 数据库帮助器的实例
+    private static DB_Plan mHelper = null; // 数据库帮助器的实例
     private SQLiteDatabase mDB = null; // 数据库的实例
-    public static final String TABLE_NAME = "Schedules"; // 表的名称
+    public static final String TABLE_NAME = "Plans"; // 表的名称
 
-    private DB_Schedule(Context context) {
+    private DB_Plan(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
-    private DB_Schedule(Context context, int version) {
+    private DB_Plan(Context context, int version) {
         super(context, DB_NAME, null, version);
     }
 
     // 利用单例模式获取数据库帮助器的唯一实例
-    public static DB_Schedule getInstance(Context context, int version) {
+    public static DB_Plan getInstance(Context context, int version) {
         if (version > 0 && mHelper == null) {
-            mHelper = new DB_Schedule(context, version);
+            mHelper = new DB_Plan(context, version);
         } else if (mHelper == null) {
-            mHelper = new DB_Schedule(context);
+            mHelper = new DB_Plan(context);
         }
         return mHelper;
     }
@@ -74,12 +70,12 @@ public class DB_Schedule extends SQLiteOpenHelper {
         db.execSQL(drop_sql);
         String create_sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + "_id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"
-                + "content TEXT NOT NULL"
+
                 + "start_time TEXT ,"
                 + "end_time TEXT ,"
-                + "position TEXT "
-                + "repeat_mode TEXT"
-                + "repeat_time TEXT"
+                + "content TEXT NOT NULL"
+                + "breakdown TEXT"
+                + "schedule TEXT"
                 + ");";
         Log.d(TAG, "create_sql:" + create_sql);
         db.execSQL(create_sql); // 执行完整的SQL语句
@@ -103,30 +99,27 @@ public class DB_Schedule extends SQLiteOpenHelper {
     }
 
     // 往该表添加一条记录
-    public long insert(Schedule info) {
-        List<Schedule> infoList = new ArrayList<Schedule>();
+    public long insert(Plan info) {
+        List<Plan> infoList = new ArrayList<Plan>();
         infoList.add(info);
         return insert(infoList);
     }
 
     // 往该表添加多条记录
-    public long insert(List<Schedule> infoList) {
+    public long insert(List<Plan> infoList) {
         long result = -1;
         for (int i = 0; i < infoList.size(); i++) {
-            Schedule info = infoList.get(i);
-            List<Schedule> tempList = new ArrayList<Schedule>();
+            Plan info = infoList.get(i);
+            List<Plan> tempList = new ArrayList<Plan>();
 
 
             // 不存在唯一性重复的记录，则插入新记录
             ContentValues cv = new ContentValues();
-            cv.put("repeat_mode",info.repeat_mode);
-            cv.put("repeat_time",info.repeat_time);
-            cv.put("content",info.content);
-            cv.put("position",info.position);
             cv.put("start_time", info.start_time);
             cv.put("end_time",info.end_time);
-
-
+            cv.put("content",info.content);
+            cv.put("breakdown",info.code_b());
+            cv.put("schedule",info.code_s());
             // 执行插入记录动作，该语句返回插入记录的行号
             result = mDB.insert(TABLE_NAME, "", cv);
             if (result == -1) { // 添加成功则返回行号，添加失败则返回-1
@@ -137,48 +130,46 @@ public class DB_Schedule extends SQLiteOpenHelper {
     }
 
     // 根据条件更新指定的表记录
-    public int update(Schedule info, String condition) {
+    public int update(Plan info, String condition) {
         ContentValues cv = new ContentValues();
 
         cv.put("start_time", info.start_time);
         cv.put("end_time",info.end_time);
         cv.put("content",info.content);
-        cv.put("position",info.position);
-        cv.put("repeat_mode",info.repeat_mode);
-        cv.put("repeat_time",info.repeat_time);
+        cv.put("breakdown",info.code_b());
+        cv.put("schedule",info.code_s());
+
         // 执行更新记录动作，该语句返回更新的记录数量
         return mDB.update(TABLE_NAME, cv, condition, null);
     }
 
-    public int update(Schedule info) {
+    public int update(Plan info) {
         // 执行更新记录动作，该语句返回更新的记录数量
         return update(info, "id=" + info.id);
     }
 
     // 根据指定条件查询记录，并返回结果数据列表
-    public List<Schedule> query(String condition) {
-        String sql = String.format("select _id,content,stat_time,end_time,position,repeat_mode,repeat_time " +
+    public List<Plan> query(String condition) {
+        String sql = String.format("select _id,stat_time,end_time,content,breakdown,schedule " +
                 "from %s where %s;", TABLE_NAME, condition);
         Log.d(TAG, "query sql: " + sql);
-        List<Schedule> infoList = new ArrayList<Schedule>();
+        List<Plan> infoList = new ArrayList<Plan>();
         // 执行记录查询动作，该语句返回结果集的游标
         Cursor cursor = mDB.rawQuery(sql, null);
         // 循环取出游标指向的每条记录
         while (cursor.moveToNext()) {
-            Schedule info = new Schedule();
+            Plan info = new Plan();
             info.id = cursor.getLong(1);
-            info.content = cursor.getString(2);
-            info.start_time= cursor.getString(3);
-            info.end_time = cursor.getString(4);
-            info.position = cursor.getString(5);
-            info.repeat_mode=cursor.getString(6);
-            info.repeat_time=cursor.getString(7);
+            info.start_time= cursor.getString(2);
+            info.end_time = cursor.getString(3);
+            info.content = cursor.getString(4);
+            info.code_bd = cursor.getString(5);
+            info.decode_b();
+            info.code_sch = cursor.getString(6);
+            info.decode_s();
             infoList.add(info);
         }
         cursor.close(); // 查询完毕，关闭数据库游标
         return infoList;
     }
-
-
-
 }
