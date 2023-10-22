@@ -5,7 +5,8 @@
     >
     <TextView
         android:layout_width="match_parent"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:textColor="#001155"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/group_tag"/>

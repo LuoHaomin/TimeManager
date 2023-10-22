@@ -70,11 +70,11 @@ public class DB_Plan extends SQLiteOpenHelper {
         db.execSQL(drop_sql);
         String create_sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + "_id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"
-
+                + "tag TEXT ,"
                 + "start_time TEXT ,"
                 + "end_time TEXT ,"
-                + "content TEXT NOT NULL"
-                + "breakdown TEXT"
+                + "content TEXT NOT NULL,"
+                + "breakdown TEXT,"
                 + "schedule TEXT"
                 + ");";
         Log.d(TAG, "create_sql:" + create_sql);
@@ -100,7 +100,7 @@ public class DB_Plan extends SQLiteOpenHelper {
 
     // 往该表添加一条记录
     public long insert(Plan info) {
-        List<Plan> infoList = new ArrayList<Plan>();
+        List<Plan> infoList = new ArrayList<>();
         infoList.add(info);
         return insert(infoList);
     }
@@ -110,11 +110,12 @@ public class DB_Plan extends SQLiteOpenHelper {
         long result = -1;
         for (int i = 0; i < infoList.size(); i++) {
             Plan info = infoList.get(i);
-            List<Plan> tempList = new ArrayList<Plan>();
+            List<Plan> tempList = new ArrayList<>();
 
 
             // 不存在唯一性重复的记录，则插入新记录
             ContentValues cv = new ContentValues();
+            cv.put("tag",info.tag);
             cv.put("start_time", info.start_time);
             cv.put("end_time",info.end_time);
             cv.put("content",info.content);
@@ -132,7 +133,7 @@ public class DB_Plan extends SQLiteOpenHelper {
     // 根据条件更新指定的表记录
     public int update(Plan info, String condition) {
         ContentValues cv = new ContentValues();
-
+        cv.put("tag",info.tag);
         cv.put("start_time", info.start_time);
         cv.put("end_time",info.end_time);
         cv.put("content",info.content);
@@ -150,16 +151,41 @@ public class DB_Plan extends SQLiteOpenHelper {
 
     // 根据指定条件查询记录，并返回结果数据列表
     public List<Plan> query(String condition) {
-        String sql = String.format("select _id,stat_time,end_time,content,breakdown,schedule " +
+        String sql = String.format("select * " +
                 "from %s where %s;", TABLE_NAME, condition);
         Log.d(TAG, "query sql: " + sql);
-        List<Plan> infoList = new ArrayList<Plan>();
+        List<Plan> infoList = new ArrayList<>();
         // 执行记录查询动作，该语句返回结果集的游标
         Cursor cursor = mDB.rawQuery(sql, null);
         // 循环取出游标指向的每条记录
         while (cursor.moveToNext()) {
             Plan info = new Plan();
-            info.id = cursor.getLong(1);
+            info.id = cursor.getLong(0);
+            info.tag=cursor.getString(1);
+            info.start_time= cursor.getString(2);
+            info.end_time = cursor.getString(3);
+            info.content = cursor.getString(4);
+            info.code_bd = cursor.getString(5);
+            info.decode_b();
+            info.code_sch = cursor.getString(6);
+            info.decode_s();
+            infoList.add(info);
+        }
+        cursor.close(); // 查询完毕，关闭数据库游标
+        return infoList;
+    }
+    public List<Plan> query() {
+        String sql = String.format("select * " +
+                "from %s ;", TABLE_NAME);
+
+        List<Plan> infoList = new ArrayList<>();
+        // 执行记录查询动作，该语句返回结果集的游标
+         Cursor cursor = mDB.rawQuery(sql, null);
+       // 循环取出游标指向的每条记录
+        while (cursor.moveToNext()) {
+            Plan info = new Plan();
+            info.id = cursor.getLong(0);
+            info.tag=cursor.getString(1);
             info.start_time= cursor.getString(2);
             info.end_time = cursor.getString(3);
             info.content = cursor.getString(4);

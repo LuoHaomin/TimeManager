@@ -8,6 +8,7 @@ public class Plan {
 
     public String start_time;
     public String end_time;
+    public String tag;
     public String content="No Content";
     public List<Schedule> breakdowns=new ArrayList<>();
     public String code_bd;
@@ -34,24 +35,38 @@ public class Plan {
     }
     public void decode_b(){
         String txt=code_bd;
-        Schedule schedule=new Schedule();
-        int size;
-        size=Integer.parseInt(txt.substring(1,txt.indexOf(')')));
+        int size=Integer.parseInt(txt.substring(1,txt.indexOf(')')));
+        txt=txt.substring(txt.indexOf(')')+1);
         for(int i=0;i<size;i++){
-            schedule.decode(txt.substring(txt.indexOf(')')+1));
+            Schedule schedule=new Schedule();
+            schedule.decode(txt);
             breakdowns.add(schedule);
-            txt=txt.substring(txt.indexOf('/')+1);
+            txt=txt.substring(txt.indexOf('\n')+1);
         }
     }
     public void decode_s(){
         String txt=code_sch;
-        Schedule schedule=new Schedule();
-        int size;
-        size=Integer.parseInt(txt.substring(1,txt.indexOf(')')));
+        int size=Integer.parseInt(txt.substring(1,txt.indexOf(')')));
+        txt=txt.substring(txt.indexOf(')')+1);
         for(int i=0;i<size;i++){
-            schedule.decode(txt.substring(txt.indexOf(')')+1));
+            Schedule schedule=new Schedule();
+            schedule.decode(txt);
             schedules.add(schedule);
-            txt=txt.substring(txt.indexOf('/')+1);
+            txt=txt.substring(txt.indexOf('\n')+1);
         }
+    }
+    public List<String> nameOfB(){
+        List<String> list = new ArrayList<>();
+        for(int i=0;i<breakdowns.size();i++){
+            list.add(breakdowns.get(i).content);
+        }
+        return list;
+    }
+    public List<String> nameOfSch(){
+        List<String> list = new ArrayList<>();
+        for(int i=0;i<schedules.size();i++){
+            list.add(schedules.get(i).content);
+        }
+        return list;
     }
 }

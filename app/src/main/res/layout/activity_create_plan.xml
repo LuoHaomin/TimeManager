@@ -124,8 +124,8 @@
 
             <Button
                 android:id="@+id/add_breakdown"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/add_pic"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_end_time" />
@@ -147,8 +147,8 @@
 
             <Button
                 android:id="@+id/add_schedule"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/add_pic"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakdown_list" />

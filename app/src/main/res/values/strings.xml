@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">TimeManager</string>
+    <string name="app_name">时间流</string>
     <string name="sart_text">机会无限，\n但时间不是</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
