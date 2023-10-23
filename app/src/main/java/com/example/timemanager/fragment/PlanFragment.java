@@ -1,8 +1,10 @@
 package com.example.timemanager.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,7 +19,10 @@ import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.R;
 import com.example.timemanager.adapter.PlanAdapter;
 import com.example.timemanager.bean.Plan;
+import com.example.timemanager.bean.Schedule;
+import com.example.timemanager.database.DB_Plan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +32,12 @@ import java.util.List;
  */
 public class PlanFragment extends Fragment {
 
-    List<String> tagss;
-    List<List<Plan>> planList;
+    List<String> tagss=new ArrayList<>();
+    private DB_Plan db_plan;
+
+    //SharedPreferences tags= getActivity().getSharedPreferences("tags", Context.MODE_PRIVATE);
+    //SharedPreferences.Editor editor=tags.edit();
+    List<List<Plan>> planList=new ArrayList<>();
 
     public PlanFragment() {
         // Required empty public constructor
@@ -42,9 +51,8 @@ public class PlanFragment extends Fragment {
      */
 
     public static PlanFragment newInstance() {
-        PlanFragment fragment = new PlanFragment();
 
-        return fragment;
+        return new PlanFragment();
     }
 
     @Override
@@ -65,6 +73,21 @@ public class PlanFragment extends Fragment {
         });
 
 
+/*
+
+        *
+        *
+        *db_plan=DB_Plan.getInstance(getActivity(),1);
+        Plan example=new Plan();
+        db_plan.insert(example);
+db_plan.openWriteLink();
+        planList.add(db_plan.query("_id=*"));
+        tagss.add("未分类");
+        *
+        **/
+
+
+
         Button download_btn = view.findViewById(R.id.dragDown);
         download_btn.setOnClickListener(view12 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -76,10 +99,22 @@ public class PlanFragment extends Fragment {
             AlertDialog alertDialog=builder.create();
             alertDialog.show();
         });
+        /*
+        tagss.add("none");tagss.add("none");tagss.add("none");
+        Schedule ex=new Schedule();
+        Plan example=new Plan();
+        example.schedules.add(ex);example.schedules.add(ex);example.schedules.add(ex);
+        example.breakdowns.add(ex);example.breakdowns.add(ex);example.breakdowns.add(ex);
+        List<Plan> exp= new ArrayList<>();
+        exp.add(example);exp.add(example);exp.add(example);
+        planList.add(exp);planList.add(exp);planList.add(exp);planList.add(exp);*/
+        if(tagss.size()!=0 && planList.size()!=0){
+            ExpandableListView expandableListView =view.findViewById(R.id.plans);
+            expandableListView.setAdapter(new PlanAdapter(getActivity(),tagss,planList));
+        }
 
-        ExpandableListView expandableListView =view.findViewById(R.id.plans);
-        expandableListView.setAdapter(new PlanAdapter(getActivity(),tagss,planList));
         return view;
     }
+
 
 }

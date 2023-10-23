@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         Toolbar title=findViewById(R.id.header_title);
         setSupportActionBar(title);
         title.setBackgroundResource(R.color.gray);

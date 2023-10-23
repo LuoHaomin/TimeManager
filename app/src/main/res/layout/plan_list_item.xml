@@ -2,10 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:text="题目"
         android:id="@+id/t0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -20,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/t2"
-        android:textSize="30sp"
+        android:text="日程1\n日程2"
+        android:textSize="27sp"
         app:layout_constraintTop_toBottomOf="@id/t1"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
@@ -34,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/t4"
-        android:textSize="30sp"
+        android:text="日程1\n日程2"
+        android:textSize="27sp"
         app:layout_constraintTop_toBottomOf="@id/t3"
         app:layout_constraintLeft_toLeftOf="parent"/>
 

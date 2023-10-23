@@ -1,5 +1,6 @@
 package com.example.timemanager.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plan {
@@ -7,14 +8,14 @@ public class Plan {
 
     public String start_time;
     public String end_time;
-    public String content;
-    public List<Schedule> breakdowns;
+    public String content="No Content";
+    public List<Schedule> breakdowns=new ArrayList<>();
     public String code_bd;
-    public List<Schedule> schedules;
+    public List<Schedule> schedules=new ArrayList<>();
     public String code_sch;
 
 
-    //TODO: code and decode!
+
     public String code_b(){
         String txt="("+breakdowns.size()+")";
         for (int i=0;i<breakdowns.size();i++){

@@ -1,6 +1,7 @@
 package com.example.timemanager.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,9 @@ public class PlanAdapter extends BaseExpandableListAdapter
         ItemHolder holder=null;
         if (view==null){
             view = LayoutInflater.from(context).inflate(R.layout.plan_list_item,null);
+            Log.d("tag","here");
             holder = new ItemHolder();
+            holder.t0 =view.findViewById(R.id.t0);
             holder.t2 =view.findViewById(R.id.t2);
             holder.t4 =view.findViewById(R.id.t4);
             view.setTag(holder);
