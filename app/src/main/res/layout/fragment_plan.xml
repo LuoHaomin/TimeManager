@@ -16,7 +16,16 @@ android:padding="10dp">
     android:text="创建新计划"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
-
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintLeft_toRightOf="@id/CreatePlan"
+    app:layout_constraintTop_toTopOf="parent"
+    android:text="移除计划"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="4dp"
+    android:id="@+id/remove"
+    />
 <Button
     android:id="@+id/update"
     android:layout_width="40dp"

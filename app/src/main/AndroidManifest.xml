@@ -12,10 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeManager"
         tools:targetApi="31">
-
+        <activity
+            android:name=".EditPlanActivity"
+            android:exported="true" />
         <activity
             android:name=".CreatePlanActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
             android:name=".MainActivity"
@@ -26,6 +28,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
