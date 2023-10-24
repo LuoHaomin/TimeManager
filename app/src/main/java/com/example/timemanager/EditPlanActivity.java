@@ -25,6 +25,7 @@ public class EditPlanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
+
         String s="";
         /*
         Calendar calendar=Calendar.getInstance();
