@@ -5,10 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditPlanActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title0"
         app:layout_constraintLeft_toLeftOf="parent">
         <TextView
             android:id="@+id/debug"

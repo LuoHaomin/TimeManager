@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -47,30 +49,38 @@ public class CreatePlanActivity extends AppCompatActivity {
     Calendar calendar=Calendar.getInstance(),start=Calendar.getInstance(),end=Calendar.getInstance();
     Schedule newSchedule ;
     String time;
+    Bundle bundle;
+    Boolean is_creating;
+    long plan_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
 
+        bundle=getIntent().getExtras();
+        is_creating=bundle.getBoolean("is_creating");
+        if(is_creating==false){
+            plan_id=bundle.getLong("id");
+            db_plan.openReadLink();
+            plan=db_plan.query(String.format("_id = %d",plan_id)).get(0);
+            db_plan.closeLink();
+        }
         //导航栏
-        Toolbar title=findViewById(R.id.title_in_Frag);
+        Toolbar title=findViewById(R.id.title_in_c);
         setSupportActionBar(title);
         title.setBackgroundResource(R.color.gray);
-        title.setTitle("新建计划");
-        title.setNavigationIcon(R.drawable.ic_back);
+        if(is_creating) title.setSubtitle("创建计划");
+        else title.setSubtitle("编辑计划");
+        //title.setNavigationIcon(R.drawable.ic_back);
         title.setNavigationOnClickListener(view -> {
+            Toast.makeText(this,"you touch it",Toast.LENGTH_SHORT).show();
             finish();
-            Intent intent=new Intent(this, MainActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putInt("PresentPage",1);
-            intent.putExtras(bundle);
-            startActivity(intent);
-
         });
-        //导航栏
 
         //编辑框
         EditText name=findViewById(R.id.plan_name);
+        if(is_creating==false)
+            name.setText(plan.content);
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -99,7 +109,13 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         //选标签
         RadioGroup radioGroup=findViewById(R.id.tag_radio);
-        plan.tag=tagss.get(0);
+        if(is_creating) plan.tag=tagss.get(0);
+        else {
+            for (int i=0;i<tagss.size();i++){
+                if(plan.tag.equals(tagss.get(i)))
+                    radioGroup.check(radioGroup.getChildAt(i).getId());
+            }
+        }
         radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
             for(int k=0;k<radioGroup.getChildCount();k++){
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(k);
@@ -177,6 +193,25 @@ public class CreatePlanActivity extends AppCompatActivity {
         //显示子计划
         ListView breakdownList = findViewById(R.id.breakdown_list);
         breakdownList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfB()));
+        breakdownList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreatePlanActivity.this);
+                builder.setTitle("提示：");
+                builder.setMessage("确认删除？");
+                int t=pos;
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        plan.breakdowns.remove(t);
+                        breakdownList.setAdapter(new ArrayAdapter<String>(CreatePlanActivity.this,R.layout.arraylist,plan.nameOfB()));
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.create().show();
+                return true;
+            }
+        });
         //加日程
         Button addSchedule  =findViewById(R.id.add_schedule);
         addSchedule.setOnClickListener(view -> {
@@ -186,14 +221,70 @@ public class CreatePlanActivity extends AppCompatActivity {
         //显示日程
         ListView schList = findViewById(R.id.schedule_list);
         schList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfSch()));
+        schList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreatePlanActivity.this);
+                builder.setTitle("提示：");
+                builder.setMessage("确认删除？");
+                int t=pos;
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        plan.schedules.remove(t);
+                        schList.setAdapter(new ArrayAdapter<String>(CreatePlanActivity.this,R.layout.arraylist,plan.nameOfSch()));
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.create().show();
+                return true;
+            }
+        });
         //确认
         Button confirm_btn = findViewById(R.id.confirm_button);
-        confirm_btn.setOnClickListener(view -> {
-            db_plan.openWriteLink();
-            db_plan.insert(plan);
-            db_plan.closeLink();
-            finish();
-        });
+        if(is_creating){
+            confirm_btn.setOnClickListener(view -> {
+                db_plan.openWriteLink();
+                db_plan.insert(plan);
+                db_plan.closeLink();
+                finish();
+            });
+        }
+        else {
+            confirm_btn.setOnClickListener(view -> {
+                db_plan.openWriteLink();
+                db_plan.update(plan,String.format("_id = %d",plan_id));
+                db_plan.closeLink();
+                finish();
+            });
+        }
+
+        Button cancel_btn = findViewById(R.id.cancel);
+        if(is_creating){
+            cancel_btn.setOnClickListener(view -> {
+                finish();
+            });
+        }
+        else {
+            cancel_btn.setText("删除计划");
+            cancel_btn.setOnClickListener(view -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("提示：");
+                builder.setMessage("确认删除？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db_plan.openWriteLink();
+                        db_plan.delete(String.format("_id = %d",plan_id));
+                        db_plan.closeLink();finish();
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.create().show();
+
+            });
+        }
+
     }
     private void dialog_tag(){
         View view= LayoutInflater.from(this).inflate(R.layout.dialog_tag,null,false);

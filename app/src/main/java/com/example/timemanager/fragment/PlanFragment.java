@@ -64,6 +64,9 @@ public class PlanFragment extends Fragment {
         Button create_btn =view.findViewById(R.id.CreatePlan);
         create_btn.setOnClickListener(view1 -> {
             Intent intent=new Intent(getActivity(), CreatePlanActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putBoolean("is_creating",true);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
         Button download_btn = view.findViewById(R.id.dragDown);
@@ -137,6 +140,22 @@ public class PlanFragment extends Fragment {
         if(tagss.size()!=0 && planList.size()!=0){
             ExpandableListView expandableListView =view.findViewById(R.id.plans);
             expandableListView.setAdapter(new PlanAdapter(getActivity(),tagss,planList));
+            for(int i=0;i<tagss.size();i++){
+                expandableListView.expandGroup(i);
+            }
+            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                    Plan pl=planList.get(i).get(i1);
+                    Bundle bundle=new Bundle();
+                    bundle.putBoolean("is_creating",false);
+                    bundle.putLong("id",pl.id);
+                    Intent intent = new Intent(getActivity(), CreatePlanActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    return true;
+                }
+            });
         }
     }
 
