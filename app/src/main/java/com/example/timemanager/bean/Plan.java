@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Plan {
     public long id;
-
     public String start_time;
     public String end_time;
     public String tag;

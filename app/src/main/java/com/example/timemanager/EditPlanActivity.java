@@ -1,12 +1,10 @@
 package com.example.timemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
@@ -27,29 +25,8 @@ public class EditPlanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
-//        Toolbar title=findViewById(R.id.title0);
-//        setSupportActionBar(title);
-//        title.setBackgroundResource(R.color.gray);
-//        title.setNavigationIcon(R.drawable.ic_back);
-//        title.setNavigationOnClickListener(view -> {
-//            finish();
-//        });
-        Toolbar title=findViewById(R.id.title0);
-        setSupportActionBar(title);
-        title.setBackgroundResource(R.color.gray);
-        title.setSubtitle("创建日程");
-        title.setNavigationIcon(R.drawable.ic_back);
-        title.setNavigationOnClickListener(view -> {
-            Toast.makeText(this,"you touch it",Toast.LENGTH_SHORT).show();
-            finish();
-//            Intent intent=new Intent(this, MainActivity.class);
-//            Bundle bundle=new Bundle();
-//            bundle.putInt("PresentPage",1);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-        });
-
-        /*String s="";
+        String s="";
+        /*
         Calendar calendar=Calendar.getInstance();
         Date date=calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -69,7 +46,7 @@ public class EditPlanActivity extends AppCompatActivity {
 //        int num = share.getInt("num",0);
 //        String st = share.getString("tag",""), ss="";
 
-//        TextView tv =findViewById(R.id.debug);
+        TextView tv =findViewById(R.id.debug);
 //        for(int i=0;i<num;i++){
 //
 //            //tagss.add(s);
@@ -77,27 +54,27 @@ public class EditPlanActivity extends AppCompatActivity {
 //        }
 
 
-//        Plan plan=new Plan(),planA=new Plan();
-//        plan.content="示例计划";
-//        plan.start_time="time_start";
-//        plan.end_time="time";
+        Plan plan=new Plan(),planA=new Plan();
+        plan.content="示例计划";
+        plan.start_time="time_start";
+        plan.end_time="time";
 
 
 //        schedule1.code=schedule.code();
 //        schedule1.decode(schedule.code());
-//        for(int i=0;i<=10;i++){
-//            Schedule schedule =new Schedule(),schedule1=new Schedule();
-//            schedule.id=i;
-//            schedule.content="示例日程";
-//            schedule.repeat_mode="mode1";
-//            plan.schedules.add(schedule);
-//        }
-//
-//
-//        planA.code_sch=plan.code_s();
-//        planA.decode_s();
+        for(int i=0;i<=10;i++){
+            Schedule schedule =new Schedule(),schedule1=new Schedule();
+            schedule.id=i;
+            schedule.content="示例日程";
+            schedule.repeat_mode="mode1";
+            plan.schedules.add(schedule);
+        }
 
-//        tv.setText(planA.code_s());
+
+        planA.code_sch=plan.code_s();
+        planA.decode_s();
+
+        tv.setText(planA.code_s());
 
         /*
         db_plan.openWriteLink();

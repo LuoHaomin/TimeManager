@@ -44,4 +44,7 @@ public class ScheduleAdapter extends BaseAdapter {
         return null;
     }
 
+    //newly added
+
+
 }

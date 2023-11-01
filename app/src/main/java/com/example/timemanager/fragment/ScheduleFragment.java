@@ -1,17 +1,25 @@
 package com.example.timemanager.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.R;
+import com.example.timemanager.ViewByWeekActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,9 +73,36 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view =inflater.inflate(R.layout.fragment_schedule, container, false);
 
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        Button toViewByWeek = view.findViewById(R.id.to_weekly_view);
+        toViewByWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ViewByWeekActivity.class));
+            }
+        });
+        List<String> dayInWeek = new ArrayList<>();
+        dayInWeek.add("按日查看");
+        dayInWeek.add("周日");
+        dayInWeek.add("周一");
+        dayInWeek.add("周二");
+        dayInWeek.add("周三");
+        dayInWeek.add("周四");
+        dayInWeek.add("周五");
+        dayInWeek.add("周六");
 
+        Spinner dailyBar = view.findViewById(R.id.dailyBar);
+            dailyBar.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.spinner_arraylist, dayInWeek));
+        RecyclerView.LayoutManager layoutManager = new RecyclerView.LayoutManager() {
+            @Override
+            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+                return null;
+            }
+        };
+        return view;
     }
+
+
 
 }
