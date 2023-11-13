@@ -50,6 +50,7 @@ public class PlanFragment extends Fragment {
         return new PlanFragment();
     }
 
+    //start of a fragment's lifcycle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +62,15 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_plan,container,false);
+
+        //click the button and jump
         Button create_btn =view.findViewById(R.id.CreatePlan);
         create_btn.setOnClickListener(view1 -> {
             Intent intent=new Intent(getActivity(), CreatePlanActivity.class);
             startActivity(intent);
         });
+
+
         Button download_btn = view.findViewById(R.id.dragDown);
         download_btn.setOnClickListener(view12 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

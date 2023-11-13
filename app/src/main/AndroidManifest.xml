@@ -13,9 +13,12 @@
         android:theme="@style/Theme.TimeManager"
         tools:targetApi="31">
         <activity
+            android:name=".EditScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewByWeekActivity"
-            android:theme="@style/AppCompatTheme"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppCompatTheme" />
         <activity
             android:name=".EditPlanActivity"
             android:exported="true" />

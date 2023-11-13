@@ -211,6 +211,8 @@ public class CreatePlanActivity extends AppCompatActivity {
                 newTag=text.getText().toString();
             }
         });
+
+        //create a new tag
         button.setOnClickListener(view1 -> {
             SharedPreferences tag_in_share = getSharedPreferences("tag",MODE_PRIVATE);
             SharedPreferences.Editor editor =tag_in_share.edit();
@@ -222,6 +224,7 @@ public class CreatePlanActivity extends AppCompatActivity {
             setTag();
             dialog.dismiss();
         });
+
         dialog.show();
     }
     private void dialog_breakdown(){

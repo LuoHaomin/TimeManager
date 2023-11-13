@@ -24,6 +24,7 @@ public class ScheduleAdapter extends BaseAdapter {
         mlist=list;
     }
 
+    //get num from database and rewrite it to list
     @Override
     public int getCount() {
         return mlist.size();

@@ -46,5 +46,10 @@
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/t3"
         app:layout_constraintLeft_toLeftOf="parent"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="">
 
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
