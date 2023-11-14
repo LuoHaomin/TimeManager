@@ -1,6 +1,7 @@
 package com.example.timemanager.fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -94,18 +95,66 @@ public class PlanFragment extends Fragment {
             Toast.makeText(getActivity(),"已更新",Toast.LENGTH_SHORT).show();
         });
 
+
+        //删除标签
         Button remove = view.findViewById(R.id.remove);
         remove.setOnClickListener(view1 -> {
-            db_plan=DB_Plan.getInstance(getActivity(),1);
-            db_plan.openWriteLink();
-            db_plan.deleteAll();
-            db_plan.closeLink();
-            SharedPreferences share =getActivity().getSharedPreferences("tag",Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = share.edit();
-            editor.putString("tag","学习|工作|个人|");
-            editor.putInt("num",3);
-            editor.commit();
-            repaint();
+            List<Integer> choice=new ArrayList<>();
+            String[] strings=tagss.toArray(new String[tagss.size()]);
+            boolean init_choice[]=new boolean[tagss.size()];
+            AlertDialog dialog =new AlertDialog.Builder(getActivity())
+                    .setTitle("删除标签")
+                    .setMultiChoiceItems(strings, init_choice, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                            if(b){
+                                choice.add(i);
+                            }
+                            else {
+                                choice.remove(i);
+                            }
+                        }
+                    })
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int w) {
+
+                            SharedPreferences tag_in_share = getActivity().getSharedPreferences("tag",Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor =tag_in_share.edit();
+
+                            String st="";
+                            int num=0;
+                            for(int i=0;i<tagss.size();i++){
+                                if(!choice.contains(i)){
+                                    num++;
+                                    st+=tagss.get(i)+"|";
+                                }
+                                else{
+                                    db_plan=DB_Plan.getInstance(getActivity(),1);
+                                    db_plan.openWriteLink();
+                                    db_plan.delete(String.format("tag = '%s'",tagss.get(i)));
+                                    db_plan.closeLink();
+                                }
+                            }
+                            editor.putInt("num",num);
+                            editor.putString("tag",st);
+                            editor.commit();
+                            repaint();
+                        }
+                    })
+                    .create();
+            dialog.show();
+
+//            db_plan=DB_Plan.getInstance(getActivity(),1);
+//            db_plan.openWriteLink();
+//            db_plan.deleteAll();
+//            db_plan.closeLink();
+//            SharedPreferences share =getActivity().getSharedPreferences("tag",Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = share.edit();
+//            editor.putString("tag","学习|工作|个人|二课|");
+//            editor.putInt("num",4);
+//            editor.commit();
+//            repaint();
         });
         return view;
     }

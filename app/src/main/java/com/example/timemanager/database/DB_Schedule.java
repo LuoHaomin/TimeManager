@@ -1,5 +1,6 @@
 package com.example.timemanager.database;
 
+import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 
 import android.annotation.SuppressLint;
@@ -179,6 +180,19 @@ public class DB_Schedule extends SQLiteOpenHelper {
         return infoList;
     }
 
+    public boolean GetFromPlan(Context context,int version){
+        DB_Plan db_plan;
+        db_plan=DB_Plan.getInstance(context,version);
+        db_plan.openReadLink();
+        List<Plan> list=db_plan.query();
 
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.get(i).schedules.size(); j++) {
+
+            }
+        }
+
+        return true;
+    }
 
 }

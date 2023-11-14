@@ -16,6 +16,7 @@ import android.widget.Spinner;
 
 import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.R;
+import com.example.timemanager.ViewByMonthActivity;
 import com.example.timemanager.ViewByWeekActivity;
 
 import java.util.ArrayList;
@@ -81,6 +82,10 @@ public class ScheduleFragment extends Fragment {
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ViewByWeekActivity.class));
             }
+        });
+        Button toViewBuyMonth = view.findViewById(R.id.tomonth);
+        toViewBuyMonth.setOnClickListener(view1 -> {
+            startActivity(new Intent(getActivity(), ViewByMonthActivity.class));
         });
         List<String> dayInWeek = new ArrayList<>();
         dayInWeek.add("按日查看");

@@ -5,14 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CalendarView;
 
-public class ViewByWeekActivity extends AppCompatActivity {
+public class ViewByMonthActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_by_week);
-
+        setContentView(R.layout.activity_view_by_month);
         Toolbar title=findViewById(R.id.title_in_view);
         setSupportActionBar(title);
         title.setBackgroundResource(R.color.gray);
@@ -27,5 +27,7 @@ public class ViewByWeekActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+        CalendarView calendarView=findViewById(R.id.calendar);
+
     }
 }

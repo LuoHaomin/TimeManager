@@ -47,6 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
+            android:id="@+id/tomonth"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -66,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
+            style="@style/Widget.AppCompat.Button"
             android:text="按日查看"
             android:textAlignment="center"></Spinner>
     </LinearLayout>
