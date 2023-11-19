@@ -74,6 +74,7 @@ public class DB_Plan extends SQLiteOpenHelper {
                 + "start_time TEXT ,"
                 + "end_time TEXT ,"
                 + "content TEXT NOT NULL,"
+                + "finish TEXT,"
                 + "breakdown TEXT,"
                 + "schedule TEXT"
                 + ");";
@@ -111,14 +112,13 @@ public class DB_Plan extends SQLiteOpenHelper {
         for (int i = 0; i < infoList.size(); i++) {
             Plan info = infoList.get(i);
             List<Plan> tempList = new ArrayList<>();
-
-
             // 不存在唯一性重复的记录，则插入新记录
             ContentValues cv = new ContentValues();
             cv.put("tag",info.tag);
             cv.put("start_time", info.start_time);
             cv.put("end_time",info.end_time);
             cv.put("content",info.content);
+            cv.put("finish",info.finish);
             cv.put("breakdown",info.code_b());
             cv.put("schedule",info.code_s());
             // 执行插入记录动作，该语句返回插入记录的行号
@@ -137,9 +137,9 @@ public class DB_Plan extends SQLiteOpenHelper {
         cv.put("start_time", info.start_time);
         cv.put("end_time",info.end_time);
         cv.put("content",info.content);
+        cv.put("finish",info.finish);
         cv.put("breakdown",info.code_b());
         cv.put("schedule",info.code_s());
-
         // 执行更新记录动作，该语句返回更新的记录数量
         return mDB.update(TABLE_NAME, cv, condition, null);
     }
@@ -165,9 +165,10 @@ public class DB_Plan extends SQLiteOpenHelper {
             info.start_time= cursor.getString(2);
             info.end_time = cursor.getString(3);
             info.content = cursor.getString(4);
-            info.code_bd = cursor.getString(5);
+            info.finish = cursor.getString(5);
+            info.code_bd = cursor.getString(6);
             info.decode_b();
-            info.code_sch = cursor.getString(6);
+            info.code_sch = cursor.getString(7);
             info.decode_s();
             infoList.add(info);
         }
@@ -189,9 +190,10 @@ public class DB_Plan extends SQLiteOpenHelper {
             info.start_time= cursor.getString(2);
             info.end_time = cursor.getString(3);
             info.content = cursor.getString(4);
-            info.code_bd = cursor.getString(5);
+            info.finish = cursor.getString(5);
+            info.code_bd = cursor.getString(6);
             info.decode_b();
-            info.code_sch = cursor.getString(6);
+            info.code_sch = cursor.getString(7);
             info.decode_s();
             infoList.add(info);
         }

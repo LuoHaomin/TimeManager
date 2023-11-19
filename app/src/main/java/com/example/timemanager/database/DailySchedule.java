@@ -1,6 +1,8 @@
 package com.example.timemanager.database;
 
 
+import android.content.Context;
+
 import java.util.List;
 
 /*
@@ -10,12 +12,13 @@ import java.util.List;
 *
 * */
 public class DailySchedule {
-    public List<Act> acts;
-    
-    class Act{
-        public String content;
-        public String start;
-        public String end;
+
+
+    DailySchedule(Context context,int version){
+        DB_Schedule db_schedule=DB_Schedule.getInstance(context,version);
+        
 
     }
+
+
 }

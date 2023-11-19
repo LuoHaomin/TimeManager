@@ -27,6 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.timemanager.adapter.BreakdownAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
@@ -192,7 +193,11 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
         //显示子计划
         ListView breakdownList = findViewById(R.id.breakdown_list);
-        breakdownList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfB()));
+        breakdownList.setAdapter(new BreakdownAdapter(this,plan.schedules));
+
+
+
+
         breakdownList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -367,7 +372,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     end.get(Calendar.DAY_OF_MONTH));
             dialog.show();
         });
-
+        //TODO: 时间类的对接。
         Button confirm = view.findViewById(R.id.d2);
         confirm.setOnClickListener(view1 -> {
             if (newSchedule.content.length()>0){

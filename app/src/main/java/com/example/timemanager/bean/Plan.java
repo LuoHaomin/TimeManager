@@ -8,6 +8,8 @@ public class Plan {
     public String start_time;
     public String end_time;
     public String tag;
+    public String finish="N";
+
     public String content="No Content";
     public List<Schedule> breakdowns=new ArrayList<>();
     public String code_bd;
