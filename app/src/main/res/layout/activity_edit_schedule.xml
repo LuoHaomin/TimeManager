@@ -48,7 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="全部标签"
-                app:layout_constraintTop_toBottomOf="@+id/add_plan" />
+                app:layout_constraintTop_toBottomOf="@+id/add_plan"
+                tools:ignore="MissingConstraints"/>
 
             <RadioGroup
                 android:id="@+id/tag_radio"

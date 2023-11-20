@@ -23,7 +23,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -31,7 +30,6 @@ import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -324,7 +322,7 @@ public class CreatePlanActivity extends AppCompatActivity {
     private void dialog_breakdown(){
         newSchedule =new Schedule();
 
-        View view = LayoutInflater.from(this).inflate(R.layout.create_breakdonw,null,false);
+        View view = LayoutInflater.from(this).inflate(R.layout.create_breakdown,null,false);
         final AlertDialog dialogB = new AlertDialog.Builder(this).setView(view).create();
         EditText editText = view.findViewById(R.id.d1);
         editText.addTextChangedListener(new TextWatcher() {
