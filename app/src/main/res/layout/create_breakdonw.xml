@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="子计划"
+        android:text="@string/breakdown"
         android:textSize="27sp"
         android:id="@+id/d0"
         app:layout_constraintTop_toTopOf="parent"

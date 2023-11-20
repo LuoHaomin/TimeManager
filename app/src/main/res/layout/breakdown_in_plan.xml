@@ -4,19 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
     <TextView
-        android:text="DDL"
         android:id="@+id/content"
-        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="DDL"
         android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textSize="28sp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <TextView
-        android:text="DDL time"
         android:id="@+id/time"
-        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:text="DDL time"
+        android:textSize="20sp"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

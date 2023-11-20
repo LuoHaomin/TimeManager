@@ -80,9 +80,7 @@ public class PlanFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("<开发中>");
             builder.setMessage("这个软件计划支持同步课表、二课项目、运动场馆等信息，敬请期待！");
-            builder.setPositiveButton("我知道了", (dialogInterface, i) -> {
-
-            });
+            builder.setPositiveButton(R.string.IKnow, (dialogInterface, i) -> {});
             AlertDialog alertDialog=builder.create();
             alertDialog.show();
         });

@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="子计划"
+        android:text="@string/breakdown"
         android:id="@+id/t1"
         app:layout_constraintTop_toBottomOf="@id/t0"
         app:layout_constraintLeft_toLeftOf="parent"/>

@@ -2,15 +2,19 @@ package com.example.timemanager.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 
 import java.util.List;
@@ -41,11 +45,29 @@ public class ScheduleAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertview, ViewGroup parent) {
-        //没写完；
-        return null;
+        ViewHolder holder;
+        if (convertview==null){
+            holder=new ViewHolder();
+            convertview = LayoutInflater.from(mcontext).inflate(R.layout.schedule_in_plan,null);
+            holder.content=convertview.findViewById(R.id.content);
+            holder.mode=convertview.findViewById(R.id.mode);
+            convertview.setTag(holder);
+        }
+        else {
+            holder=(ViewHolder) convertview.getTag();
+        }
+        Schedule schedule = mlist.get(position);
+
+        holder.content.setText(schedule.content);
+        //TODO:字符串处理
+        holder.mode.setText(schedule.repeat_mode+schedule.repeat_time);
+        return convertview;
     }
 
-    //newly added
+    public final class ViewHolder{
+        public TextView content;
+        public TextView mode;
+    }
 
 
 }

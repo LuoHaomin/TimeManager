@@ -193,7 +193,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
         //显示子计划
         ListView breakdownList = findViewById(R.id.breakdown_list);
-        breakdownList.setAdapter(new BreakdownAdapter(this,plan.schedules));
+        breakdownList.setAdapter(new BreakdownAdapter(this,plan.breakdowns));
 
 
 
@@ -209,7 +209,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         plan.breakdowns.remove(t);
-                        breakdownList.setAdapter(new ArrayAdapter<String>(CreatePlanActivity.this,R.layout.arraylist,plan.nameOfB()));
+                        breakdownList.setAdapter(new BreakdownAdapter(CreatePlanActivity.this,plan.breakdowns));
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -336,9 +336,7 @@ public class CreatePlanActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
                 newSchedule.content=editText.getText().toString();
@@ -347,8 +345,10 @@ public class CreatePlanActivity extends AppCompatActivity {
 
 
         time= String.format("%d年%d月%d日 %d: %d",calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+        date=Calendar.getInstance().getTime();
         Button btn_end =view.findViewById(R.id.ddl);
         btn_end.setText(time);
+        newSchedule.end_time=format.format(date);
         btn_end.setOnClickListener(view0 -> {
             TimePickerDialog timePickerDialog =new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -357,6 +357,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     end.set(Calendar.MINUTE,i1);
                     btn_end.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=end.getTime();
+                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
                     newSchedule.end_time=format.format(date);
                 }
             },end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE),true);
@@ -372,13 +373,13 @@ public class CreatePlanActivity extends AppCompatActivity {
                     end.get(Calendar.DAY_OF_MONTH));
             dialog.show();
         });
-        //TODO: 时间类的对接。
+
         Button confirm = view.findViewById(R.id.d2);
         confirm.setOnClickListener(view1 -> {
             if (newSchedule.content.length()>0){
                 plan.breakdowns.add(newSchedule);
                 ListView breakdownList = findViewById(R.id.breakdown_list);
-                breakdownList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfB()));
+                breakdownList.setAdapter(new BreakdownAdapter(this,plan.breakdowns));
                 dialogB.dismiss();
             }
             else {
@@ -417,10 +418,38 @@ public class CreatePlanActivity extends AppCompatActivity {
                     date=end.getTime();
                     newSchedule.end_time=format.format(date);
                 }
-            },0,0,false);
+            },0,0,true);
             timePickerDialog.show();
         });
-        //TODO:好多没写！
+        Button repeat_val=view.findViewById(R.id.dc3);
+        RadioGroup radioGroup=view.findViewById(R.id.dc2);
+        radioGroup.check(radioGroup.getChildAt(0).getId());
+        newSchedule.repeat_mode="0";
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                for(int k=0;k<radioGroup.getChildCount();k++){
+                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(k);
+                    if(radioButton.isChecked()){
+                        newSchedule.repeat_mode=String.valueOf(k);
+                        repeat_val.setText(radioButton.getText());
+                    }
+                }
+            }
+        });
+
+        repeat_val.setOnClickListener(view1 -> {
+            switch (Integer.valueOf(newSchedule.repeat_mode)){
+                case 0:
+                    break;
+                case 1:
+                    //TODO:多次
+                    break;
+                case 2:
+                    //TODO:重复
+                    break;
+            }
+        });
         Button confirm = view.findViewById(R.id.dc5);
         confirm.setOnClickListener(view1 -> {
             plan.schedules.add(newSchedule);
