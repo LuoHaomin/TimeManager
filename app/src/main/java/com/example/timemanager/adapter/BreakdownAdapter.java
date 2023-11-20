@@ -1,41 +1,33 @@
 package com.example.timemanager.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 
 import java.util.List;
 
-public class ScheduleAdapter extends BaseAdapter {
-    private List<Schedule> mlist;
+public class BreakdownAdapter extends BaseAdapter {
+    List<Schedule> list;
     Context mcontext;
-
-    public ScheduleAdapter(Context context,List<Schedule> list){
+    public BreakdownAdapter(Context context,List<Schedule> schedules){
+        list=schedules;
         mcontext=context;
-        mlist=list;
     }
-
-    //get num from database and rewrite it to list
     @Override
     public int getCount() {
-        return mlist.size();
+        return list.size();
     }
+
     @Override
-    public Object getItem(int i){
-        return mlist.get(i);
+    public Object getItem(int i) {
+        return list.get(i);
     }
 
     @Override
@@ -46,28 +38,30 @@ public class ScheduleAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertview, ViewGroup parent) {
         ViewHolder holder;
-        if (convertview==null){
+        if(convertview==null){
             holder=new ViewHolder();
-            convertview = LayoutInflater.from(mcontext).inflate(R.layout.schedule_in_plan,null);
+            convertview= LayoutInflater.from(mcontext).inflate(R.layout.breakdown_in_plan,null);
             holder.content=convertview.findViewById(R.id.content);
-            holder.mode=convertview.findViewById(R.id.mode);
+            holder.time=convertview.findViewById(R.id.time);
             convertview.setTag(holder);
         }
         else {
             holder=(ViewHolder) convertview.getTag();
         }
-        Schedule schedule = mlist.get(position);
+        Schedule schedule=list.get(position);
 
         holder.content.setText(schedule.content);
-        //TODO:字符串处理
-        holder.mode.setText(schedule.repeat_mode+schedule.repeat_time);
+        if(schedule.finish!="Y")
+            holder.content.setTextColor(Color.BLACK);
+        else {
+            holder.content.setTextColor(Color.GREEN);
+        }
+        holder.time.setText(schedule.end_time);
         return convertview;
     }
-
     public final class ViewHolder{
+
         public TextView content;
-        public TextView mode;
+        public TextView time;
     }
-
-
 }

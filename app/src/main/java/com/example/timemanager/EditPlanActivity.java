@@ -19,13 +19,14 @@ import java.util.List;
 import java.util.Set;
 
 public class EditPlanActivity extends AppCompatActivity {
-    //private DB_Plan db_plan=DB_Plan.getInstance(this,1);
-    //private List<Plan> planList;
+    private DB_Plan db_plan=DB_Plan.getInstance(this,1);
+    private List<Plan> planList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
         String s="";
+
         /*
         Calendar calendar=Calendar.getInstance();
         Date date=calendar.getTime();
@@ -62,7 +63,7 @@ public class EditPlanActivity extends AppCompatActivity {
 
 //        schedule1.code=schedule.code();
 //        schedule1.decode(schedule.code());
-        for(int i=0;i<=10;i++){
+        for(int i=0;i<=3;i++){
             Schedule schedule =new Schedule(),schedule1=new Schedule();
             schedule.id=i;
             schedule.content="示例日程";
@@ -74,15 +75,15 @@ public class EditPlanActivity extends AppCompatActivity {
         planA.code_sch=plan.code_s();
         planA.decode_s();
 
-        tv.setText(planA.code_s());
+//        tv.setText(planA.schedules.get(1).finish);
 
-        /*
+
         db_plan.openWriteLink();
         db_plan.deleteAll();
         long i=db_plan.insert(plan);
         db_plan.closeLink();
         db_plan.openReadLink();
         planList=db_plan.query("_id is not null");
-        tv.setText(String.valueOf(planList.get(0).start_time));*/
+        tv.setText(String.valueOf(planList.get(0).start_time));
     }
 }

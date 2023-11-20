@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="子计划"
+                android:text="@string/breakdown"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_end_time" />
@@ -139,7 +139,7 @@
                 android:id="@+id/schedule_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="日程安排"
+                android:text="@string/schedule"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/breakdown_list" />

@@ -84,7 +84,6 @@ public class PlanAdapter extends BaseExpandableListAdapter
         ItemHolder holder=null;
         if (view==null){
             view = LayoutInflater.from(context).inflate(R.layout.plan_list_item,null);
-            Log.d("tag","here");
             holder = new ItemHolder();
             holder.t0 =view.findViewById(R.id.t0);
             holder.t2 =view.findViewById(R.id.t2);
@@ -98,10 +97,16 @@ public class PlanAdapter extends BaseExpandableListAdapter
         String txt1="",txt2="";
 
         for (int j=0;j<planList.get(i).get(i1).breakdowns.size();j++){
-            txt1 = txt1 + planList.get(i).get(i1).breakdowns.get(j).content +"\n";
+            txt1 = txt1 + planList.get(i).get(i1).breakdowns.get(j).content ;
+            if(j!=planList.get(i).get(i1).breakdowns.size()-1){
+                txt1+='\n';
+            }
         }
         for (int j=0;j<planList.get(i).get(i1).schedules.size();j++){
-            txt2 = txt2 + planList.get(i).get(i1).schedules.get(j).content +"\n";
+            txt2 = txt2 + planList.get(i).get(i1).schedules.get(j).content ;
+            if(j!=planList.get(i).get(i1).breakdowns.size()-1){
+                txt1+='\n';
+            }
         }
         holder.t2.setText(txt1);
         holder.t4.setText(txt2);

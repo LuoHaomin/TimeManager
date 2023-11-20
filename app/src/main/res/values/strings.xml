@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">时间流</string>
     <string name="sart_text">机会无限，\n但时间不是</string>
-
+    <string name="tool">工具</string>
+    <string name="breakdown">DDL</string>
+    <string name="schedule">日程安排</string>
+    <string name="tomato_clock">番茄钟</string>
+    <string name="filter">通知过滤器</string>
+    <string name="IKnow">我知道了</string>
 </resources>
