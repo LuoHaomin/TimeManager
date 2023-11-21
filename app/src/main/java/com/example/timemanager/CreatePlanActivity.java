@@ -27,6 +27,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.timemanager.adapter.BreakdownAdapter;
+import com.example.timemanager.adapter.ScheduleAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
@@ -223,7 +224,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         //显示日程
         ListView schList = findViewById(R.id.schedule_list);
-        schList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfSch()));
+        schList.setAdapter(new ScheduleAdapter(this,plan.schedules));
         schList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -235,7 +236,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         plan.schedules.remove(t);
-                        schList.setAdapter(new ArrayAdapter<String>(CreatePlanActivity.this,R.layout.arraylist,plan.nameOfSch()));
+                        schList.setAdapter(new ScheduleAdapter(CreatePlanActivity.this,plan.schedules));
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -452,7 +453,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         confirm.setOnClickListener(view1 -> {
             plan.schedules.add(newSchedule);
             ListView schList = findViewById(R.id.schedule_list);
-            schList.setAdapter(new ArrayAdapter<String>(this,R.layout.arraylist,plan.nameOfSch()));
+            schList.setAdapter(new ScheduleAdapter(this,plan.schedules));
             dialog.dismiss();
         });
 

@@ -60,7 +60,7 @@ public class ScheduleAdapter extends BaseAdapter {
 
         holder.content.setText(schedule.content);
         //TODO:字符串处理
-        holder.mode.setText(schedule.repeat_mode+schedule.repeat_time);
+        holder.mode.setText(schedule.repeat_mode+" "+schedule.repeat_time);
         return convertview;
     }
 
