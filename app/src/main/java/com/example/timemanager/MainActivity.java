@@ -2,23 +2,25 @@ package com.example.timemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.timemanager.adapter.PagerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private RadioGroup tab_bar;
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
         Toolbar title=findViewById(R.id.header_title);
         setSupportActionBar(title);
         title.setBackgroundResource(R.color.gray);
@@ -64,4 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState)
 }

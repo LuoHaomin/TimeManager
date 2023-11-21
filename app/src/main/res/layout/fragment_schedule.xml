@@ -69,7 +69,8 @@
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button"
             android:text="按日查看"
-            android:textAlignment="center"></Spinner>
+            android:textAlignment="center"
+            ></Spinner>
     </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
 
