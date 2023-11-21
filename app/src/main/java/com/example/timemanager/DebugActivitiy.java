@@ -2,7 +2,6 @@ package com.example.timemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -10,15 +9,9 @@ import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class EditPlanActivity extends AppCompatActivity {
+public class DebugActivitiy extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
     private List<Plan> planList;
     @Override

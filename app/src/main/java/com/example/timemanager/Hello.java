@@ -1,12 +1,19 @@
 package com.example.timemanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 
 import com.example.timemanager.database.DB_Plan;
 
@@ -31,7 +38,11 @@ public class Hello extends AppCompatActivity {
             editor.putInt("num",4);
             editor.commit();
         }
-
+//        if(!checkNotificationPermission(this)){
+//            requestPermission(this);
+//            Notify("message");
+//        }
+//
     }
     @Override
     protected void onResume(){
@@ -47,4 +58,44 @@ public class Hello extends AppCompatActivity {
             startActivity(intent);
         }
     };
+    public boolean checkNotificationPermission(Context context){
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        return NotificationManagerCompat.from(context).areNotificationsEnabled() && manager!=null && manager.getImportance()!=NotificationManager.IMPORTANCE_NONE;
+    }
+    public void requestPermission(Context context){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if(!manager.areNotificationsEnabled()){
+                Intent intent=new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE,getPackageName());
+                startActivity(intent);
+            }
+            if (manager == null) {
+                NotificationChannel channel=new NotificationChannel(getString(R.string.app_name),getString(R.string.app_name),NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription("");
+                manager.createNotificationChannel(channel);
+            }
+        }
+    }
+    private void Notify(String message){
+        Intent clickIntent = new Intent(this, MainActivity.class);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                R.string.app_name, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification.Builder builder = new Notification.Builder(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, getString(R.string.app_name));
+        }
+        builder.setSmallIcon(R.drawable.add_pic)
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true)
+                .setContentTitle("测试用通知")
+                .setContentText(message);
+        Notification notification = builder.build();
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(R.string.app_name,notification);
+    }
+
 }

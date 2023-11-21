@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditPlanActivity">
+    tools:context=".DebugActivitiy">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/title0"
         android:layout_width="match_parent"

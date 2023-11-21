@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.R;
+import com.example.timemanager.ViewByDayActivity;
 import com.example.timemanager.ViewByMonthActivity;
 import com.example.timemanager.ViewByWeekActivity;
 
@@ -98,7 +100,8 @@ public class ScheduleFragment extends Fragment {
         dayInWeek.add("周六");
 
         Spinner dailyBar = view.findViewById(R.id.dailyBar);
-            dailyBar.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.spinner_arraylist, dayInWeek));
+        dailyBar.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.spinner_arraylist, dayInWeek));
+
         RecyclerView.LayoutManager layoutManager = new RecyclerView.LayoutManager() {
             @Override
             public RecyclerView.LayoutParams generateDefaultLayoutParams() {
