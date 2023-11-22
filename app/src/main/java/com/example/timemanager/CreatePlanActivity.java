@@ -83,14 +83,10 @@ public class CreatePlanActivity extends AppCompatActivity {
             name.setText(plan.content);
         name.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -356,7 +352,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     end.set(Calendar.MINUTE,i1);
                     btn_end.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=end.getTime();
-                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
                     newSchedule.end_time=format.format(date);
                 }
             },end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE),true);
@@ -451,6 +447,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
         Button confirm = view.findViewById(R.id.dc5);
         confirm.setOnClickListener(view1 -> {
+            newSchedule.root=plan.content;
             plan.schedules.add(newSchedule);
             ListView schList = findViewById(R.id.schedule_list);
             schList.setAdapter(new ScheduleAdapter(this,plan.schedules));

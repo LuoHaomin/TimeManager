@@ -20,7 +20,7 @@ import java.util.List;
 public class DB_Schedule extends SQLiteOpenHelper {
     private static final String TAG = "DB_Schedule";
     private static final String DB_NAME = "Schedule.db"; // 数据库的名称
-    private static final int DB_VERSION = 1; // 数据库的版本号
+    public static final int DB_VERSION = 1; // 数据库的版本号
     private static DB_Schedule mHelper = null; // 数据库帮助器的实例
     private SQLiteDatabase mDB = null; // 数据库的实例
     public static final String TABLE_NAME = "Schedules"; // 表的名称
@@ -74,13 +74,16 @@ public class DB_Schedule extends SQLiteOpenHelper {
         Log.d(TAG, "drop_sql:" + drop_sql);
         db.execSQL(drop_sql);
         String create_sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
-                + "_id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL,"
-                + "content TEXT NOT NULL"
+                + "_id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL ,"
+                + "content TEXT NOT NULL ,"
                 + "start_time TEXT ,"
                 + "end_time TEXT ,"
-                + "position TEXT "
-                + "repeat_mode TEXT"
-                + "repeat_time TEXT"
+                + "finish TEXT ,"
+                + "position TEXT ,"
+                + "repeat_mode TEXT ,"
+                + "repeat_time TEXT ,"
+                + "stuff TEXT ,"
+                + "root TEXT"
                 + ");";
         Log.d(TAG, "create_sql:" + create_sql);
         db.execSQL(create_sql); // 执行完整的SQL语句
@@ -120,13 +123,15 @@ public class DB_Schedule extends SQLiteOpenHelper {
 
             // 不存在唯一性重复的记录，则插入新记录
             ContentValues cv = new ContentValues();
+            cv.put("content",info.content);
+            cv.put("finish",info.finish);
+            cv.put("stuff",info.stuff);
             cv.put("repeat_mode",info.repeat_mode);
             cv.put("repeat_time",info.repeat_time);
-            cv.put("content",info.content);
             cv.put("position",info.position);
             cv.put("start_time", info.start_time);
             cv.put("end_time",info.end_time);
-
+            cv.put("root",info.root);
 
             // 执行插入记录动作，该语句返回插入记录的行号
             result = mDB.insert(TABLE_NAME, "", cv);
@@ -141,12 +146,15 @@ public class DB_Schedule extends SQLiteOpenHelper {
     public int update(Schedule info, String condition) {
         ContentValues cv = new ContentValues();
 
-        cv.put("start_time", info.start_time);
-        cv.put("end_time",info.end_time);
         cv.put("content",info.content);
-        cv.put("position",info.position);
+        cv.put("finish",info.finish);
+        cv.put("stuff",info.stuff);
         cv.put("repeat_mode",info.repeat_mode);
         cv.put("repeat_time",info.repeat_time);
+        cv.put("position",info.position);
+        cv.put("start_time", info.start_time);
+        cv.put("end_time",info.end_time);
+        cv.put("root",info.root);
         // 执行更新记录动作，该语句返回更新的记录数量
         return mDB.update(TABLE_NAME, cv, condition, null);
     }
@@ -158,7 +166,7 @@ public class DB_Schedule extends SQLiteOpenHelper {
 
     // 根据指定条件查询记录，并返回结果数据列表
     public List<Schedule> query(String condition) {
-        String sql = String.format("select _id,content,stat_time,end_time,position,repeat_mode,repeat_time " +
+        String sql = String.format("select * " +
                 "from %s where %s;", TABLE_NAME, condition);
         Log.d(TAG, "query sql: " + sql);
         List<Schedule> infoList = new ArrayList<Schedule>();
@@ -167,13 +175,16 @@ public class DB_Schedule extends SQLiteOpenHelper {
         // 循环取出游标指向的每条记录
         while (cursor.moveToNext()) {
             Schedule info = new Schedule();
-            info.id = cursor.getLong(1);
-            info.content = cursor.getString(2);
-            info.start_time= cursor.getString(3);
-            info.end_time = cursor.getString(4);
+            info.id = cursor.getLong(0);
+            info.content = cursor.getString(1);
+            info.start_time= cursor.getString(2);
+            info.end_time = cursor.getString(3);
+            info.finish = cursor.getString(4);
             info.position = cursor.getString(5);
             info.repeat_mode=cursor.getString(6);
             info.repeat_time=cursor.getString(7);
+            info.stuff = cursor.getString(8);
+            info.root = cursor.getString(9);
             infoList.add(info);
         }
         cursor.close(); // 查询完毕，关闭数据库游标
@@ -183,13 +194,15 @@ public class DB_Schedule extends SQLiteOpenHelper {
     public boolean GetFromPlan(Context context,int version){
         DB_Plan db_plan;
         db_plan=DB_Plan.getInstance(context,version);
-        db_plan.openReadLink();
+        db_plan.openWriteLink();
         List<Plan> list=db_plan.query();
 
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).schedules.size(); j++) {
+        DB_Schedule db_schedule=DB_Schedule.getInstance(context,DB_VERSION);
+        db_schedule.openWriteLink();
 
-            }
+        for (int i = 0; i < list.size(); i++) {
+            db_schedule.insert(list.get(i).schedules);
+            list.get(i).schedules=db_schedule.query(String.format("root = %s",list.get(i).content));
         }
 
         return true;

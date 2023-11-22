@@ -24,7 +24,7 @@
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".DebugActivitiy"
+            android:name=".DebugActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity

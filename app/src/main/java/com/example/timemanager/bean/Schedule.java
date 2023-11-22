@@ -1,7 +1,5 @@
 package com.example.timemanager.bean;
 
-import java.util.Calendar;
-
 public class Schedule {
     public long id=0;
 
@@ -15,7 +13,7 @@ public class Schedule {
     public String repeat_time;
     public String stuff;
 
-    public String from;
+    public String root;
     public String code;
 
     public Schedule(){
@@ -25,7 +23,7 @@ public class Schedule {
         finish = "N";
         position="none";
         repeat_mode= "mode0";
-        from="nowhere";
+        root ="nowhere";
         repeat_time="none";
         stuff="none";
     }
@@ -33,7 +31,7 @@ public class Schedule {
         String txt;
         txt=String.valueOf(id)+"`"+content+":"+finish+"*"
             +start_time+"!" +end_time+"#" +position+"^"
-            +repeat_mode+"|"+repeat_time+"%"+from+";"
+            +repeat_mode+"|"+repeat_time+"%"+ root +";"
             +stuff+"\n";
         code=txt;
         return code;
@@ -48,7 +46,7 @@ public class Schedule {
         position=code.substring(code.indexOf('#')+1,code.indexOf('^'));
         repeat_mode=code.substring(code.indexOf('^')+1,code.indexOf('|'));
         repeat_time=code.substring(code.indexOf('|')+1,code.indexOf('%'));
-        from=code.substring(code.indexOf('%')+1,code.indexOf(';'));
+        root =code.substring(code.indexOf('%')+1,code.indexOf(';'));
         stuff=code.substring(code.indexOf(';')+1);
     }
 

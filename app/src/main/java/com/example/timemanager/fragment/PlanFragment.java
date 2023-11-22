@@ -74,7 +74,6 @@ public class PlanFragment extends Fragment {
             startActivity(intent);
         });
 
-
         Button download_btn = view.findViewById(R.id.dragDown);
         download_btn.setOnClickListener(view12 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

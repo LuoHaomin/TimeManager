@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.timemanager.bean.Schedule;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -30,15 +31,21 @@ public class DailySchedule {
     }
 
     public List<Schedule> getScheduleList() {
+
         db_schedule.openReadLink();
         list=db_schedule.query("");
         db_schedule.closeLink();
+
         return list;
     }
 
     public List<Double> getTime_distribution() {
 
         return time_distribution;
+    }
+    public List<Schedule> getPast(){
+        List<Schedule> past = new ArrayList<>();
+        return past;
     }
 
 }

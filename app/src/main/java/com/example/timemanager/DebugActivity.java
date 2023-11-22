@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.timemanager.bean.Plan;
-import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
+import com.example.timemanager.database.DB_Schedule;
 
 import java.util.List;
 
-public class DebugActivitiy extends AppCompatActivity {
+public class DebugActivity extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
     private List<Plan> planList;
     @Override
@@ -19,6 +19,15 @@ public class DebugActivitiy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
         String s="";
+
+        DB_Schedule db_schedule=DB_Schedule.getInstance(this,DB_Schedule.DB_VERSION);
+//
+        db_schedule.openWriteLink();
+        db_schedule.GetFromPlan(this,DB_Schedule.DB_VERSION);
+        db_schedule.closeLink();
+        TextView tv =findViewById(R.id.debug);
+
+        tv.setText("");
 
         /*
         Calendar calendar=Calendar.getInstance();
@@ -40,7 +49,7 @@ public class DebugActivitiy extends AppCompatActivity {
 //        int num = share.getInt("num",0);
 //        String st = share.getString("tag",""), ss="";
 
-        TextView tv =findViewById(R.id.debug);
+
 //        for(int i=0;i<num;i++){
 //
 //            //tagss.add(s);
@@ -48,35 +57,35 @@ public class DebugActivitiy extends AppCompatActivity {
 //        }
 
 
-        Plan plan=new Plan(),planA=new Plan();
-        plan.content="示例计划";
-        plan.start_time="time_start";
-        plan.end_time="time";
+//        Plan plan=new Plan(),planA=new Plan();
+//        plan.content="示例计划";
+//        plan.start_time="time_start";
+//        plan.end_time="time";
 
 
 //        schedule1.code=schedule.code();
 //        schedule1.decode(schedule.code());
-        for(int i=0;i<=3;i++){
-            Schedule schedule =new Schedule(),schedule1=new Schedule();
-            schedule.id=i;
-            schedule.content="示例日程";
-            schedule.repeat_mode="mode1";
-            plan.schedules.add(schedule);
-        }
-
-
-        planA.code_sch=plan.code_s();
-        planA.decode_s();
-
+//        for(int i=0;i<=3;i++){
+//            Schedule schedule =new Schedule(),schedule1=new Schedule();
+//            schedule.id=i;
+//            schedule.content="示例日程";
+//            schedule.repeat_mode="mode1";
+//            plan.schedules.add(schedule);
+//        }
+//
+//
+//        planA.code_sch=plan.code_s();
+//        planA.decode_s();
+//
 //        tv.setText(planA.schedules.get(1).finish);
-
-
-        db_plan.openWriteLink();
-        db_plan.deleteAll();
-        long i=db_plan.insert(plan);
-        db_plan.closeLink();
-        db_plan.openReadLink();
-        planList=db_plan.query("_id is not null");
-        tv.setText(String.valueOf(planList.get(0).start_time));
+//
+//
+//        db_plan.openWriteLink();
+//        db_plan.deleteAll();
+//        long i=db_plan.insert(plan);
+//        db_plan.closeLink();
+//        db_plan.openReadLink();
+//        planList=db_plan.query("_id is not null");
+//        tv.setText(String.valueOf(planList.get(0).start_time));
     }
 }
