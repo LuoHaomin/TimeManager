@@ -17,6 +17,9 @@ import android.provider.Settings;
 
 import com.example.timemanager.database.DB_Plan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Hello extends AppCompatActivity {
 
@@ -24,6 +27,11 @@ public class Hello extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
+        List<String> strings=new ArrayList<>();
+        strings.add(getString(R.string.sart_text));
+        strings.add("逝者如斯夫，\n不舍昼夜");
+
+
         SharedPreferences tag_in_share = getSharedPreferences("tag", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =tag_in_share.edit();
         String s = tag_in_share.getString("tag","");

@@ -35,7 +35,6 @@ public class DailySchedule {
         db_schedule.openReadLink();
         list=db_schedule.query();
         db_schedule.closeLink();
-
         return list;
     }
 
