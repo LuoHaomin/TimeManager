@@ -1,6 +1,8 @@
 package com.example.timemanager.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,6 +24,7 @@ import com.example.timemanager.ViewByMonthActivity;
 import com.example.timemanager.ViewByWeekActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -85,22 +88,50 @@ public class ScheduleFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ViewByWeekActivity.class));
             }
         });
-        Button toViewBuyMonth = view.findViewById(R.id.tomonth);
-        toViewBuyMonth.setOnClickListener(view1 -> {
+        Button toViewByMonth = view.findViewById(R.id.to_monthly_view);
+        toViewByMonth.setOnClickListener(view1 -> {
             startActivity(new Intent(getActivity(), ViewByMonthActivity.class));
         });
-        List<String> dayInWeek = new ArrayList<>();
-        dayInWeek.add("按日查看");
-        dayInWeek.add("周日");
-        dayInWeek.add("周一");
-        dayInWeek.add("周二");
-        dayInWeek.add("周三");
-        dayInWeek.add("周四");
-        dayInWeek.add("周五");
-        dayInWeek.add("周六");
 
-        Spinner dailyBar = view.findViewById(R.id.dailyBar);
-        dailyBar.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.spinner_arraylist, dayInWeek));
+        Button toViewByDay = view.findViewById(R.id.to_daily_view);
+        toViewByDay.setOnClickListener(view1 -> {
+            Calendar calendar = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), null,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+
+            //确认按钮
+            datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(view2 -> {
+                Calendar data=Calendar.getInstance();
+                //确认年月日
+                int year = datePickerDialog.getDatePicker().getYear();
+                int monthOfYear = datePickerDialog.getDatePicker().getMonth() + 1;
+                int dayOfMonth = datePickerDialog.getDatePicker().getDayOfMonth();
+                data.set(year,monthOfYear,dayOfMonth);
+                Bundle bundle = new Bundle();
+                bundle.putInt("year", year);
+                bundle.putInt("monthOfYear", monthOfYear);
+                bundle.putInt("dayOfMonth",dayOfMonth);
+                Intent intent = new Intent(getActivity(), ViewByDayActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                datePickerDialog.dismiss();
+            });
+        });
+//        List<String> dayInWeek = new ArrayList<>();
+//        dayInWeek.add("按日查看");
+//        dayInWeek.add("周日");
+//        dayInWeek.add("周一");
+//        dayInWeek.add("周二");
+//        dayInWeek.add("周三");
+//        dayInWeek.add("周四");
+//        dayInWeek.add("周五");
+//        dayInWeek.add("周六");
+
+//        Spinner dailyBar = view.findViewById(R.id.dailyBar);
+//        dailyBar.setAdapter(new ArrayAdapter<>(getActivity(),R.layout.spinner_arraylist, dayInWeek));
 
         RecyclerView.LayoutManager layoutManager = new RecyclerView.LayoutManager() {
             @Override

@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
-            android:id="@+id/tomonth"
+            android:id="@+id/to_monthly_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -62,15 +62,23 @@
             android:text="按周查看"
             android:textAlignment="center"></Button>
 
-        <Spinner
-            android:id="@+id/dailyBar"
+        <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button"
+            android:id="@+id/to_daily_view"
             android:text="按日查看"
-            android:textAlignment="center"
-            ></Spinner>
+            android:textAlignment="center"/>
+
+<!--        <Spinner-->
+<!--            android:id="@+id/dailyBar"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            style="@style/Widget.AppCompat.Button"-->
+<!--            android:text="按日查看"-->
+<!--            android:textAlignment="center"-->
+<!--            ></Spinner>-->
     </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
 

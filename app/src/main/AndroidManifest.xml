@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeManager"
         tools:targetApi="31">
+        <activity
+            android:name=".SelfComment"
+            android:exported="false"
+            android:theme="@style/AppCompatTheme"/>
         <activity
             android:name=".ViewByMonthActivity"
             android:exported="true"
@@ -29,7 +34,8 @@
             android:theme="@style/AppCompatTheme" />
         <activity
             android:name=".ViewByDayActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppCompatTheme"/>
         <activity
             android:name=".CreatePlanActivity"
             android:exported="true"
@@ -43,6 +49,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

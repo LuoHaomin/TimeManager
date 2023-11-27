@@ -29,15 +29,18 @@
             android:textSize="20sp"
             android:text="学习：体育运动：二课："
             app:layout_constraintLeft_toLeftOf="parent"
-            android:gravity="center"/>
+            android:gravity="center" />
 
 
         <Button
+            android:id="@+id/self_comment"
+            style="@android:style/TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:drawableRight="@color/cardview_light_background"
             android:text="自我评价"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -50,19 +53,21 @@
 <!--    </androidx.recyclerview.widget.RecyclerView>>-->
 
     <ListView
+        android:id="@+id/daily_subplan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/daily_time_display">
 
     </ListView>
     <Button
+        android:id="@+id/add_plan"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/add_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp">
 
     </Button>
 
