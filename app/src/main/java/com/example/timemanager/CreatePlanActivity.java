@@ -483,8 +483,30 @@ public class CreatePlanActivity extends AppCompatActivity {
                 .create().show();
     }
     private void dialog_mode2(Button button){
+        Calendar cld=Calendar.getInstance();
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_mode2,null,false);
         final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
+        Button btn_time = view.findViewById(R.id.btn_time);
+        btn_time.setText("时间");
+        btn_time.setOnClickListener(view1 -> {
+            TimePickerDialog dialog1=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    cld.set(Calendar.HOUR_OF_DAY,i);
+                    cld.set(Calendar.MINUTE,i1);
+                    btn_time.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
+                    date=cld.getTime();
+//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+                    newSchedule.start_time=format.format(date);
+                }
+            },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);
+            dialog1.show();
+        });
+        Button confirm = view.findViewById(R.id.confirm_button);
+        confirm.setOnClickListener(view1 -> {
+            //TODO:存入数据
+            dialog.dismiss();
+        });
         dialog.show();
     }
 

@@ -33,9 +33,8 @@ public class DailySchedule {
     public List<Schedule> getScheduleList() {
 
         db_schedule.openReadLink();
-        list=db_schedule.query("");
+        list=db_schedule.query();
         db_schedule.closeLink();
-
         return list;
     }
 
