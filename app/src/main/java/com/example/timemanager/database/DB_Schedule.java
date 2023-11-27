@@ -190,22 +190,28 @@ public class DB_Schedule extends SQLiteOpenHelper {
         cursor.close(); // 查询完毕，关闭数据库游标
         return infoList;
     }
-
-    public boolean GetFromPlan(Context context,int version){
-        DB_Plan db_plan;
-        db_plan=DB_Plan.getInstance(context,version);
-        db_plan.openWriteLink();
-        List<Plan> list=db_plan.query();
-
-        DB_Schedule db_schedule=DB_Schedule.getInstance(context,DB_VERSION);
-        db_schedule.openWriteLink();
-
-        for (int i = 0; i < list.size(); i++) {
-            db_schedule.insert(list.get(i).schedules);
-            list.get(i).schedules=db_schedule.query(String.format("root = %s",list.get(i).content));
+    public List<Schedule> query(){
+        String sql = String.format("select * " +
+                "from %s ;", TABLE_NAME);
+        List<Schedule> infoList = new ArrayList<Schedule>();
+        // 执行记录查询动作，该语句返回结果集的游标
+        Cursor cursor = mDB.rawQuery(sql, null);
+        // 循环取出游标指向的每条记录
+        while (cursor.moveToNext()) {
+            Schedule info = new Schedule();
+            info.id = cursor.getLong(0);
+            info.content = cursor.getString(1);
+            info.start_time= cursor.getString(2);
+            info.end_time = cursor.getString(3);
+            info.finish = cursor.getString(4);
+            info.position = cursor.getString(5);
+            info.repeat_mode=cursor.getString(6);
+            info.repeat_time=cursor.getString(7);
+            info.stuff = cursor.getString(8);
+            info.root = cursor.getString(9);
+            infoList.add(info);
         }
-
-        return true;
+        cursor.close(); // 查询完毕，关闭数据库游标
+        return infoList;
     }
-
 }

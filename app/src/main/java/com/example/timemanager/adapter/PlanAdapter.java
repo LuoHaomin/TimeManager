@@ -86,6 +86,7 @@ public class PlanAdapter extends BaseExpandableListAdapter
             view = LayoutInflater.from(context).inflate(R.layout.plan_list_item,null);
             holder = new ItemHolder();
             holder.t0 =view.findViewById(R.id.t0);
+            holder.ddl=view.findViewById(R.id.ddl_show);
             holder.t2 =view.findViewById(R.id.t2);
             holder.t4 =view.findViewById(R.id.t4);
             view.setTag(holder);
@@ -94,19 +95,30 @@ public class PlanAdapter extends BaseExpandableListAdapter
         }
 
         holder.t0.setText(planList.get(i).get(i1).content);
-        String txt1="",txt2="";
 
+        holder.ddl.setText(planList.get(i).get(i1).end_time);
+
+        String txt1="",txt2="";
+        if(planList.get(i).get(i1).breakdowns.size()==0){
+            txt1="(空)";
+        }
         for (int j=0;j<planList.get(i).get(i1).breakdowns.size();j++){
-            txt1 = txt1 + planList.get(i).get(i1).breakdowns.get(j).content ;
+            txt1 = txt1 + planList.get(i).get(i1).breakdowns.get(j).content +"    ("+ planList.get(i).get(i1).breakdowns.get(j).end_time+")";
             if(j!=planList.get(i).get(i1).breakdowns.size()-1){
                 txt1+='\n';
             }
         }
+        if(planList.get(i).get(i1).breakdowns.size()==0){
+            txt1="(空)";
+        }
         for (int j=0;j<planList.get(i).get(i1).schedules.size();j++){
             txt2 = txt2 + planList.get(i).get(i1).schedules.get(j).content ;
             if(j!=planList.get(i).get(i1).breakdowns.size()-1){
-                txt1+='\n';
+                txt2+='\n';
             }
+        }
+        if(planList.get(i).get(i1).schedules.size()==0){
+            txt2="(空)";
         }
         holder.t2.setText(txt1);
         holder.t4.setText(txt2);
@@ -122,6 +134,7 @@ public class PlanAdapter extends BaseExpandableListAdapter
     }
     class ItemHolder{
         public TextView t0;
+        public TextView ddl;
         public TextView t2;
         public TextView t4;
     }

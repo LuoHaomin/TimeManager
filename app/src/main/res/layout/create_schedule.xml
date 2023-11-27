@@ -18,28 +18,14 @@
         android:id="@+id/dc1"
         android:hint="名称"
         app:layout_constraintTop_toBottomOf="@id/dc0"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dct1"
-        android:text="单次时长"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dc1"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-        android:id="@+id/dc6"
-        android:text="hh时mm分"
-        app:layout_constraintTop_toBottomOf="@id/dct1"
-        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dct2"
         android:text="重复模式"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dc6"/>
+        app:layout_constraintTop_toBottomOf="@id/dc1"/>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

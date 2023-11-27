@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_time"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:id="@+id/title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_time"
+        app:layout_constraintTop_toBottomOf="@id/title"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="1"
+            android:id="@+id/box"
+            app:layout_constraintTop_toBottomOf="@id/btn_time"
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w1"
+                android:text="周一"
+                android:textSize="18sp"
+                />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w2"
+                android:text="周二"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w1"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w3"
+                android:text="周三"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w2"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w4"
+                android:text="周四"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w3"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w5"
+                android:text="周五"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w4"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w6"
+                android:text="周六"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w5"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/w7"
+                android:text="周日"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/w6"/>
+        </GridLayout>
+
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        app:layout_constraintTop_toBottomOf="@id/box"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,16 +7,15 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -37,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
@@ -58,8 +58,9 @@ public class CreatePlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_plan);
 
         bundle=getIntent().getExtras();
+        assert bundle != null;
         is_creating=bundle.getBoolean("is_creating");
-        if(is_creating==false){
+        if(!is_creating){
             plan_id=bundle.getLong("id");
             db_plan.openReadLink();
             plan=db_plan.query(String.format("_id = %d",plan_id)).get(0);
@@ -79,7 +80,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         //编辑框
         EditText name=findViewById(R.id.plan_name);
-        if(is_creating==false)
+        if(!is_creating)
             name.setText(plan.content);
         name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,10 +123,11 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
 
         //定时间
-        time= String.format("%d年%d月%d日 %d: %d",calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
 
+//        if(plan.start_time.length()==0)
+//            plan.start_time=format.format(start.getTime());
         Button btn_start =findViewById(R.id.btn_start_time);
-        btn_start.setText(time);
+        btn_start.setText(plan.start_time);
         btn_start.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog =new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -133,7 +135,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
                     start.set(Calendar.HOUR_OF_DAY,i);
                     start.set(Calendar.MINUTE,i1);
-                    btn_start.setText(String.format("%d年%d月%d日 %d: %d",start.get(Calendar.YEAR),start.get(Calendar.MONTH)+1,start.get(Calendar.DAY_OF_MONTH),start.get(Calendar.HOUR_OF_DAY),start.get(Calendar.MINUTE)));
+                    btn_start.setText(getTimeString(start));
                     date=start.getTime();
                     plan.start_time=format.format(date);
                 }
@@ -153,8 +155,21 @@ public class CreatePlanActivity extends AppCompatActivity {
             dialog.show();
         });
 
+//        if(is_creating==false){
+//            try {
+//                Date d =format.parse(plan.end_time);
+//                end.setTime(d);
+//            } catch (ParseException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+
+
+        //time= getTimeString(end);
+//        if(plan.end_time.length()==0)
+//            plan.end_time=format.format(end.getTime());
         Button btn_end = findViewById(R.id.btn_end_time);
-        btn_end.setText(time);
+        btn_end.setText(plan.end_time);
         btn_end.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog =new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -385,6 +400,7 @@ public class CreatePlanActivity extends AppCompatActivity {
     }
 
     private void dialog_schedule(){
+        AtomicReference<Boolean> b= new AtomicReference<>(false);
         View view = LayoutInflater.from(this).inflate(R.layout.create_schedule,null,false);
         final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
         newSchedule=new Schedule();
@@ -402,20 +418,7 @@ public class CreatePlanActivity extends AppCompatActivity {
             }
         });
 
-        Button last = view.findViewById(R.id.dc6);
-        last.setOnClickListener(view1 -> {
-            TimePickerDialog timePickerDialog =new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                    end.set(Calendar.HOUR_OF_DAY,i);
-                    end.set(Calendar.MINUTE,i1);
-                    last.setText(String.format("%d时%d分",end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
-                    date=end.getTime();
-                    newSchedule.end_time=format.format(date);
-                }
-            },0,0,true);
-            timePickerDialog.show();
-        });
+
         Button repeat_val=view.findViewById(R.id.dc3);
         RadioGroup radioGroup=view.findViewById(R.id.dc2);
         radioGroup.check(radioGroup.getChildAt(0).getId());
@@ -427,6 +430,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     RadioButton radioButton = (RadioButton) radioGroup.getChildAt(k);
                     if(radioButton.isChecked()){
                         newSchedule.repeat_mode=String.valueOf(k);
+                        b.set(false);
                         repeat_val.setText(radioButton.getText());
                     }
                 }
@@ -438,13 +442,16 @@ public class CreatePlanActivity extends AppCompatActivity {
                 case 0:
                     break;
                 case 1:
-                    //TODO:多次
+                    dialog_mode1(repeat_val);
+                    b.set(true);
                     break;
                 case 2:
-                    //TODO:重复
+                    dialog_mode2(repeat_val);
+                    b.set(true);
                     break;
             }
         });
+
         Button confirm = view.findViewById(R.id.dc5);
         confirm.setOnClickListener(view1 -> {
             newSchedule.root=plan.content;
@@ -454,6 +461,30 @@ public class CreatePlanActivity extends AppCompatActivity {
             dialog.dismiss();
         });
 
+        dialog.show();
+    }
+    private void dialog_mode1(Button button){
+        final EditText editText = new EditText(this);
+
+        editText.setHint("次数（若为0，则无限重复）");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        AlertDialog.Builder input = new AlertDialog.Builder(this);
+        input.setTitle("重复次数")
+                .setView(editText)
+                .setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                newSchedule.repeat_time=editText.getText().toString();
+                                button.setText(newSchedule.repeat_time);
+                            }
+                        }
+                )
+                .create().show();
+    }
+    private void dialog_mode2(Button button){
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_mode2,null,false);
+        final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
         dialog.show();
     }
 
@@ -477,6 +508,9 @@ public class CreatePlanActivity extends AppCompatActivity {
             tagRadio.addView(tagButton,lp);
         }
         tagRadio.check(tagRadio.getChildAt(0).getId());
+    }
+    private String getTimeString(Calendar calendar){
+        return String.format("%d年%d月%d日 %d: %d",calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
     }
 
 }

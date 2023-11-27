@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.timemanager.bean.Plan;
+import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
 import com.example.timemanager.database.DB_Schedule;
 
@@ -21,13 +22,18 @@ public class DebugActivity extends AppCompatActivity {
         String s="";
 
         DB_Schedule db_schedule=DB_Schedule.getInstance(this,DB_Schedule.DB_VERSION);
-//
+
         db_schedule.openWriteLink();
-        db_schedule.GetFromPlan(this,DB_Schedule.DB_VERSION);
+        db_schedule.deleteAll();
+
+
+        List<Schedule> list=db_schedule.query();
         db_schedule.closeLink();
         TextView tv =findViewById(R.id.debug);
-
-        tv.setText("");
+        for (int i = 0; i < list.size(); i++) {
+            s+=list.get(i).code();
+        }
+        tv.setText(s);
 
         /*
         Calendar calendar=Calendar.getInstance();

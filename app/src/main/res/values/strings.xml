@@ -7,4 +7,6 @@
     <string name="tomato_clock">番茄钟</string>
     <string name="filter">通知过滤器</string>
     <string name="IKnow">我知道了</string>
+    <string name="repeat_time">重复时间</string>
+    <string name="confirm">确认</string>
 </resources>
