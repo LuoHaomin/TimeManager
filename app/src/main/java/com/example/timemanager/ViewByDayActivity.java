@@ -47,7 +47,7 @@ public class ViewByDayActivity extends AppCompatActivity {
         //获得当日数据
         DailySchedule dailySchedule=new DailySchedule(this,1, calendar);
         List<Schedule> schedules = dailySchedule.getScheduleList();
-//
+
         daily_subplan.setAdapter(new DailyAdapter(this, schedules));
         daily_subplan.setOnItemLongClickListener((adapterView, view, i, l) -> {
             Schedule sch = schedules.get(i);

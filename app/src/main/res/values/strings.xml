@@ -9,4 +9,6 @@
     <string name="IKnow">我知道了</string>
     <string name="repeat_time">重复时间</string>
     <string name="confirm">确认</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -11,7 +11,7 @@ public class Schedule {
     public String position;
     public String repeat_mode;
     public String repeat_time;
-    public String stuff;
+    public String stuff;//日程相关的备注
 
     public String root;
     public String code;
