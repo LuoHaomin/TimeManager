@@ -3,6 +3,9 @@ package com.example.timemanager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.timemanager.bean.Plan;
@@ -15,25 +18,39 @@ import java.util.List;
 public class DebugActivity extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
     private List<Plan> planList;
+    WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
-        String s="";
 
-        DB_Schedule db_schedule=DB_Schedule.getInstance(this,DB_Schedule.DB_VERSION);
+        webView = findViewById(R.id.webTEST);
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        webView.loadUrl("https://jw.ustc.edu.cn/home");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view,String s){
+                view.loadUrl(s);
+                return true;
+            }
+        });
 
-        db_schedule.openWriteLink();
-        db_schedule.deleteAll();
-
-
-        List<Schedule> list=db_schedule.query();
-        db_schedule.closeLink();
-        TextView tv =findViewById(R.id.debug);
-        for (int i = 0; i < list.size(); i++) {
-            s+=list.get(i).code();
-        }
-        tv.setText(s);
+//        String s="";
+//
+//        DB_Schedule db_schedule=DB_Schedule.getInstance(this,DB_Schedule.DB_VERSION);
+//
+//        db_schedule.openWriteLink();
+//        db_schedule.deleteAll();
+//
+//
+//        List<Schedule> list=db_schedule.query();
+//        db_schedule.closeLink();
+//        TextView tv =findViewById(R.id.debug);
+//        for (int i = 0; i < list.size(); i++) {
+//            s+=list.get(i).code();
+//        }
+//        tv.setText(s);
 
         /*
         Calendar calendar=Calendar.getInstance();
@@ -94,4 +111,14 @@ public class DebugActivity extends AppCompatActivity {
 //        planList=db_plan.query("_id is not null");
 //        tv.setText(String.valueOf(planList.get(0).start_time));
     }
+    @Override
+    public void onBackPressed(){
+        if(webView.canGoBack()){
+            webView.goBack();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
 }

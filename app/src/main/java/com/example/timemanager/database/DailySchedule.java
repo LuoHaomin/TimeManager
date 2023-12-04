@@ -46,5 +46,4 @@ public class DailySchedule {
         List<Schedule> past = new ArrayList<>();
         return past;
     }
-
 }

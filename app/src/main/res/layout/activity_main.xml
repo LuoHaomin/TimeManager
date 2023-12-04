@@ -20,7 +20,6 @@
         android:layout_weight="1"/>
 
 
-
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -32,16 +31,20 @@
             android:checked="true"
             android:drawableTop="@drawable/tab_second_normal"
             android:text="清晰"/>
+
+        <RadioButton
+            android:id="@+id/tool_tag"
+            style="@style/TabButton"
+            android:drawableTop="@drawable/ic_focus"
+            android:text="月历"/>
         <RadioButton
             android:id="@+id/plan_tag"
             style="@style/TabButton"
             android:drawableTop="@drawable/tab_third_normal"
             android:text="愿景"/>
         <RadioButton
-            android:id="@+id/tool_tag"
             style="@style/TabButton"
-            android:drawableTop="@drawable/ic_focus"
-            android:text="专注"/>
-
+            android:id="@+id/evaluation_tag"
+            android:text="评价"/>
     </RadioGroup>
 </LinearLayout>

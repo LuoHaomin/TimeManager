@@ -161,8 +161,9 @@ public class DB_Schedule extends SQLiteOpenHelper {
 
     public int update(Schedule info) {
         // 执行更新记录动作，该语句返回更新的记录数量
-        return update(info, "id=" + info.id);
+        return update(info, "_id = " + info.id);
     }
+
 
     // 根据指定条件查询记录，并返回结果数据列表
     public List<Schedule> query(String condition) {

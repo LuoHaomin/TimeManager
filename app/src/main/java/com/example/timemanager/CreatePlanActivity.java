@@ -30,6 +30,7 @@ import com.example.timemanager.adapter.ScheduleAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
+import com.example.timemanager.database.DB_Schedule;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class CreatePlanActivity extends AppCompatActivity {
     List<String> tagss=new ArrayList<>();
     String newTag="";
     DB_Plan db_plan=DB_Plan.getInstance(this,1);
+    DB_Schedule db_schedule=DB_Schedule.getInstance(this,1);
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     Date date;
     Calendar calendar=Calendar.getInstance(),start=Calendar.getInstance(),end=Calendar.getInstance();
@@ -246,6 +248,10 @@ public class CreatePlanActivity extends AppCompatActivity {
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO:plan.schedules.id 未更新！！！
+                        db_schedule.openWriteLink();
+                        //db_schedule.delete(String.format("_id = %d",plan.schedules.get(t).id));
+                        db_schedule.closeLink();
                         plan.schedules.remove(t);
                         schList.setAdapter(new ScheduleAdapter(CreatePlanActivity.this,plan.schedules));
                     }
@@ -259,6 +265,10 @@ public class CreatePlanActivity extends AppCompatActivity {
         Button confirm_btn = findViewById(R.id.confirm_button);
         if(is_creating){
             confirm_btn.setOnClickListener(view -> {
+                db_schedule.openWriteLink();
+                db_schedule.insert(plan.schedules);
+                db_schedule.closeLink();
+
                 db_plan.openWriteLink();
                 db_plan.insert(plan);
                 db_plan.closeLink();
@@ -267,6 +277,16 @@ public class CreatePlanActivity extends AppCompatActivity {
         }
         else {
             confirm_btn.setOnClickListener(view -> {
+                db_schedule.openWriteLink();
+                for (int i=0;i<plan.schedules.size();i++){
+                    if(plan.schedules.get(i).id==0){
+                        db_schedule.insert(plan.schedules.get(i));
+                    }
+                    else {
+                        db_schedule.update(plan.schedules.get(i));
+                    }
+                }
+                db_schedule.closeLink();
                 db_plan.openWriteLink();
                 db_plan.update(plan,String.format("_id = %d",plan_id));
                 db_plan.closeLink();
@@ -404,21 +424,21 @@ public class CreatePlanActivity extends AppCompatActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.create_schedule,null,false);
         final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
         newSchedule=new Schedule();
+
+        //日程名称
         EditText editText = view.findViewById(R.id.dc1);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
                 newSchedule.content=editText.getText().toString();
             }
         });
 
-
+        //repeat mode
         Button repeat_val=view.findViewById(R.id.dc3);
         RadioGroup radioGroup=view.findViewById(R.id.dc2);
         radioGroup.check(radioGroup.getChildAt(0).getId());
