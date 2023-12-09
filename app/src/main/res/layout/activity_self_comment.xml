@@ -6,4 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".SelfComment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_gravity="top"
+        android:id="@+id/navigation_bar_in_Frag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/navigation_bar_in_Frag"
+        android:text="本周任务："/>
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        app:layout_constraintTop_toBottomOf="@id/navigation_bar_in_Frag"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+<!--    点击单个时间,可以弹出dialogue展示这周具体的任务-->
+    <TextView
+        android:id="@+id/tags_and_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tags_and_time"
+        app:layout_constraintTop_toBottomOf="@+id/image1"/>
+
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="任务完成度:%"
+        android:textColor="@color/purple_200"
+        app:layout_constraintTop_toBottomOf="@id/tags_and_time"
+        tools:ignore="MissingConstraints" />
+
+    <ListView
+        android:id="@+id/tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/percentage">
+
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:text="(选择需要的板块填写)"
+        app:layout_constraintTop_toBottomOf="@+id/tasks"/>
+
+    <Button
+        android:id="@+id/ascertain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确认"
+        app:layout_constraintTop_toBottomOf="@id/note"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
