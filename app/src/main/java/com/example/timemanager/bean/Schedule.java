@@ -6,13 +6,11 @@ public class Schedule {
     public String start_time;
     public String end_time;
     public String finish;
-
     public String content;
     public String position;
     public String repeat_mode;
     public String repeat_time;
     public String stuff;//日程相关的备注
-
     public String root;
     public String code;
 

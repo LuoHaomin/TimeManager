@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -232,6 +234,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         //加日程
         Button addSchedule  =findViewById(R.id.add_schedule);
         addSchedule.setOnClickListener(view -> {
+            newSchedule=new Schedule();
             dialog_schedule();
         });
 
@@ -314,6 +317,10 @@ public class CreatePlanActivity extends AppCompatActivity {
                         db_plan.openWriteLink();
                         db_plan.delete(String.format("_id = %d",plan_id));
                         db_plan.closeLink();finish();
+
+                        db_schedule.openWriteLink();
+                        db_schedule.delete(String.format("root = %s",plan.content));
+                        db_schedule.closeLink();
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -495,16 +502,27 @@ public class CreatePlanActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 newSchedule.repeat_time=editText.getText().toString();
-                                button.setText(newSchedule.repeat_time);
+                                if(newSchedule.repeat_time.matches(""))
+                                    newSchedule.repeat_time="0";
+                                if(Integer.valueOf(newSchedule.repeat_time)==0)
+                                    button.setText("一直重复");
+                                else {
+                                    button.setText(newSchedule.repeat_time+" 次");
+                                    newSchedule.repeat_time = "0/"+newSchedule.repeat_time;
+                                }
                             }
                         }
                 )
                 .create().show();
     }
     private void dialog_mode2(Button button){
+        CheckBox[] ch=new CheckBox[8];
         Calendar cld=Calendar.getInstance();
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_mode2,null,false);
+
+        //选时间
         final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
         Button btn_time = view.findViewById(R.id.btn_time);
         btn_time.setText("时间");
@@ -522,9 +540,25 @@ public class CreatePlanActivity extends AppCompatActivity {
             },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);
             dialog1.show();
         });
+        //选日期
+        ch[1]=view.findViewById(R.id.w1);
+        ch[2]=view.findViewById(R.id.w2);
+        ch[3]=view.findViewById(R.id.w3);
+        ch[4]=view.findViewById(R.id.w4);
+        ch[5]=view.findViewById(R.id.w5);
+        ch[6]=view.findViewById(R.id.w6);
+        ch[7]=view.findViewById(R.id.w7);
+
+        //存数据
         Button confirm = view.findViewById(R.id.confirm_button);
         confirm.setOnClickListener(view1 -> {
-            //TODO:存入数据
+            String result="";
+            for(int i=1;i<=7;i++){
+                if(ch[i].isChecked())
+                    result+=String.format("%d,",i);
+            }
+            newSchedule.repeat_time=result;
+            button.setText(result);
             dialog.dismiss();
         });
         dialog.show();

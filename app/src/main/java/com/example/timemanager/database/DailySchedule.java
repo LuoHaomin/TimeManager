@@ -7,7 +7,9 @@ import com.example.timemanager.bean.Schedule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 * 处理每天的数据
@@ -46,4 +48,9 @@ public class DailySchedule {
         List<Schedule> past = new ArrayList<>();
         return past;
     }
+    public Map<Integer,String> getMonthEvent(){
+        Map<Integer,String> map=new HashMap<>();
+        return map;
+    }
+
 }

@@ -1,14 +1,23 @@
 package com.example.timemanager.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.timemanager.R;
+import com.example.timemanager.adapter.MonthAdapter;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +26,12 @@ import com.example.timemanager.R;
  */
 public class MonthFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    View view;
+    private Calendar month;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public MonthFragment() {
         // Required empty public constructor
@@ -35,15 +42,13 @@ public class MonthFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment MonthFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MonthFragment newInstance(String param1, String param2) {
+    public static MonthFragment newInstance(String param1) {
         MonthFragment fragment = new MonthFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,8 +57,7 @@ public class MonthFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
         }
     }
 
@@ -61,6 +65,41 @@ public class MonthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_month, container, false);
+        month = Calendar.getInstance();
+        view=inflater.inflate(R.layout.fragment_month, container, false);
+        GridView hint=view.findViewById(R.id.星期);
+
+        List<String> list = new ArrayList<>();
+        list.add("星期日");
+        list.add("星期一");
+        list.add("星期二");
+        list.add("星期三");
+        list.add("星期四");
+        list.add("星期五");
+        list.add("星期六");
+        hint.setAdapter(new ArrayAdapter<>(requireActivity(), R.layout.spinner_arraylist, list));
+
+        Paint();
+
+        Button next = view.findViewById(R.id.next);
+        next.setOnClickListener((view1 -> {
+            month.add(Calendar.MONTH,1);
+            Paint();
+        }));
+
+        Button last = view.findViewById(R.id.last);
+        last.setOnClickListener(view1 -> {
+            month.add(Calendar.MONTH,-1);
+            Paint();
+        });
+        return view;
     }
+
+    private void Paint(){
+        TextView textView = view.findViewById(R.id.提示);
+        textView.setText(String.format("%d年%d月",month.get(Calendar.YEAR),month.get(Calendar.MONTH)+1));
+        GridView month_grid = view.findViewById(R.id.month_grid);
+        month_grid.setAdapter(new MonthAdapter(getActivity(),month,month.get(Calendar.MONTH)==Calendar.getInstance().get(Calendar.MONTH)));
+    }
+
 }
