@@ -46,6 +46,10 @@
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
+            android:name=".EditScheduleActivity"
+            android:exported="true"
+            android:theme="@style/AppCompatTheme" />
+        <activity
             android:name=".Hello"
             android:exported="true"
             android:theme="@style/AppCompatTheme">

@@ -331,8 +331,8 @@ public class CreatePlanActivity extends AppCompatActivity {
 
     }
     private void dialog_tag(){
-
-        View view= LayoutInflater.from(this).inflate(R.layout.dialog_tag,null,false);
+        View view= LayoutInflater.from(this)
+                .inflate(R.layout.dialog_tag,null,false);
         final AlertDialog dialog=new AlertDialog.Builder(this).setView(view).create();
         EditText text=view.findViewById(R.id.et_in_dialog_tag);
         Button button=view.findViewById(R.id.btn_in_dialog_tag);
