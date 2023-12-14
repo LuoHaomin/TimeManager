@@ -45,13 +45,12 @@ public class EditScheduleActivity extends AppCompatActivity {
     Date date;
     Calendar calendar = Calendar.getInstance(),start = Calendar.getInstance(), end = Calendar.getInstance();
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    Schedule nschedule;
+//    Schedule nschedule;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_edit_schedule);
 
         bundle = getIntent().getExtras();
@@ -199,6 +198,41 @@ public class EditScheduleActivity extends AppCompatActivity {
                     end.get(Calendar.DAY_OF_MONTH));
             dialog.show();
         });
+
+//        TODO:Dec.13th there is some bugs hiding here
+        //重复模式
+        RadioGroup radioGroup1 = findViewById(R.id.rg_repeat_pattern);
+        Button repeat_val = findViewById(R.id.repeat_select);
+        radioGroup1.check(radioGroup1.getChildAt(0).getId());
+        schedule.repeat_mode = "0";
+        radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                for (int j = 0; j < radioGroup.getChildCount(); j++){
+                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(j);
+                    if (radioButton.isChecked()){
+                        schedule.repeat_mode = String.valueOf(j);
+                        repeat_val.setText(radioButton.getText());
+                    }
+                }
+            }
+        });
+
+        repeat_val.setOnClickListener(view -> {
+            switch (Integer.valueOf(schedule.repeat_mode)){
+                case 0:
+                    break;
+                case 1:
+                    mode1(repeat_val);
+                    break;
+                case 2:
+                    mode2(repeat_val);
+                    break;
+            }
+        });
+
+
+
     }
 
 
@@ -242,7 +276,7 @@ public class EditScheduleActivity extends AppCompatActivity {
         for(int i = 0; i < num; i++){
             s = st.substring(0, st.indexOf('|'));
             tagss.add(s);
-            st = st.substring(st.indexOf('|' )+ 1);
+            st = st.substring(st.indexOf('|') + 1);
         }
         RadioGroup tagRadio = findViewById(R.id.tag_radio);
         tagRadio.removeAllViews();//清空先前所有标签
@@ -275,14 +309,14 @@ public class EditScheduleActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                nschedule.repeat_time=editText.getText().toString();
-                                if(nschedule.repeat_time.matches(""))
-                                    nschedule.repeat_time="0";
-                                if(Integer.valueOf(nschedule.repeat_time)==0)
+                                schedule.repeat_time=editText.getText().toString();
+                                if(schedule.repeat_time.matches(""))
+                                    schedule.repeat_time="0";
+                                if(Integer.valueOf(schedule.repeat_time)==0)
                                     button.setText("一直重复");
                                 else {
-                                    button.setText(nschedule.repeat_time+" 次");
-                                    nschedule.repeat_time = "0/"+nschedule.repeat_time;
+                                    button.setText(schedule.repeat_time+" 次");
+                                    schedule.repeat_time = "0/"+schedule.repeat_time;
                                 }
                             }
                         }
@@ -308,7 +342,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                     btn_time.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=cld.getTime();
 //                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
-                    nschedule.start_time=format.format(date);
+                    schedule.start_time=format.format(date);
                 }
             },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);
             dialog1.show();
@@ -330,7 +364,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                 if(ch[i].isChecked())
                     result+=String.format("%d,",i);
             }
-            nschedule.repeat_time=result;
+            schedule.repeat_time=result;
             button.setText(result);
             dialog.dismiss();
         });
