@@ -57,9 +57,11 @@
         android:id="@+id/daily_subplan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/daily_time_display">
+        app:layout_constraintTop_toBottomOf="@+id/daily_time_display"
+        tools:layout_editor_absoluteX="24dp">
 
     </ListView>
+
     <Button
         android:id="@+id/add_plan"
         android:layout_width="40dp"

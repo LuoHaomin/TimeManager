@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -21,23 +24,28 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 
 
+import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class EditScheduleActivity extends AppCompatActivity {
 
+    private Plan plan = new Plan();
     private Schedule schedule = new Schedule();
-    List<String> tagss = new ArrayList<>();
+    public List<String> tagss = new ArrayList<>();
     Bundle bundle;
+    public Long id;
     String newTag="";
     //time
     Date date;
     Calendar calendar = Calendar.getInstance(),start = Calendar.getInstance(), end = Calendar.getInstance();
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    Schedule nschedule;
 
 
     @Override
@@ -52,9 +60,10 @@ public class EditScheduleActivity extends AppCompatActivity {
 
         switch (entrance){
             case 0:
-                Long id = bundle.getLong("id");
+                id = bundle.getLong("id");
                 break;
             case 1:
+                id = bundle.getLong("id");
                 int year = bundle.getInt("year");
                 int monthOfYear = bundle.getInt("monthOfYear");
                 int dayOfMonth = bundle.getInt("dayOfMonth");
@@ -86,9 +95,9 @@ public class EditScheduleActivity extends AppCompatActivity {
             }
         });
 
-        //写入地点
-        EditText place = findViewById(R.id.edit_place);
-        place.addTextChangedListener(new TextWatcher() {
+//        写入日程
+        EditText schedule_name = findViewById(R.id.edit_schedule_name);
+        schedule_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -97,9 +106,42 @@ public class EditScheduleActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                schedule.position = place.getText().toString();
+                schedule.content = schedule_name.getText().toString();
             }
         });
+
+//        TODO:how to get data from database?
+        //写入地点
+        EditText place = findViewById(R.id.edit_place);
+        if (entrance == 0) {
+            place.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    schedule.content = place.getText().toString();
+                }
+            });
+        }else{
+            place.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    schedule.content = place.getText().toString();
+                }
+            });
+        }
 
         //定时间
         Button start_btn = findViewById(R.id.edit_start_time);
@@ -159,6 +201,7 @@ public class EditScheduleActivity extends AppCompatActivity {
         });
     }
 
+
     private void dialog_tag(){
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_tag, null, false);
         final AlertDialog dialog = new AlertDialog.Builder(this).setView(view).create();
@@ -217,6 +260,81 @@ public class EditScheduleActivity extends AppCompatActivity {
     private String getTimeString(Calendar calendar){
         return String.format("%d年%d月%d日 %d : %d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    }
+
+    public void mode1(Button button){
+        final EditText editText = new EditText(this);
+
+        editText.setHint("次数（若为0，则无限重复）");
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        AlertDialog.Builder input = new AlertDialog.Builder(this);
+        input.setTitle("重复次数")
+                .setView(editText)
+                .setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                nschedule.repeat_time=editText.getText().toString();
+                                if(nschedule.repeat_time.matches(""))
+                                    nschedule.repeat_time="0";
+                                if(Integer.valueOf(nschedule.repeat_time)==0)
+                                    button.setText("一直重复");
+                                else {
+                                    button.setText(nschedule.repeat_time+" 次");
+                                    nschedule.repeat_time = "0/"+nschedule.repeat_time;
+                                }
+                            }
+                        }
+                )
+                .create().show();
+    }
+
+    private void mode2(Button button){
+        CheckBox[] ch=new CheckBox[8];
+        Calendar cld=Calendar.getInstance();
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_mode2,null,false);
+
+        //选时间
+        final AlertDialog dialog= new AlertDialog.Builder(this).setView(view).create();
+        Button btn_time = view.findViewById(R.id.btn_time);
+        btn_time.setText("时间");
+        btn_time.setOnClickListener(view1 -> {
+            TimePickerDialog dialog1=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    cld.set(Calendar.HOUR_OF_DAY,i);
+                    cld.set(Calendar.MINUTE,i1);
+                    btn_time.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
+                    date=cld.getTime();
+//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+                    nschedule.start_time=format.format(date);
+                }
+            },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);
+            dialog1.show();
+        });
+        //选日期
+        ch[1]=view.findViewById(R.id.w1);
+        ch[2]=view.findViewById(R.id.w2);
+        ch[3]=view.findViewById(R.id.w3);
+        ch[4]=view.findViewById(R.id.w4);
+        ch[5]=view.findViewById(R.id.w5);
+        ch[6]=view.findViewById(R.id.w6);
+        ch[7]=view.findViewById(R.id.w7);
+
+        //存数据
+        Button confirm = view.findViewById(R.id.confirm_button);
+        confirm.setOnClickListener(view1 -> {
+            String result="";
+            for(int i=1;i<=7;i++){
+                if(ch[i].isChecked())
+                    result+=String.format("%d,",i);
+            }
+            nschedule.repeat_time=result;
+            button.setText(result);
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
 }
