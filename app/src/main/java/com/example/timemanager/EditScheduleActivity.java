@@ -43,6 +43,7 @@ public class EditScheduleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_edit_schedule);
 
         bundle = getIntent().getExtras();
@@ -57,6 +58,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                 int year = bundle.getInt("year");
                 int monthOfYear = bundle.getInt("monthOfYear");
                 int dayOfMonth = bundle.getInt("dayOfMonth");
+                break;
         }
 
         //显示标签
@@ -95,7 +97,7 @@ public class EditScheduleActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                schedule.content = place.getText().toString();
+                schedule.position = place.getText().toString();
             }
         });
 
@@ -189,7 +191,7 @@ public class EditScheduleActivity extends AppCompatActivity {
 
     private void setTag(){
         SharedPreferences tag_in_share = getSharedPreferences("tag", MODE_PRIVATE);//获取数据
-        String st = tag_in_share.getString("tag", ""), s = "";//读取数据
+        String st = tag_in_share.getString("tag", ""), s;//读取数据
         int num = tag_in_share.getInt("num", 0);
         tagss.clear();  //清空已有标签
 
@@ -197,7 +199,7 @@ public class EditScheduleActivity extends AppCompatActivity {
         for(int i = 0; i < num; i++){
             s = st.substring(0, st.indexOf('|'));
             tagss.add(s);
-            st = st.substring(st.indexOf('|' + 1));
+            st = st.substring(st.indexOf('|' )+ 1);
         }
         RadioGroup tagRadio = findViewById(R.id.tag_radio);
         tagRadio.removeAllViews();//清空先前所有标签

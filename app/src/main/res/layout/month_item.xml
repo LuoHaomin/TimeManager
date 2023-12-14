@@ -14,10 +14,18 @@
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="事项1\n事项2事项1\n事项2"
         android:id="@+id/item"
-        app:layout_constraintTop_toBottomOf="@id/date"
-        />
+        app:layout_constraintTop_toBottomOf="@id/date" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:id="@+id/DDL"
+        android:textColor="@color/red"
+        android:text="@string/app_name"
+        app:layout_constraintTop_toBottomOf="@id/item"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

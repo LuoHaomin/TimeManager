@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.timemanager.R;
 import com.example.timemanager.adapter.MonthAdapter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -79,27 +81,46 @@ public class MonthFragment extends Fragment {
         list.add("星期六");
         hint.setAdapter(new ArrayAdapter<>(requireActivity(), R.layout.spinner_arraylist, list));
 
-        Paint();
+        try {
+            Paint();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         Button next = view.findViewById(R.id.next);
         next.setOnClickListener((view1 -> {
             month.add(Calendar.MONTH,1);
-            Paint();
+            try {
+                Paint();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }));
 
         Button last = view.findViewById(R.id.last);
         last.setOnClickListener(view1 -> {
             month.add(Calendar.MONTH,-1);
-            Paint();
+            try {
+                Paint();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         });
         return view;
     }
 
-    private void Paint(){
+    private void Paint() throws ParseException {
         TextView textView = view.findViewById(R.id.提示);
         textView.setText(String.format("%d年%d月",month.get(Calendar.YEAR),month.get(Calendar.MONTH)+1));
         GridView month_grid = view.findViewById(R.id.month_grid);
-        month_grid.setAdapter(new MonthAdapter(getActivity(),month,month.get(Calendar.MONTH)==Calendar.getInstance().get(Calendar.MONTH)));
+        MonthAdapter adapter = new MonthAdapter(getActivity(),month,month.get(Calendar.MONTH)==Calendar.getInstance().get(Calendar.MONTH));
+        month_grid.setAdapter(adapter);
+        month_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(requireContext(),String.format("%d-%d",month.get(Calendar.MONTH)+1,i-adapter.FirstDay+1),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

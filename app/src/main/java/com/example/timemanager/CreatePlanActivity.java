@@ -1,5 +1,6 @@
 package com.example.timemanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -251,9 +252,9 @@ public class CreatePlanActivity extends AppCompatActivity {
                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO:plan.schedules.id 未更新！！！
                         db_schedule.openWriteLink();
-                        //db_schedule.delete(String.format("_id = %d",plan.schedules.get(t).id));
+                        //TODO:数据！！
+//                        db_schedule.delete(String.format("content = %s",plan.schedules.get(t).content));
                         db_schedule.closeLink();
                         plan.schedules.remove(t);
                         schList.setAdapter(new ScheduleAdapter(CreatePlanActivity.this,plan.schedules));
@@ -553,11 +554,15 @@ public class CreatePlanActivity extends AppCompatActivity {
         Button confirm = view.findViewById(R.id.confirm_button);
         confirm.setOnClickListener(view1 -> {
             String result="";
+            String data="";
             for(int i=1;i<=7;i++){
-                if(ch[i].isChecked())
+                if(ch[i].isChecked()){
                     result+=String.format("%d,",i);
+                    data+=String.format("%d,",i==7 ? 1:i+1);
+                }
+
             }
-            newSchedule.repeat_time=result;
+            newSchedule.repeat_time=data;
             button.setText(result);
             dialog.dismiss();
         });
@@ -585,6 +590,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         }
         tagRadio.check(tagRadio.getChildAt(0).getId());
     }
+    @NonNull
     private String getTimeString(Calendar calendar){
         return String.format("%d年%d月%d日 %d: %d",calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
     }

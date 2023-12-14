@@ -12,29 +12,85 @@ import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
 import com.example.timemanager.database.DB_Schedule;
+import com.example.timemanager.database.DailySchedule;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DebugActivity extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
-    private List<Plan> planList;
+    private List<Plan> plans;
     WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plan);
+        Calendar calendar=Calendar.getInstance();
+        TextView textView = findViewById(R.id.debug);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 
-        webView = findViewById(R.id.webTEST);
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        webView.loadUrl("https://jw.ustc.edu.cn/home");
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view,String s){
-                view.loadUrl(s);
-                return true;
+        try {
+            Map<Integer,String> ans = dailySchedule.getMonthDDLs();
+            for(int i=0;i<32;i++){
+                if(ans.containsKey(i)){
+                    textView.setText(textView.getText()+"\n"+String.format("%d %s",i,ans.get(i)));
+                }
             }
-        });
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        DB_Schedule db_schedule = DB_Schedule.getInstance(this,1);
+        db_schedule.openWriteLink();
+        db_schedule.deleteAll();
+        db_schedule.closeLink();
+//
+//        db_plan.openReadLink();
+//        Schedule schedule ;
+//        plans = db_plan.query();
+//        db_plan.closeLink();
+//        for(int i=0;i< plans.size();i++){
+//            for(int j=0;j < plans.get(i).breakdowns.size();j++){
+//                schedule = plans.get(i).breakdowns.get(j);
+//
+//
+//                if(schedule.end_time.matches("YY-MM-DD hh:mm"))
+//                    continue;
+//                try {
+//                    Date dates=format.parse(schedule.end_time);
+//                    textView.setText(textView.getText()+"\n"+schedule.content+" "+schedule.end_time);
+//                    Calendar calendar=Calendar.getInstance();
+//                    calendar.setTime(dates);
+//                    textView.setText(String.valueOf(textView.getText()+"\n"+calendar.get(Calendar.DAY_OF_MONTH)));
+//                } catch (ParseException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                assert dates != null;
+//                ct.setTime(dates);
+//                if(ct.get(Calendar.YEAR)==date.get(Calendar.YEAR) && ct.get(Calendar.MONTH)==date.get(Calendar.MONTH)){
+//                    if(map.containsKey(ct.get(Calendar.DAY_OF_MONTH))){
+//                        map.put(ct.get(Calendar.DAY_OF_MONTH),map.get(ct.get(Calendar.DAY_OF_MONTH))+schedule.content);
+//                    }
+//                    else
+//                        map.put(ct.get(Calendar.DAY_OF_MONTH),schedule.content);
+//                }
+//            }
+//        }
+//        webView = findViewById(R.id.webTEST);
+//        WebSettings settings = webView.getSettings();
+//        settings.setJavaScriptEnabled(true);
+//        webView.loadUrl("https://jw.ustc.edu.cn/home");
+//        webView.setWebViewClient(new WebViewClient(){
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view,String s){
+//                view.loadUrl(s);
+//                return true;
+//            }
+//        });
 
 //        String s="";
 //
@@ -111,14 +167,14 @@ public class DebugActivity extends AppCompatActivity {
 //        planList=db_plan.query("_id is not null");
 //        tv.setText(String.valueOf(planList.get(0).start_time));
     }
-    @Override
-    public void onBackPressed(){
-        if(webView.canGoBack()){
-            webView.goBack();
-        }
-        else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed(){
+//        if(webView.canGoBack()){
+//            webView.goBack();
+//        }
+//        else {
+//            super.onBackPressed();
+//        }
+//    }
 
 }
