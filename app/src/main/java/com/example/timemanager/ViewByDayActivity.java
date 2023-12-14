@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.activity.ComponentDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -77,6 +78,11 @@ public class ViewByDayActivity extends AppCompatActivity {
             bundle.putInt("dayOfMonth",calendar.get(Calendar.DAY_OF_MONTH));
             intent.putExtras(bundle);
             startActivity(intent);
+        });
+
+        Button school_bus = findViewById(R.id.school_bus);
+        school_bus.setOnClickListener(view -> {
+//            ComponentDialog
         });
     }
 

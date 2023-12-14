@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:context=".EditScheduleActivity"
+        tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".EditScheduleActivity">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/add_plan"
@@ -65,12 +78,26 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/schedule_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tag_radio"
+        android:text="日程名称"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edit_schedule_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_name"
+        android:hint="请填写当日的该日程内容"/>
+    <TextView
         android:id="@+id/place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="地点"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tag_radio"/>
+        app:layout_constraintTop_toBottomOf="@+id/edit_schedule_name"/>
 
     <EditText
         android:id="@+id/edit_place"
@@ -140,6 +167,14 @@
             android:text="每周"/>
     </RadioGroup>
 
+        <Button
+            android:id="@+id/repeat_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="单次"
+            app:layout_constraintTop_toBottomOf="@id/rg_repeat_pattern"
+            android:shadowColor="@android:color/holo_blue_bright"/>
+
     <Switch
         android:id="@+id/alarm_switch"
         android:layout_width="match_parent"
@@ -147,21 +182,42 @@
         android:text="开启提醒"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/rg_repeat_pattern"/>
+        app:layout_constraintTop_toBottomOf="@id/repeat_select"/>
 
-
-    <LinearLayout
-        android:id="@+id/submit_area"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/remarks"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@+id/alarm_switch"
+        android:text="备注"
+        tools:ignore="MissingConstraints" />
 
+    <EditText
+        android:id="@+id/edit_remarks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:background="@android:drawable/edit_text"
+        app:layout_constraintTop_toBottomOf="@id/remarks"
+        tools:ignore="MissingConstraints" />
+
+        <LinearLayout
+            android:id="@+id/submit_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/edit_remarks"
+            android:orientation="horizontal">
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@id/edit_remarks"
             android:text="取消" />
 
         <Button
@@ -169,8 +225,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="确认"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_remarks"/>
+        </LinearLayout>
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
