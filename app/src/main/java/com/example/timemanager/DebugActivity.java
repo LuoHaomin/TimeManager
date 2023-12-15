@@ -31,21 +31,27 @@ public class DebugActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_plan);
         Calendar calendar=Calendar.getInstance();
         TextView textView = findViewById(R.id.debug);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 
-        try {
-            Map<Integer,String> ans = dailySchedule.getMonthDDLs();
-            for(int i=0;i<32;i++){
-                if(ans.containsKey(i)){
-                    textView.setText(textView.getText()+"\n"+String.format("%d %s",i,ans.get(i)));
-                }
-            }
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+
+//            Map<Integer,String> ans = dailySchedule.getMonthEvent();
+//            for(int i=0;i<32;i++){
+//                if(ans.containsKey(i)){
+//                    textView.setText(textView.getText()+"\n"+String.format("%d %s",i,ans.get(i)));
+//                }
+//            }
+
+//        Schedule schedule =new Schedule();
+//        schedule.id=12;
+//        schedule.content="abc";
+//        schedule.repeat_mode="mode1";
         DB_Schedule db_schedule = DB_Schedule.getInstance(this,1);
         db_schedule.openWriteLink();
+
+//        db_schedule.insert(schedule);
+        textView.setText(String.valueOf(db_schedule.query().get(0).code()));
+//        db_schedule.delete("content = 'abc'");
         db_schedule.deleteAll();
         db_schedule.closeLink();
 //

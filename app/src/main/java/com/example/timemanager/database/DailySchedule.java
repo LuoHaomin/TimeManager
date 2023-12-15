@@ -26,6 +26,7 @@ public class DailySchedule {
     public Context mcontext;
     int mversion=1;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date dates;
     List<Schedule> list;
     List<Plan> plans;
@@ -44,8 +45,13 @@ public class DailySchedule {
     public List<Schedule> getScheduleList() {
 
         db_schedule.openReadLink();
-        list=db_schedule.query();
+
+        if(list!=null) list.clear();
+        list = db_schedule.query("start_time LIKE '" +dayFormat.format(date.getTime())+"%' ");
+
+        list.addAll(db_schedule.query("repeat_mode = '2'"));
         db_schedule.closeLink();
+
         return list;
     }
 
@@ -60,16 +66,27 @@ public class DailySchedule {
     public Map<Integer,String> getMonthEvent(){
         Map<Integer,String> map=new HashMap<>();
         Schedule schedule;
-        //重复日程
         Calendar date1 = (Calendar)date.clone();
         db_schedule.openReadLink();
-        list=db_schedule.query("repeat_mode = 2");
+        for(int j=1;j<date1.getMaximum(Calendar.DAY_OF_MONTH);j++){
+            date1.set(Calendar.DAY_OF_MONTH,j);
+            if(list!=null) list.clear();
+            list = db_schedule.query("start_time LIKE '" +dayFormat.format(date1.getTime())+"%' ");
+            for(int i=0;i<list.size();i++){
+                if(map.containsKey(j)){
+                    map.put(j,map.get(j)+"\n"+list.get(i).content);
+                }
+                else
+                    map.put(j,list.get(i).content);
+            }
+        }
+        list=db_schedule.query("repeat_mode = '2'");
         db_schedule.closeLink();
-        date1.set(Calendar.DAY_OF_MONTH,1);
         List<Integer> repeat_days = new ArrayList<>();
         String s,st;
 
         for(int i=0; i< list.size();i++){
+            date1 = (Calendar)date.clone();
             schedule = list.get(i);
             st=schedule.repeat_time;
             repeat_days.clear();
@@ -79,18 +96,20 @@ public class DailySchedule {
                 st=st.substring(st.indexOf(',')+1);
             }
             date1.set(Calendar.DAY_OF_MONTH,1);
-            for(int j=0;j<date1.getMaximum(Calendar.DAY_OF_MONTH);j++,date1.add(Calendar.DAY_OF_MONTH,1)){
+            for(int j=1;j<date1.getMaximum(Calendar.DAY_OF_MONTH);j++){
+                date1.set(Calendar.DAY_OF_MONTH,j);
                 if (repeat_days.contains(date1.get(Calendar.DAY_OF_WEEK))){
-                    if(map.containsKey(date1.get(Calendar.DAY_OF_MONTH))){
-                        map.put(date1.get(Calendar.DAY_OF_MONTH),map.get(date1.get(Calendar.DAY_OF_MONTH))+"\n"+schedule.content);
+                    if(map.containsKey(j)){
+                        map.put(j,map.get(j)+"\n"+schedule.content);
                     }
                     else
-                        map.put(date1.get(Calendar.DAY_OF_MONTH),schedule.content);
+                        map.put(j,schedule.content);
 
                 }
+
             }
         }
-        //TODO:mode0&1
+
         return map;
     }
     public Map<Integer,String> getMonthDDLs() throws ParseException {

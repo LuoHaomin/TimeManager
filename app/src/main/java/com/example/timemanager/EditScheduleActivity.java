@@ -1,8 +1,5 @@
 package com.example.timemanager;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -12,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,21 +20,23 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
+import com.example.timemanager.database.DB_Schedule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class EditScheduleActivity extends AppCompatActivity {
 
-    private Plan plan = new Plan();
-    private Schedule schedule = new Schedule();
+    private Schedule schedule;
     public List<String> tagss = new ArrayList<>();
     Bundle bundle;
     public Long id;
@@ -45,8 +45,8 @@ public class EditScheduleActivity extends AppCompatActivity {
     Date date;
     Calendar calendar = Calendar.getInstance(),start = Calendar.getInstance(), end = Calendar.getInstance();
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//    Schedule nschedule;
 
+    DB_Schedule db_schedule = DB_Schedule.getInstance(this,DB_Schedule.DB_VERSION);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +54,29 @@ public class EditScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_schedule);
 
         bundle = getIntent().getExtras();
-        assert bundle != null;
-        int entrance = bundle.getInt("entrance");
+        int entrance;
+        if(bundle == null){
+            entrance=0;
+
+        }
+
+        else entrance = bundle.getInt("entrance");
 
         switch (entrance){
-            case 0:
-                id = bundle.getLong("id");
-                break;
-            case 1:
-                id = bundle.getLong("id");
+            case 0://新建
+                schedule=new Schedule();
                 int year = bundle.getInt("year");
                 int monthOfYear = bundle.getInt("monthOfYear");
                 int dayOfMonth = bundle.getInt("dayOfMonth");
+                start.set(year,monthOfYear,dayOfMonth);
+                end.set(year,monthOfYear,dayOfMonth);
+//                Toast.makeText(this,entrance,Toast.LENGTH_SHORT).show();
+                break;
+            case 1://修改
+                id = bundle.getLong("id");
+                db_schedule.openReadLink();
+                schedule=db_schedule.query("_id =" + id).get(0);
+                db_schedule.closeLink();
                 break;
         }
 
@@ -73,12 +84,10 @@ public class EditScheduleActivity extends AppCompatActivity {
         setTag();
         //添加标签
         Button btn_tag = findViewById(R.id.add_plan_in_edit_schedule);
-        btn_tag.setOnClickListener(view -> {
-            dialog_tag();
-        });
+        btn_tag.setOnClickListener(view -> dialog_tag());
         //选标签
         RadioGroup radioGroup = findViewById(R.id.tag_radio);
-        if(entrance == 0)
+        if(entrance == 1)
             schedule.stuff = tagss.get(0);
         else{
             for (int i = 0; i < tagss.size(); i++){
@@ -96,6 +105,7 @@ public class EditScheduleActivity extends AppCompatActivity {
 
 //        写入日程
         EditText schedule_name = findViewById(R.id.edit_schedule_name);
+        if(entrance==1) schedule_name.setText(schedule.content);
         schedule_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -109,42 +119,30 @@ public class EditScheduleActivity extends AppCompatActivity {
             }
         });
 
-//        TODO:how to get data from database?
+
         //写入地点
         EditText place = findViewById(R.id.edit_place);
-        if (entrance == 0) {
-            place.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    schedule.content = place.getText().toString();
-                }
-            });
-        }else{
-            place.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    schedule.content = place.getText().toString();
-                }
-            });
+        if (entrance == 1) {
+            place.setText(schedule.position);
         }
+        place.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                schedule.position = place.getText().toString();
+            }
+        });
         //定时间
         Button start_btn = findViewById(R.id.edit_start_time);
-        start_btn.setText(schedule.start_time);
+        start_btn.setText(getTimeString(start));
+        schedule.start_time=format.format(start.getTime());
         start_btn.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -170,7 +168,8 @@ public class EditScheduleActivity extends AppCompatActivity {
         });
 
         Button end_btn = findViewById(R.id.edit_end_time);
-        end_btn.setText(schedule.end_time);
+        end_btn.setText(getTimeString(end));
+        schedule.end_time=format.format(end.getTime());
         end_btn.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -199,7 +198,6 @@ public class EditScheduleActivity extends AppCompatActivity {
             dialog.show();
         });
 
-//        TODO:Dec.13th there is some bugs hiding here
         //重复模式
         RadioGroup radioGroup1 = findViewById(R.id.rg_repeat_pattern);
         Button repeat_val = findViewById(R.id.repeat_select);
@@ -219,7 +217,7 @@ public class EditScheduleActivity extends AppCompatActivity {
         });
 
         repeat_val.setOnClickListener(view -> {
-            switch (Integer.valueOf(schedule.repeat_mode)){
+            switch (Integer.parseInt(schedule.repeat_mode)){
                 case 0:
                     break;
                 case 1:
@@ -231,8 +229,51 @@ public class EditScheduleActivity extends AppCompatActivity {
             }
         });
 
+        EditText edit_remark=findViewById(R.id.edit_remarks);
+        edit_remark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                schedule.stuff = edit_remark.getText().toString();
+            }
+        });
+
+        Button cancel = findViewById(R.id.cancel_button);
+        if(entrance==0)
+            cancel.setOnClickListener(view -> finish());
+        else if (entrance==1) {
+            cancel.setOnClickListener(view -> {
+                cancel.setText("删除日程");
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("提示：");
+                builder.setMessage("确认删除？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        db_schedule.openWriteLink();
+                        db_schedule.delete("_id = " + id);
+                        db_schedule.closeLink();
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.create().show();
+            });
+        }
 
 
+        Button confirm = findViewById(R.id.confirm_button);
+        confirm.setOnClickListener(view -> {
+            db_schedule.openWriteLink();
+            db_schedule.insert(schedule);
+            db_schedule.closeLink();
+            Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+            finish();
+        });
     }
 
 

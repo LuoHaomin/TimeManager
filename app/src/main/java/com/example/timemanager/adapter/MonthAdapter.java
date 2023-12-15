@@ -73,10 +73,13 @@ Context mcontext;
 
         if(i>=FirstDay && i<FirstDay+LastDay){
             holder.date.setText(String.format(Locale.US,"%d",i-FirstDay+1));
+
             if(event.get(i-FirstDay+1)!=null){
                 holder.item.setText(event.get(i-FirstDay+1));
             }
+
             else holder.item.setText("");
+
             if(DDLs.containsKey(i-FirstDay+1)){
                 holder.ddl.setText(DDLs.get(i-FirstDay+1));
             }

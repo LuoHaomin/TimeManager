@@ -254,7 +254,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db_schedule.openWriteLink();
                         //TODO:数据！！
-//                        db_schedule.delete(String.format("content = %s",plan.schedules.get(t).content));
+                        db_schedule.delete(String.format("content = '%s' AND root ='%s'",plan.schedules.get(t).content,plan.content));
                         db_schedule.closeLink();
                         plan.schedules.remove(t);
                         schList.setAdapter(new ScheduleAdapter(CreatePlanActivity.this,plan.schedules));
@@ -317,11 +317,12 @@ public class CreatePlanActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db_plan.openWriteLink();
                         db_plan.delete(String.format("_id = %d",plan_id));
-                        db_plan.closeLink();finish();
+                        db_plan.closeLink();
 
                         db_schedule.openWriteLink();
-                        db_schedule.delete(String.format("root = %s",plan.content));
+                        db_schedule.delete(String.format("root = '%s'",plan.content));
                         db_schedule.closeLink();
+                        finish();
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -468,6 +469,29 @@ public class CreatePlanActivity extends AppCompatActivity {
         repeat_val.setOnClickListener(view1 -> {
             switch (Integer.valueOf(newSchedule.repeat_mode)){
                 case 0:
+                    start=Calendar.getInstance();
+                    TimePickerDialog timePickerDialog =new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int i, int i1) {
+
+                            start.set(Calendar.HOUR_OF_DAY,i);
+                            start.set(Calendar.MINUTE,i1);
+                            repeat_val.setText(getTimeString(start));
+                            date=start.getTime();
+                            newSchedule.start_time=format.format(date);
+                        }
+                    },start.get(Calendar.HOUR_OF_DAY),start.get(Calendar.MINUTE),true);
+                    timePickerDialog.show();
+                    DatePickerDialog pickerDialog =new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                            start.set(i,i1,i2);
+                        }
+                    },
+                            start.get(Calendar.YEAR),
+                            start.get(Calendar.MONTH),
+                            start.get(Calendar.DAY_OF_MONTH));
+                    pickerDialog.show();
                     break;
                 case 1:
                     dialog_mode1(repeat_val);
