@@ -36,11 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScheduleFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ScheduleFragment extends Fragment {
 
     public ListView lv_in_schedule_fragment;
@@ -67,7 +63,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view =inflater.inflate(R.layout.fragment_schedule, container, false);
 
         CalendarView calendarView = view.findViewById(R.id.calendar);

@@ -88,18 +88,19 @@ public class EditScheduleActivity extends AppCompatActivity {
         //选标签
         RadioGroup radioGroup = findViewById(R.id.tag_radio);
         if(entrance == 1)
-            schedule.stuff = tagss.get(0);
+            schedule.root = tagss.get(0);
         else{
             for (int i = 0; i < tagss.size(); i++){
-                if(schedule.stuff.equals(tagss.get(i)))
+                if(schedule.root.equals(tagss.get(i)))
                     radioGroup.check(radioGroup.getChildAt(i).getId());
             }
         }
+
         radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
             for(int k = 0; k < radioGroup.getChildCount(); k++){
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(k);
                 if(radioButton.isChecked())
-                    schedule.stuff = tagss.get(k);
+                    schedule.root = tagss.get(k);
             }
         });
 

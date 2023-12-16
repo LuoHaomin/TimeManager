@@ -24,6 +24,7 @@ import java.util.Map;
 public class DebugActivity extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
     private List<Plan> plans;
+    private List<Schedule> schedules;
     WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,8 @@ public class DebugActivity extends AppCompatActivity {
         Calendar calendar=Calendar.getInstance();
         TextView textView = findViewById(R.id.debug);
         DailySchedule dailySchedule = new DailySchedule(this,1,calendar);
-        dailySchedule.getScheduleList();
-
+        schedules = dailySchedule.getScheduleList();
+        textView.setText(String.valueOf(schedules.get(0).code()));
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 
