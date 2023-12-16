@@ -60,7 +60,7 @@ public class DailyAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        //TODO:rewrite sources in String;see in HomePage... Adapter
+        //TODO:rewrite sources in String;see in HomePage -x... Adapter
         Schedule schedule = mSchedule.get(position);
         holder.timeAndPlace.setText(schedule.start_time+schedule.end_time+"\n"+schedule.position);
         holder.subPlan.setText(schedule.content);

@@ -31,6 +31,9 @@ public class DebugActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_plan);
         Calendar calendar=Calendar.getInstance();
         TextView textView = findViewById(R.id.debug);
+        DailySchedule dailySchedule = new DailySchedule(this,1,calendar);
+        dailySchedule.getScheduleList();
+
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 
@@ -46,14 +49,14 @@ public class DebugActivity extends AppCompatActivity {
 //        schedule.id=12;
 //        schedule.content="abc";
 //        schedule.repeat_mode="mode1";
-        DB_Schedule db_schedule = DB_Schedule.getInstance(this,1);
-        db_schedule.openWriteLink();
-
-//        db_schedule.insert(schedule);
-        textView.setText(String.valueOf(db_schedule.query().get(0).code()));
-//        db_schedule.delete("content = 'abc'");
-        db_schedule.deleteAll();
-        db_schedule.closeLink();
+//        DB_Schedule db_schedule = DB_Schedule.getInstance(this,1);
+//        db_schedule.openWriteLink();
+//
+////        db_schedule.insert(schedule);
+//        textView.setText(String.valueOf(db_schedule.query().get(0).code()));
+////        db_schedule.delete("content = 'abc'");
+//        db_schedule.deleteAll();
+//        db_schedule.closeLink();
 //
 //        db_plan.openReadLink();
 //        Schedule schedule ;
