@@ -49,7 +49,7 @@ public class DailySchedule {
         if(list!=null) list.clear();
         list = db_schedule.query("start_time LIKE '" +dayFormat.format(date.getTime())+"%' ");
 
-        list.addAll(db_schedule.query("repeat_mode = '2'"));
+        list.addAll(db_schedule.query("repeat_mode = '2' AND repeat_val LIKE '%"+date.get(Calendar.DAY_OF_WEEK)+",%'"));
         db_schedule.closeLink();
 
         return list;
