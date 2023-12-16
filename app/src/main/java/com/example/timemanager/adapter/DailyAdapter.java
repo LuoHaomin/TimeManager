@@ -6,11 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
@@ -60,7 +56,7 @@ public class DailyAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        //TODO:rewrite sources in String;see in HomePage -x... Adapter
+        //TODO:rewrite sources in String;see in ？？Adapter
         Schedule schedule = mSchedule.get(position);
         holder.timeAndPlace.setText(schedule.start_time+schedule.end_time+"\n"+schedule.position);
         holder.subPlan.setText(schedule.content);

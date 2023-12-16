@@ -71,6 +71,7 @@ public class ScheduleFragment extends Fragment {
 
         DailySchedule dailySchedule = new DailySchedule(this.getActivity(), 1, calendar);
         schedules=dailySchedule.getScheduleList();
+        daily_agenda.setAdapter(new HomePageScheduleAdapter(this.getActivity(), schedules));
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
             calendar.set(year, month, day);

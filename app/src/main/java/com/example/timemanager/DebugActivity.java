@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
@@ -18,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +37,9 @@ public class DebugActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.debug);
         DailySchedule dailySchedule = new DailySchedule(this,1,calendar);
         schedules = dailySchedule.getScheduleList();
-        textView.setText(String.valueOf(schedules.get(0).code()));
+        textView.setText(String.valueOf(schedules.get(0).content));
+        ListView listView = findViewById(R.id.debug_list);
+        listView.setAdapter(new HomePageScheduleAdapter(this,schedules));
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 

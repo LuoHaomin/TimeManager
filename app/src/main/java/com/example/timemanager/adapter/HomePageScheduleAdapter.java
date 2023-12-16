@@ -8,19 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
-//import com.google.api.Context;
 
 import java.util.List;
 
 public class HomePageScheduleAdapter extends BaseAdapter {
-    private Context mContext;
-    private List<Schedule> mSchedule;
+    private final Context mContext;
+    private final List<Schedule> mSchedule;
     DB_Schedule dbSchedule;
 
     public HomePageScheduleAdapter(Context context, List<Schedule> schedule_List){
@@ -43,6 +42,7 @@ public class HomePageScheduleAdapter extends BaseAdapter {
         if(view == null){
             holder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.home_page_fragment_schedule, null);
+            holder.name = view.findViewById(R.id.name);
             holder.checkbox = view.findViewById(R.id.checkbox);
             holder.place = view.findViewById(R.id.place);
             holder.start_time = view.findViewById(R.id.start_time);
@@ -53,15 +53,25 @@ public class HomePageScheduleAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         Schedule schedule = mSchedule.get(i);
+        if (schedule.finish.matches("1"))
+            holder.checkbox.setChecked(true);
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b)
+                if(b){
                     mSchedule.get(i).finish="1";
-                else mSchedule.get(i).finish="0";
+                    Toast.makeText(mContext, "checked", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    mSchedule.get(i).finish="0";
+                    Toast.makeText(mContext, "unchecked", Toast.LENGTH_SHORT).show();
+                }
+
                 dbSchedule.openWriteLink();
                 dbSchedule.update(mSchedule.get(i));
                 dbSchedule.closeLink();
+
             }
         });
         holder.name.setText(schedule.content);
@@ -72,7 +82,7 @@ public class HomePageScheduleAdapter extends BaseAdapter {
         return view;
     }
 
-    public final class ViewHolder{
+    public static final class ViewHolder{
         public CheckBox checkbox;
         public TextView name;
         public TextView place;
