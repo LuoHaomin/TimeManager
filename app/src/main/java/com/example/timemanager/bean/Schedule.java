@@ -18,7 +18,7 @@ public class Schedule {
         start_time = "YY-MM-DD hh:mm";
         end_time = "YY-MM-DD hh:mm";
         content="No Content";
-        finish = "N";
+        finish = "0";
         position="none";
         repeat_mode= "mode0";
         root ="nowhere";

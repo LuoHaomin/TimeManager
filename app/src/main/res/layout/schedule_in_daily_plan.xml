@@ -24,7 +24,7 @@
         android:gravity="center"
         android:text="日程安排"/>
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/finish"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

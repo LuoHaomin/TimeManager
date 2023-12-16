@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class DailyAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        //TODO:rewrite sources in String
+        //TODO:rewrite sources in String;see in HomePage... Adapter
         Schedule schedule = mSchedule.get(position);
         holder.timeAndPlace.setText(schedule.start_time+schedule.end_time+"\n"+schedule.position);
         holder.subPlan.setText(schedule.content);
@@ -71,6 +72,6 @@ public class DailyAdapter extends BaseAdapter {
     public final class ViewHolder{
         public TextView timeAndPlace;
         public TextView subPlan;
-        public RadioButton finish;
+        public CheckBox finish;
     }
 }

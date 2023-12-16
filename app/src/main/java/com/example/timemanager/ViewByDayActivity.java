@@ -53,7 +53,7 @@ public class ViewByDayActivity extends AppCompatActivity {
         daily_subplan.setOnItemLongClickListener((adapterView, view, i, l) -> {
             Schedule sch = schedules.get(i);
             Bundle bundle = new Bundle();
-            bundle.putInt("entrance",1);
+            bundle.putInt("entrance", 1);
             bundle.putLong("id", sch.id);
             Intent intent = new Intent(ViewByDayActivity.this,
                     EditScheduleActivity.class);
@@ -75,9 +75,9 @@ public class ViewByDayActivity extends AppCompatActivity {
             bundle.putInt("entrance",0);
             bundle.putInt("year", calendar.get(Calendar.YEAR));
             bundle.putInt("monthOfYear", calendar.get(Calendar.MONTH));
-            bundle.putInt("dayOfMonth",calendar.get(Calendar.DAY_OF_MONTH));
+            bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
             intent.putExtras(bundle);
-            startActivity(intent);
+            ViewByDayActivity.this.startActivity(intent);
         });
 
         Button school_bus = findViewById(R.id.school_bus);

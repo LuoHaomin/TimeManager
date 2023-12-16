@@ -6,83 +6,124 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragment.ScheduleFragment">
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="周 历"
-        android:id="@+id/guide"
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <HorizontalScrollView
-
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guide"
-        tools:context=".exam">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-
-
-    </HorizontalScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/to_monthly_view"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="按月查看"
-            android:textAlignment="center"></Button>
+            android:padding="12dp">
+        <CalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:firstDayOfWeek="2"
+            android:selectedWeekBackgroundColor="#aff"
+            android:focusedMonthDateColor="#f00"
+            android:weekSeparatorLineColor="#ff0"
+            android:unfocusedMonthDateColor="#cc1"
+            tools:ignore="MissingConstraints" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/to_weekly_view"
-            android:text="按周查看"
-            android:textAlignment="center"></Button>
+        <ImageView
+            android:id="@+id/cut_off"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintTop_toBottomOf="@id/calendar"
+            android:background="@android:color/holo_blue_dark"
+            tools:ignore="MissingConstraints" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/to_daily_view"
-            android:text="按日查看"
-            android:textAlignment="center"/>
+            <ListView
+                android:id="@+id/daily_agenda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cut_off"
+                tools:layout_editor_absoluteX="12dp">
 
-<!--        <Spinner-->
-<!--            android:id="@+id/dailyBar"-->
+            </ListView>
+
+            <Button
+                android:id="@+id/add_plan"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/add_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <HorizontalScrollView-->
+
+<!--        android:id="@+id/horizontalScrollView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:fillViewport="true"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/linearLayout"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+
+<!--        tools:context=".exam">-->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:nestedScrollingEnabled="false"-->
+<!--            android:overScrollMode="never"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">-->
+
+<!--        </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--    </HorizontalScrollView>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/to_monthly_view"-->
 <!--            android:layout_width="0dp"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:layout_weight="1"-->
-<!--            style="@style/Widget.AppCompat.Button"-->
+<!--            android:text="按月查看"-->
+<!--            android:textAlignment="center"></Button>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:id="@+id/to_weekly_view"-->
+<!--            android:text="按周查看"-->
+<!--            android:textAlignment="center"></Button>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:id="@+id/to_daily_view"-->
 <!--            android:text="按日查看"-->
-<!--            android:textAlignment="center"-->
-<!--            ></Spinner>-->
-    </LinearLayout>
-    <!-- TODO: Update blank fragment layout -->
+<!--            android:textAlignment="center"/>-->
+
+<!--&lt;!&ndash;        <Spinner&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/dailyBar"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@style/Widget.AppCompat.Button"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="按日查看"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:textAlignment="center"&ndash;&gt;-->
+<!--&lt;!&ndash;            ></Spinner>&ndash;&gt;-->
+<!--    </LinearLayout>-->
+<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
 
 
 <!--        scrollview.setVerticalScrollBarEnabled(false)/>-->
-
-</androidx.constraintlayout.widget.ConstraintLayout>

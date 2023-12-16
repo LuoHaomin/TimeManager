@@ -37,7 +37,7 @@ public class DailySchedule {
     public DailySchedule(Context context,int version,Calendar date_){
         mcontext=context;
         mversion=version;
-        date=date_;
+        date=(Calendar) date_.clone();
         db_schedule=DB_Schedule.getInstance(context,version);
         db_plan=DB_Plan.getInstance(context,version);
     }
