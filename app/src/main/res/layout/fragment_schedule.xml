@@ -9,40 +9,53 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <CalendarView
-            android:id="@+id/calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:firstDayOfWeek="2"
-            android:selectedWeekBackgroundColor="#aff"
-            android:focusedMonthDateColor="#f00"
-            android:weekSeparatorLineColor="#ff0"
-            android:unfocusedMonthDateColor="#cc1"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="wrap_content">
+            <CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:firstDayOfWeek="2"
+                android:selectedWeekBackgroundColor="#aff"
+                android:focusedMonthDateColor="#f00"
+                android:weekSeparatorLineColor="#ff0"
+                android:unfocusedMonthDateColor="#cc1"
+                tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/cut_off"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            app:layout_constraintTop_toBottomOf="@id/calendar"
-            android:background="@android:color/holo_blue_dark"
-            tools:ignore="MissingConstraints" />
+            <ImageView
+                android:id="@+id/cut_off"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/calendar"
+                android:background="@android:color/holo_blue_dark"
+                tools:ignore="MissingConstraints" />
 
             <ListView
                 android:id="@+id/daily_agenda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cut_off"
-                tools:layout_editor_absoluteX="12dp">
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/cut_off">
+            </ListView>
 
+            <ImageView
+                android:id="@+id/cut_off_1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintTop_toBottomOf="@id/daily_agenda"
+                android:background="@android:color/holo_blue_dark"
+                tools:ignore="MissingConstraints" />
+
+            <ListView
+                android:id="@+id/plan"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cut_off_1"
+                tools:layout_editor_absoluteX="12dp">
             </ListView>
 
             <Button
@@ -52,9 +65,8 @@
                 android:background="@drawable/add_pic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="24dp"
-                android:layout_marginBottom="24dp"/>
-
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="32dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

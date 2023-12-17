@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.EditScheduleActivity;
@@ -32,6 +33,7 @@ import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.database.DailySchedule;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,8 +42,10 @@ import java.util.List;
 public class ScheduleFragment extends Fragment {
 
     public ListView lv_in_schedule_fragment;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     Calendar calendar = Calendar.getInstance();
     List<Schedule> schedules;
+    ListView daily_agenda;
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -67,29 +71,31 @@ public class ScheduleFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_schedule, container, false);
 
         CalendarView calendarView = view.findViewById(R.id.calendar);
-        ListView daily_agenda = view.findViewById(R.id.daily_agenda);
+        daily_agenda = view.findViewById(R.id.daily_agenda);
 
-        DailySchedule dailySchedule = new DailySchedule(this.getActivity(), 1, calendar);
+        DailySchedule dailySchedule = new DailySchedule(getActivity(), DB_Schedule.DB_VERSION, calendar);
         schedules=dailySchedule.getScheduleList();
-        daily_agenda.setAdapter(new HomePageScheduleAdapter(this.getActivity(), schedules));
+        daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
             calendar.set(year, month, day);
+            Toast.makeText(getActivity(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
             schedules = new DailySchedule(ScheduleFragment.this.getActivity(), DB_Schedule.DB_VERSION, calendar).getScheduleList();
-            daily_agenda.setAdapter(new HomePageScheduleAdapter(this.getActivity(), schedules));
+            daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
         });
+
 
         Button add_plan = view.findViewById(R.id.add_plan);
         add_plan.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), EditScheduleActivity.class);
             Bundle bundle = new Bundle();
+            bundle.putInt("entrance", 0);
             bundle.putInt("year", calendar.get(Calendar.YEAR));
             bundle.putInt("month", calendar.get(Calendar.MONTH));
             bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
             intent.putExtras(bundle);
             getActivity().startActivity(intent);
         });
-
 //        Button toViewByWeek = view.findViewById(R.id.to_weekly_view);
 //        toViewByWeek.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -152,7 +158,9 @@ public class ScheduleFragment extends Fragment {
     }
 
 
-//    private void onClick(View view1) {
-//        calendar.get();
-//    }
+    public void paint(){
+        DailySchedule dailySchedule_1 = new DailySchedule(getActivity(), DB_Schedule.DB_VERSION, calendar);
+        schedules=dailySchedule_1.getScheduleList();
+        daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
+    }
 }

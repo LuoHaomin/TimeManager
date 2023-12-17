@@ -1,6 +1,10 @@
 package com.example.timemanager.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timemanager.EditScheduleActivity;
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
+import com.example.timemanager.fragment.ScheduleFragment;
 
 import java.util.List;
 
@@ -21,11 +28,13 @@ public class HomePageScheduleAdapter extends BaseAdapter {
     private final Context mContext;
     private final List<Schedule> mSchedule;
     DB_Schedule dbSchedule;
+    ScheduleFragment mfragment;
 
-    public HomePageScheduleAdapter(Context context, List<Schedule> schedule_List){
+    public HomePageScheduleAdapter(Context context, List<Schedule> schedule_List,ScheduleFragment fragment){
         mContext = context;
         mSchedule = schedule_List;
         dbSchedule = DB_Schedule.getInstance(context,DB_Schedule.DB_VERSION);
+        mfragment = fragment;
     }
     @Override
     public int getCount() {return mSchedule.size();}
@@ -48,6 +57,7 @@ public class HomePageScheduleAdapter extends BaseAdapter {
             holder.start_time = view.findViewById(R.id.start_time);
             holder.end_time = view.findViewById(R.id.end_time);
             holder.tomato = view.findViewById(R.id.tomato);
+            holder.daily_agenda_content = view.findViewById(R.id.daily_agenda_content);
             view.setTag(holder);
         }else {
             holder = (ViewHolder) view.getTag();
@@ -74,6 +84,38 @@ public class HomePageScheduleAdapter extends BaseAdapter {
 
             }
         });
+        holder.daily_agenda_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, EditScheduleActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("entrance", 1);
+                bundle.putLong("id", schedule.id);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+        holder.daily_agenda_content.setOnLongClickListener(new View.OnLongClickListener() {
+            DB_Schedule db_schedule = DB_Schedule.getInstance(mContext,DB_Schedule.DB_VERSION);
+            @Override
+            public boolean onLongClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle("提示：");
+                builder.setMessage("确认删除？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db_schedule.openWriteLink();
+                        db_schedule.delete("_id = " + schedule.id);
+                        db_schedule.closeLink();
+                        mfragment.paint();
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.create().show();
+                return false;
+            }
+        });
         holder.name.setText(schedule.content);
         holder.place.setText(schedule.position);
         holder.start_time.setText(schedule.start_time);
@@ -89,5 +131,6 @@ public class HomePageScheduleAdapter extends BaseAdapter {
         public TextView start_time;
         public TextView end_time;
         public ImageButton tomato;
+        public LinearLayout daily_agenda_content;
     }
 }

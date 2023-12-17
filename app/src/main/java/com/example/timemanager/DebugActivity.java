@@ -39,7 +39,7 @@ public class DebugActivity extends AppCompatActivity {
         schedules = dailySchedule.getScheduleList();
         textView.setText(String.valueOf(schedules.get(0).content));
         ListView listView = findViewById(R.id.debug_list);
-        listView.setAdapter(new HomePageScheduleAdapter(this,schedules));
+//        listView.setAdapter(new HomePageScheduleAdapter(this,schedules,));
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 

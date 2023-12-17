@@ -57,7 +57,6 @@ public class EditScheduleActivity extends AppCompatActivity {
         int entrance;
         if(bundle == null){
             entrance=0;
-
         }
 
         else entrance = bundle.getInt("entrance");
@@ -66,7 +65,7 @@ public class EditScheduleActivity extends AppCompatActivity {
             case 0://新建
                 schedule=new Schedule();
                 int year = bundle.getInt("year");
-                int monthOfYear = bundle.getInt("monthOfYear");
+                int monthOfYear = bundle.getInt("month");
                 int dayOfMonth = bundle.getInt("dayOfMonth");
                 start.set(year,monthOfYear,dayOfMonth);
                 end.set(year,monthOfYear,dayOfMonth);
@@ -242,29 +241,28 @@ public class EditScheduleActivity extends AppCompatActivity {
             }
         });
 
+//        删除日程
         Button cancel = findViewById(R.id.cancel_button);
-        if(entrance==0)
-            cancel.setOnClickListener(view -> finish());
-        else if (entrance==1) {
-            cancel.setOnClickListener(view -> {
-                cancel.setText("删除日程");
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("提示：");
-                builder.setMessage("确认删除？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        db_schedule.openWriteLink();
-                        db_schedule.delete("_id = " + id);
-                        db_schedule.closeLink();
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("取消",null);
-                builder.create().show();
-            });
-        }
+        cancel.setOnClickListener(view -> finish());
+//        else if (entrance==1) {
+//            cancel.setOnClickListener(view -> {
+//                cancel.setText("删除日程");
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("提示：");
+//                builder.setMessage("确认删除？");
+//                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        db_schedule.openWriteLink();
+//                        db_schedule.delete("_id = " + id);
+//                        db_schedule.closeLink();
+//                        finish();
+//                    }
+//                });
+//                builder.setNegativeButton("取消",null);
+//                builder.create().show();
+//            });
+//        }
 
 
         Button confirm = findViewById(R.id.confirm_button);
@@ -300,7 +298,7 @@ public class EditScheduleActivity extends AppCompatActivity {
             int num = tag_in_share.getInt("num", 0);
             editor.putInt("num", num + 1);
             editor.putString("tag", s + newTag + "|");
-            editor.apply();//必须commit/apply
+            editor.apply();//必须commit||apply
             setTag();
             dialog.dismiss();
         });
@@ -402,11 +400,15 @@ public class EditScheduleActivity extends AppCompatActivity {
         Button confirm = view.findViewById(R.id.confirm_button);
         confirm.setOnClickListener(view1 -> {
             String result="";
+            String data="";
             for(int i=1;i<=7;i++){
-                if(ch[i].isChecked())
+                if(ch[i].isChecked()){
                     result+=String.format("%d,",i);
+                    data+=String.format("%d,",i==7 ? 1:i+1);
+                }
+
             }
-            schedule.repeat_time=result;
+            schedule.repeat_time=data;
             button.setText(result);
             dialog.dismiss();
         });

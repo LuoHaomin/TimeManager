@@ -20,6 +20,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/daily_agenda_content"
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
@@ -30,24 +31,28 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="日程名称" />
 
             <TextView
                 android:id="@+id/place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="地点" />
 
             <TextView
                 android:id="@+id/start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="开始时间" />
 
             <TextView
                 android:id="@+id/end_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="结束时间" />
         </LinearLayout>
 
