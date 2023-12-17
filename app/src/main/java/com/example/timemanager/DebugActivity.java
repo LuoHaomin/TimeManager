@@ -36,8 +36,12 @@ public class DebugActivity extends AppCompatActivity {
         Calendar calendar=Calendar.getInstance();
         TextView textView = findViewById(R.id.debug);
         DailySchedule dailySchedule = new DailySchedule(this,1,calendar);
-        schedules = dailySchedule.getScheduleList();
-        textView.setText(String.valueOf(schedules.get(0).content));
+        try {
+            schedules = dailySchedule.getDDLsList();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        textView.setText(String.valueOf(schedules.get(0).root));
         ListView listView = findViewById(R.id.debug_list);
 //        listView.setAdapter(new HomePageScheduleAdapter(this,schedules,));
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");

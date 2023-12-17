@@ -14,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.timemanager.adapter.DailyAdapter;
+import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Schedule;
+import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.database.DailySchedule;
 
 import java.util.Calendar;
@@ -34,7 +36,7 @@ public class ViewByDayActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         assert bundle != null;
         calendar.set(bundle.getInt("year"),
-                bundle.getInt("monthOfYear"),
+                bundle.getInt("month"),
                 bundle.getInt("dayOfMonth"));
 
         ListView daily_subplan=findViewById(R.id.daily_subplan);
@@ -46,10 +48,10 @@ public class ViewByDayActivity extends AppCompatActivity {
             finish();
         });
         //获得当日数据
-        DailySchedule dailySchedule=new DailySchedule(this,1, calendar);
+        DailySchedule dailySchedule=new DailySchedule(this,DB_Schedule.DB_VERSION, calendar);
         List<Schedule> schedules = dailySchedule.getScheduleList();
 
-        daily_subplan.setAdapter(new DailyAdapter(this, schedules));
+        daily_subplan.setAdapter(new HomePageScheduleAdapter(this, schedules));
         daily_subplan.setOnItemLongClickListener((adapterView, view, i, l) -> {
             Schedule sch = schedules.get(i);
             Bundle bundle = new Bundle();

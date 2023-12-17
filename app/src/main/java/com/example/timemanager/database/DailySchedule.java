@@ -54,6 +54,28 @@ public class DailySchedule {
 
         return list;
     }
+    public List<Schedule> getDDLsList() throws ParseException {
+        db_plan.openReadLink();
+        plans = db_plan.query();
+        db_plan.closeLink();
+        Calendar ct=Calendar.getInstance();
+        list = new ArrayList<>();
+        Schedule schedule;
+        for(int i=0;i<plans.size();i++){
+            for (int j =0;j<plans.get(i).breakdowns.size();j++){
+
+                schedule = plans.get(i).breakdowns.get(j);
+                schedule.root = plans.get(i).content;
+                if(schedule.end_time.matches("YY-MM-DD hh:mm"))
+                    continue;
+                dates=format.parse(schedule.end_time);
+                assert dates != null;
+                ct.setTime(dates);
+//                ct.after()
+            }
+        }
+        return list;
+    }
 
     public List<Double> getTime_distribution() {
 

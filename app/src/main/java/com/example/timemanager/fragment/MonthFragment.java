@@ -1,5 +1,6 @@
 package com.example.timemanager.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.timemanager.R;
+import com.example.timemanager.ViewByDayActivity;
 import com.example.timemanager.adapter.MonthAdapter;
 
 import java.text.ParseException;
@@ -118,7 +120,16 @@ public class MonthFragment extends Fragment {
         month_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(requireContext(),String.format("%d-%d",month.get(Calendar.MONTH)+1,i-adapter.FirstDay+1),Toast.LENGTH_SHORT).show();
+                if(i>=adapter.FirstDay && i<adapter.FirstDay+adapter.LastDay){
+                    Intent intent = new Intent(getActivity(), ViewByDayActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putInt("year",month.get(Calendar.YEAR));
+                    bundle.putInt("month",month.get(Calendar.MONTH));
+                    bundle.putInt("dayOfMonth",i-adapter.FirstDay+1);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+//                Toast.makeText(requireContext(),String.format("%d-%d",month.get(Calendar.MONTH)+1,i-adapter.FirstDay+1),Toast.LENGTH_SHORT).show();
             }
         });
     }

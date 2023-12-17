@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     tools:context=".ViewByDayActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -45,22 +44,18 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/daily_time_display" >-->
-
-
-<!--    </androidx.recyclerview.widget.RecyclerView>>-->
 
     <ListView
         android:id="@+id/daily_subplan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/daily_time_display"
-        tools:layout_editor_absoluteX="24dp">
-
+        android:layout_height="wrap_content">
     </ListView>
+    <ListView
+        android:id="@+id/daily_ddls"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/daily_subplan"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/add_plan"
