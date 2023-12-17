@@ -36,6 +36,11 @@ public class HomePageScheduleAdapter extends BaseAdapter {
         dbSchedule = DB_Schedule.getInstance(context,DB_Schedule.DB_VERSION);
         mfragment = fragment;
     }
+    public HomePageScheduleAdapter(Context context, List<Schedule> schedule_List){
+        mContext = context;
+        mSchedule = schedule_List;
+        dbSchedule = DB_Schedule.getInstance(context,DB_Schedule.DB_VERSION);
+    }
     @Override
     public int getCount() {return mSchedule.size();}
 
