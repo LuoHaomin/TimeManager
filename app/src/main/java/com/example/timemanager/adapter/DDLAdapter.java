@@ -57,7 +57,7 @@ public class DDLAdapter extends BaseAdapter {
         //TODO:rewrite sources in String;see in ？？Adapter
         Schedule schedule = mSchedule.get(position);
         holder.name.setText(schedule.root+">>"+schedule.content);
-        holder.countdown.setText("??");
+        holder.countdown.setText(schedule.code);
         return view;
     }
 

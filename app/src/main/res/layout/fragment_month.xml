@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="7"
-
         android:id="@+id/星期"
         app:layout_constraintTop_toBottomOf="@+id/提示"/>
     <GridView

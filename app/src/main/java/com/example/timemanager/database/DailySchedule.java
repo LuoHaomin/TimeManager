@@ -58,6 +58,7 @@ public class DailySchedule {
         db_plan.openReadLink();
         plans = db_plan.query();
         db_plan.closeLink();
+        Long day = 86400000L,dt;
         Calendar ct=Calendar.getInstance();
         list = new ArrayList<>();
         Schedule schedule;
@@ -70,8 +71,12 @@ public class DailySchedule {
                     continue;
                 dates=format.parse(schedule.end_time);
                 assert dates != null;
-                ct.setTime(dates);
-//                ct.after()
+                dt = dates.getTime() - date.getTime().getTime();
+                if(dt/day >= 0){
+                    schedule.code=String.valueOf(dt/day)+"天";
+                    list.add(schedule);
+                }
+
             }
         }
         return list;

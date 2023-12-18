@@ -17,6 +17,7 @@
         android:layout_height="40dp"
         android:text="事项1\n事项2事项1\n事项2"
         android:id="@+id/item"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/date" />
     <TextView
         android:layout_width="match_parent"

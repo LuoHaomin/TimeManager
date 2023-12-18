@@ -43,7 +43,7 @@ Context mcontext;
 
     @Override
     public int getCount() {
-        return 42;
+        return 49;
     }
 
     @Override

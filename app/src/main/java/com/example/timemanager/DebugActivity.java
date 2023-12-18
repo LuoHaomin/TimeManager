@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.timemanager.adapter.DDLAdapter;
 import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
@@ -41,9 +42,9 @@ public class DebugActivity extends AppCompatActivity {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        textView.setText(String.valueOf(schedules.get(0).root));
+        textView.setText(String.valueOf(schedules.size()));
         ListView listView = findViewById(R.id.debug_list);
-//        listView.setAdapter(new HomePageScheduleAdapter(this,schedules,));
+        listView.setAdapter(new DDLAdapter(this,schedules));
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //        DailySchedule dailySchedule= new DailySchedule(this,1,calendar);
 
