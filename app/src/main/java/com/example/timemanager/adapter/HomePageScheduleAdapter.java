@@ -113,7 +113,10 @@ public class HomePageScheduleAdapter extends BaseAdapter {
                         db_schedule.openWriteLink();
                         db_schedule.delete("_id = " + schedule.id);
                         db_schedule.closeLink();
-                        mfragment.paint();
+                        if (mfragment != null) {
+                            mfragment.paint();
+                        }
+
                     }
                 });
                 builder.setNegativeButton("取消",null);
