@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
+
                 app:layout_constraintTop_toBottomOf="@+id/cut_off">
             </ListView>
 
@@ -57,18 +58,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/cut_off_1"
                 tools:layout_editor_absoluteX="12dp">
             </ListView>
+<!--            <ImageView-->
 
-            <Button
-                android:id="@+id/add_plan"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/add_pic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="32dp"
-                android:layout_marginBottom="32dp"/>
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/plan"-->
+<!--                tools:ignore="MissingConstraints" />-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/add_plan"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/add_pic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--    <HorizontalScrollView-->
@@ -134,7 +141,4 @@
 <!--&lt;!&ndash;            android:textAlignment="center"&ndash;&gt;-->
 <!--&lt;!&ndash;            ></Spinner>&ndash;&gt;-->
 <!--    </LinearLayout>-->
-<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-
-
 <!--        scrollview.setVerticalScrollBarEnabled(false)/>-->

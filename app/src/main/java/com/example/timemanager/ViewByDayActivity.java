@@ -13,12 +13,14 @@ import androidx.activity.ComponentDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.timemanager.adapter.DDLAdapter;
 import com.example.timemanager.adapter.DailyAdapter;
 import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.database.DailySchedule;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -63,7 +65,12 @@ public class ViewByDayActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         });
-
+        ListView daily_ddls = findViewById(R.id.daily_ddls);
+        try {
+            daily_ddls.setAdapter(new DDLAdapter(this,dailySchedule.getDDLsList()));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         Button self_comment = findViewById(R.id.self_comment);
         self_comment.setOnClickListener(view -> {
             Intent intent = new Intent(ViewByDayActivity.this, SelfComment.class);

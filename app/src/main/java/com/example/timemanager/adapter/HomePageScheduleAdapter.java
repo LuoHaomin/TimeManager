@@ -22,6 +22,7 @@ import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.fragment.ScheduleFragment;
 
+import java.text.ParseException;
 import java.util.List;
 
 public class HomePageScheduleAdapter extends BaseAdapter {
@@ -114,7 +115,11 @@ public class HomePageScheduleAdapter extends BaseAdapter {
                         db_schedule.delete("_id = " + schedule.id);
                         db_schedule.closeLink();
                         if (mfragment != null) {
-                            mfragment.paint();
+                            try {
+                                mfragment.paint();
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
 
                     }

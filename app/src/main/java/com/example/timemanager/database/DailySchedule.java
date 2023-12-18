@@ -50,6 +50,7 @@ public class DailySchedule {
         list = db_schedule.query("start_time LIKE '" +dayFormat.format(date.getTime())+"%' ");
 
         list.addAll(db_schedule.query("repeat_mode = '2' AND repeat_time LIKE '%"+date.get(Calendar.DAY_OF_WEEK)+",%'"));
+        //TODO:截止日期的判定。
         db_schedule.closeLink();
 
         return list;

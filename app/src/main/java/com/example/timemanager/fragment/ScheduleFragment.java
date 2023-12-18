@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,11 +29,13 @@ import com.example.timemanager.R;
 import com.example.timemanager.ViewByDayActivity;
 import com.example.timemanager.ViewByMonthActivity;
 import com.example.timemanager.ViewByWeekActivity;
+import com.example.timemanager.adapter.DDLAdapter;
 import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.database.DailySchedule;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,11 +44,11 @@ import java.util.List;
 
 public class ScheduleFragment extends Fragment {
 
-    public ListView lv_in_schedule_fragment;
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     Calendar calendar = Calendar.getInstance();
     List<Schedule> schedules;
     ListView daily_agenda;
+    ListView ddl;
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -72,10 +75,12 @@ public class ScheduleFragment extends Fragment {
 
         CalendarView calendarView = view.findViewById(R.id.calendar);
         daily_agenda = view.findViewById(R.id.daily_agenda);
-
-        DailySchedule dailySchedule = new DailySchedule(getActivity(), DB_Schedule.DB_VERSION, calendar);
-        schedules=dailySchedule.getScheduleList();
-        daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
+        ddl = view.findViewById(R.id.plan);
+        try {
+            paint();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
             calendar.set(year, month, day);
@@ -158,9 +163,30 @@ public class ScheduleFragment extends Fragment {
     }
 
 
-    public void paint(){
+    public void paint() throws ParseException {
         DailySchedule dailySchedule_1 = new DailySchedule(getActivity(), DB_Schedule.DB_VERSION, calendar);
         schedules=dailySchedule_1.getScheduleList();
         daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
+        setListViewHeight(daily_agenda);
+
+        ddl.setAdapter(new DDLAdapter(getActivity(),dailySchedule_1.getDDLsList()));
+        setListViewHeight(ddl);
     }
+    public static void setListViewHeight(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null ) {
+            return ;
+        }
+        int totalHeight = 0 ;
+        for ( int i = 0 ; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null , listView);
+            listItem.measure( 1 , 1 );
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1 )) + listView.getPaddingTop() + listView.getPaddingBottom();
+        listView.setLayoutParams(params);
+    }
+
 }
