@@ -25,11 +25,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ViewByDayActivity extends AppCompatActivity {
-    private final static String TAG = "ListViewByDayActivity";
-    private ListView lv_daily_sub_plan;
 
     Bundle bundle;
     Calendar calendar=Calendar.getInstance();
+    ListView daily_subplan;
+    ListView daily_ddls;
+    DailySchedule dailySchedule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class ViewByDayActivity extends AppCompatActivity {
                 bundle.getInt("month"),
                 bundle.getInt("dayOfMonth"));
 
-        ListView daily_subplan=findViewById(R.id.daily_subplan);
+        daily_subplan=findViewById(R.id.daily_subplan);
         Toolbar title=findViewById(R.id.navigation_bar_in_Frag);
         setSupportActionBar(title);
         title.setBackgroundResource(R.color.gray);
@@ -50,7 +51,7 @@ public class ViewByDayActivity extends AppCompatActivity {
             finish();
         });
         //获得当日数据
-        DailySchedule dailySchedule=new DailySchedule(this,DB_Schedule.DB_VERSION, calendar);
+        dailySchedule=new DailySchedule(this,DB_Schedule.DB_VERSION, calendar);
         List<Schedule> schedules = dailySchedule.getScheduleList();
 
         daily_subplan.setAdapter(new HomePageScheduleAdapter(this, schedules));
@@ -65,7 +66,7 @@ public class ViewByDayActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         });
-        ListView daily_ddls = findViewById(R.id.daily_ddls);
+        daily_ddls = findViewById(R.id.daily_ddls);
         try {
             daily_ddls.setAdapter(new DDLAdapter(this,dailySchedule.getDDLsList()));
         } catch (ParseException e) {
@@ -94,5 +95,28 @@ public class ViewByDayActivity extends AppCompatActivity {
 //            ComponentDialog
         });
     }
+    @Override
+    public void onResume() {
 
+        super.onResume();
+        List<Schedule> schedules = dailySchedule.getScheduleList();
+
+        daily_subplan.setAdapter(new HomePageScheduleAdapter(this, schedules));
+        daily_subplan.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            Schedule sch = schedules.get(i);
+            Bundle bundle = new Bundle();
+            bundle.putInt("entrance", 1);
+            bundle.putLong("id", sch.id);
+            Intent intent = new Intent(ViewByDayActivity.this,
+                    EditScheduleActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            return true;
+        });
+        try {
+            daily_ddls.setAdapter(new DDLAdapter(this,dailySchedule.getDDLsList()));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

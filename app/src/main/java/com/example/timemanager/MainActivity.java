@@ -18,6 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private RadioGroup tab_bar;
+    Integer pos=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +59,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     @Override
+    public void onPause(){
+        super.onPause();
+        pos = viewPager.getCurrentItem();
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
-            int pos=bundle.getInt("PresentPage");
-            viewPager.setCurrentItem(pos);
-        }
 
+        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        viewPager.setCurrentItem(pos);
     }
 
 //    @Override
