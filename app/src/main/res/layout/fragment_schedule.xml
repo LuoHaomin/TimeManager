@@ -74,6 +74,7 @@
         android:background="@drawable/add_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:alpha="0.9"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

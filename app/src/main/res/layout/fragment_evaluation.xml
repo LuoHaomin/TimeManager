@@ -56,12 +56,14 @@
             <GridLayout
                 android:id="@+id/self_comment_month_picker"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="1"
                 app:layout_constraintTop_toBottomOf="@+id/cut_off_2"
                 android:columnCount="3"
                 android:rowCount="4"
                 android:padding="4dp"
                 android:orientation="horizontal"
+
                 tools:ignore="MissingConstraints">
 
                 <TextView
@@ -71,14 +73,12 @@
                     android:fadingEdge="none"
                     android:text="Jan"
                     android:textSize="32sp"
-                    style="@android:style/Widget.Button"
-                    android:textColor="#22bfff"/>.
+                    android:textColor="#2a6d6d"/>.
                 <TextView
                     android:id="@+id/Feb"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Feb"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
                     android:textColor="#2f9adc"/>.
                 <TextView
@@ -86,9 +86,8 @@
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Mar"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
-                    android:textColor="#4faeff"/>.
+                    android:textColor="#579eff"/>.
 
                 <TextView
                     android:id="@+id/Apr"
@@ -96,14 +95,12 @@
                     android:gravity="center"
                     android:text="Apr"
                     android:textSize="32sp"
-                    style="@android:style/Widget.Button"
-                    android:textColor="#22bfff"/>.
+                    android:textColor="#2a6d6d"/>.
                 <TextView
                     android:id="@+id/May"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="May"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
                     android:textColor="#2f9adc"/>.
                 <TextView
@@ -111,9 +108,8 @@
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Jun"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
-                    android:textColor="#4faeff"/>.
+                    android:textColor="#579eff"/>.
 
                 <TextView
                     android:id="@+id/Jul"
@@ -121,14 +117,12 @@
                     android:gravity="center"
                     android:text="Jul"
                     android:textSize="32sp"
-                    style="@android:style/Widget.Button"
-                    android:textColor="#22bfff"/>.
+                    android:textColor="#2a6d6d"/>.
                 <TextView
                     android:id="@+id/Aug"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Aug"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
                     android:textColor="#2f9adc"/>.
                 <TextView
@@ -136,24 +130,20 @@
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Sep"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
-                    android:textColor="#4faeff"/>.
-
+                    android:textColor="#579eff"/>.
                 <TextView
                     android:id="@+id/Oct"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Oct"
                     android:textSize="32sp"
-                    style="@android:style/Widget.Button"
-                    android:textColor="#22bfff"/>.
+                    android:textColor="#2a6d6d"/>.
                 <TextView
                     android:id="@+id/Nov"
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Nov"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
                     android:textColor="#2f9adc"/>.
                 <TextView
@@ -161,12 +151,8 @@
                     android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Dec"
-                    style="@android:style/Widget.Button"
                     android:textSize="32sp"
-                    android:textColor="#4faeff"/>.
-
-
-
+                    android:textColor="#579eff"/>.
             </GridLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

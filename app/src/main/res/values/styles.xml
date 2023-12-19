@@ -9,6 +9,10 @@
     <item name="android:textColor">@drawable/tag_text_selector</item>
     <item name="android:textSize">15sp</item>
     <item name="android:button">@null</item>
+
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
 </style>
     <style name="AppCompatTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 </resources>

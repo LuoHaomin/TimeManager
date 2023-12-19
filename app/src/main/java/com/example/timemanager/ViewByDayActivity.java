@@ -73,7 +73,7 @@ public class ViewByDayActivity extends AppCompatActivity {
         }
         Button self_comment = findViewById(R.id.self_comment);
         self_comment.setOnClickListener(view -> {
-            Intent intent = new Intent(ViewByDayActivity.this, SelfComment.class);
+            Intent intent = new Intent(ViewByDayActivity.this, CheckSelfCommentActivity.class);
             startActivity(intent);
         });
 

@@ -100,6 +100,11 @@ public class ScheduleFragment extends Fragment {
             bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
             intent.putExtras(bundle);
             getActivity().startActivity(intent);
+            try {
+                paint();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         });
 //        Button toViewByWeek = view.findViewById(R.id.to_weekly_view);
 //        toViewByWeek.setOnClickListener(new View.OnClickListener() {

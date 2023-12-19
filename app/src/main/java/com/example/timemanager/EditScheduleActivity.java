@@ -228,7 +228,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                     break;
             }
         });
-
+        //备注
         EditText edit_remark=findViewById(R.id.edit_remarks);
         edit_remark.addTextChangedListener(new TextWatcher() {
             @Override
@@ -237,9 +237,14 @@ public class EditScheduleActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
+                db_schedule.openWriteLink();
+                //todo:quick finish this
+//                db_schedule.insert("stuff", schedule);
+                db_schedule.closeLink();
                 schedule.stuff = edit_remark.getText().toString();
             }
         });
+
 
 //        删除日程
         Button cancel = findViewById(R.id.cancel_button);
@@ -263,8 +268,6 @@ public class EditScheduleActivity extends AppCompatActivity {
 //                builder.create().show();
 //            });
 //        }
-
-
         Button confirm = findViewById(R.id.confirm_button);
         confirm.setOnClickListener(view -> {
             db_schedule.openWriteLink();
@@ -274,7 +277,6 @@ public class EditScheduleActivity extends AppCompatActivity {
             finish();
         });
     }
-
 
     private void dialog_tag(){
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_tag, null, false);

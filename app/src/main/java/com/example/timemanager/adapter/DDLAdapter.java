@@ -1,20 +1,24 @@
 package com.example.timemanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.timemanager.CreatePlanActivity;
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 
 import java.util.List;
 
 public class DDLAdapter extends BaseAdapter {
-    private Context mContext;
+    private final Context mContext;
     private List<Schedule> mSchedule;
 
     public DDLAdapter(Context context, List<Schedule> schedule_list){
@@ -58,6 +62,19 @@ public class DDLAdapter extends BaseAdapter {
         Schedule schedule = mSchedule.get(position);
         holder.name.setText(schedule.root+">>"+schedule.content);
         holder.countdown.setText(schedule.code);
+
+        //TODO:choose enough params to submit to edit_plan activity
+//        holder.ddl_show = view.findViewById(R.id.ddl_show);
+//        holder.ddl_show.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mContext, CreatePlanActivity.class);
+////                Bundle bundle = new Bundle();
+//                //todo:params here
+////                intent.putExtras(bundle);
+//                mContext.startActivity(intent);
+//            }
+//        });
         return view;
     }
 
@@ -65,5 +82,6 @@ public class DDLAdapter extends BaseAdapter {
     public final class ViewHolder{
         public TextView name;
         public TextView countdown;
+        public LinearLayout ddl_show;
     }
 }
