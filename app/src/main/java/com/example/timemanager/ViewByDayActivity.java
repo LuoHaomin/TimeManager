@@ -84,7 +84,7 @@ public class ViewByDayActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putInt("entrance",0);
             bundle.putInt("year", calendar.get(Calendar.YEAR));
-            bundle.putInt("monthOfYear", calendar.get(Calendar.MONTH));
+            bundle.putInt("month", calendar.get(Calendar.MONTH));
             bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
             intent.putExtras(bundle);
             ViewByDayActivity.this.startActivity(intent);

@@ -72,6 +72,4 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(pos);
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState)
 }

@@ -269,13 +269,25 @@ public class EditScheduleActivity extends AppCompatActivity {
 //            });
 //        }
         Button confirm = findViewById(R.id.confirm_button);
-        confirm.setOnClickListener(view -> {
-            db_schedule.openWriteLink();
-            db_schedule.insert(schedule);
-            db_schedule.closeLink();
-            Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
-            finish();
-        });
+        if(entrance==0){
+            confirm.setOnClickListener(view -> {
+                db_schedule.openWriteLink();
+                db_schedule.insert(schedule);
+                db_schedule.closeLink();
+//                Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+                finish();
+            });
+        }
+        else if (entrance==1){
+            confirm.setOnClickListener(view -> {
+                db_schedule.openWriteLink();
+                db_schedule.update(schedule);
+                db_schedule.closeLink();
+//                Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+                finish();
+            });
+
+        }
     }
 
     private void dialog_tag(){

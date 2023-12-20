@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timemanager.EditScheduleActivity;
+import com.example.timemanager.MainActivity;
 import com.example.timemanager.R;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
@@ -99,6 +100,7 @@ public class HomePageScheduleAdapter extends BaseAdapter {
                 bundle.putLong("id", schedule.id);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
+//                Toast.makeText(mContext, "touched", Toast.LENGTH_SHORT).show();
             }
         });
         holder.daily_agenda_content.setOnLongClickListener(new View.OnLongClickListener() {
