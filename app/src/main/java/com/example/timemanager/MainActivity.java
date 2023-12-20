@@ -64,12 +64,23 @@ public class MainActivity extends AppCompatActivity {
         pos = viewPager.getCurrentItem();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        viewPager.setCurrentItem(pos);
-    }
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//
+//        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+//        viewPager.setCurrentItem(pos);
+//
+//        int entrance = getIntent().getIntExtra("entrancc", 0);
+//        if (entrance == 1){
+//            viewPager.setCurrentItem(0);
+//        } else if (entrance == 2) {
+//            viewPager.setCurrentItem(1);
+//        } else if (entrance == 3) {
+//            viewPager.setCurrentItem(2);
+//        } else if (entrance == 4) {
+//            viewPager.setCurrentItem(3);
+//        }
+//    }
 
 }

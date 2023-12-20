@@ -6,6 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.EvaluationFragment">
 
+    <ImageView
+        android:layout_width="320dp"
+        android:layout_height="210dp"
+        android:background="@drawable/gate_of_ustc"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.65"/>.
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,14 +35,13 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:shadowColor="@android:color/holo_blue_light"
                 android:text="本周总结"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/cut_off_1"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1.5dp"
                 app:layout_constraintTop_toBottomOf="@id/title_this_week"
                 android:background="@android:color/holo_blue_dark"
                 tools:ignore="MissingConstraints" />
@@ -48,7 +57,7 @@
             <ImageView
                 android:id="@+id/cut_off_2"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1.5dp"
                 app:layout_constraintTop_toBottomOf="@id/text_content"
                 android:background="@android:color/holo_blue_dark"
                 tools:ignore="MissingConstraints" />
@@ -69,6 +78,7 @@
                 <TextView
                     android:id="@+id/Jan"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:fadingEdge="none"
                     android:text="Jan"
@@ -77,6 +87,7 @@
                 <TextView
                     android:id="@+id/Feb"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Feb"
                     android:textSize="32sp"
@@ -84,6 +95,7 @@
                 <TextView
                     android:id="@+id/Mar"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Mar"
                     android:textSize="32sp"
@@ -92,6 +104,7 @@
                 <TextView
                     android:id="@+id/Apr"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Apr"
                     android:textSize="32sp"
@@ -99,6 +112,7 @@
                 <TextView
                     android:id="@+id/May"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="May"
                     android:textSize="32sp"
@@ -106,6 +120,7 @@
                 <TextView
                     android:id="@+id/Jun"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Jun"
                     android:textSize="32sp"
@@ -114,6 +129,7 @@
                 <TextView
                     android:id="@+id/Jul"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Jul"
                     android:textSize="32sp"
@@ -121,6 +137,7 @@
                 <TextView
                     android:id="@+id/Aug"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Aug"
                     android:textSize="32sp"
@@ -128,6 +145,7 @@
                 <TextView
                     android:id="@+id/Sep"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Sep"
                     android:textSize="32sp"
@@ -135,6 +153,7 @@
                 <TextView
                     android:id="@+id/Oct"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Oct"
                     android:textSize="32sp"
@@ -142,6 +161,7 @@
                 <TextView
                     android:id="@+id/Nov"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Nov"
                     android:textSize="32sp"
@@ -149,6 +169,7 @@
                 <TextView
                     android:id="@+id/Dec"
                     android:layout_columnWeight="1"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="Dec"
                     android:textSize="32sp"
