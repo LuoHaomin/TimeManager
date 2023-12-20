@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.timemanager.EditScheduleActivity;
 import com.example.timemanager.R;
+import com.example.timemanager.TomatoClockActivity;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.fragment.ScheduleFragment;
@@ -127,6 +128,16 @@ public class HomePageScheduleAdapter extends BaseAdapter {
                 builder.setNegativeButton("取消",null);
                 builder.create().show();
                 return false;
+            }
+        });
+        holder.tomato.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo:choose right time to send in bundle
+                Intent intent = new Intent(mContext, TomatoClockActivity.class);
+                Bundle bundle = new Bundle();
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
         holder.name.setText(schedule.content);

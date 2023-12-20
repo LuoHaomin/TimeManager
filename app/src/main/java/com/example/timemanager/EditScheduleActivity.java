@@ -273,7 +273,7 @@ public class EditScheduleActivity extends AppCompatActivity {
             db_schedule.openWriteLink();
             db_schedule.insert(schedule);
             db_schedule.closeLink();
-            Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
             finish();
         });
     }

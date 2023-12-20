@@ -13,6 +13,7 @@
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
     <item name="android:windowFullscreen">true</item>
+<!--    <item name="android:titleMarginTop">20dp</item>-->
 </style>
     <style name="AppCompatTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 </resources>

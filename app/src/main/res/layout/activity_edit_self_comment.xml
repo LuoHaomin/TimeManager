@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditSelfCommentActivity">
@@ -42,25 +43,48 @@
             <ImageView
                 android:id="@+id/cut_off"
                 android:layout_width="match_parent"
-                android:layout_height="1.2dp"
+                android:layout_height="3.2dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/holo_blue_dark"
                 tools:ignore="MissingConstraints" />
 
             <EditText
                 android:id="@+id/edit_self_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@id/cut_off"
                 style="@android:style/TextAppearance"
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="6dp"
                 android:minLines="1"
                 android:maxLines="30"
-                android:autofillHints="随时记录一周的得与失"/>.
+                android:hint="随时记录一周的得与失"/>.
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/commit_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消保存"/>
+        <Button
+            android:id="@+id/commit_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="保存"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

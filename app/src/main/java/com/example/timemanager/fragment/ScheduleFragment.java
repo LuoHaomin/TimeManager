@@ -21,6 +21,7 @@ import android.widget.CalendarView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timemanager.CreatePlanActivity;
@@ -194,4 +195,18 @@ public class ScheduleFragment extends Fragment {
         listView.setLayoutParams(params);
     }
 
+//    public class MFragment extends Fragment {
+//        Button button;
+//        TextView text;
+//        Bundle bundle;
+//        String message;
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+//            View contentView = inflater.inflate(R.layout.fragment_schedule, container, false);
+////            bundle = this.getArguments();
+////            设置布局文件
+//            return contentView;
+//        }
+//    }
 }
