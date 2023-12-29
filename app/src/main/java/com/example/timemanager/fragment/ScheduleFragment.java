@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -86,8 +87,13 @@ public class ScheduleFragment extends Fragment {
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
             calendar.set(year, month, day);
             Toast.makeText(getActivity(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
-            schedules = new DailySchedule(ScheduleFragment.this.getActivity(), DB_Schedule.DB_VERSION, calendar).getScheduleList();
-            daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
+//            schedules = new DailySchedule(ScheduleFragment.this.getActivity(), DB_Schedule.DB_VERSION, calendar).getScheduleList();
+//            daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
+            try {
+                paint();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         });
 
 
