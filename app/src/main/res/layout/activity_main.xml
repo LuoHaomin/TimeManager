@@ -52,6 +52,8 @@
         <RadioButton
             style="@style/TabButton"
             android:id="@+id/evaluation_tag"
-            android:text="评价"/>
+            android:text="评价"
+            android:drawableTop="@drawable/record"
+            />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
