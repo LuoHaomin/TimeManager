@@ -23,5 +23,5 @@ https://github.com/LuoHaomin/TimeManager/assets/147121970/10ba457b-f77d-40f0-9d9
 
 ## 发布预告
 1月20日发布1.0（alpha）版。
-
+## 备注
 ### 该项目为大一学生的大作业，开发者水平有限，如有使用不便，还请多多包涵。
