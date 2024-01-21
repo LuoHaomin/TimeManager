@@ -303,7 +303,17 @@ public class CreatePlanActivity extends AppCompatActivity {
         Button cancel_btn = findViewById(R.id.cancel);
         if(is_creating){
             cancel_btn.setOnClickListener(view -> {
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("提示：");
+                builder.setMessage("确认取消？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("返回", null);
+                builder.create().show();
             });
         }
         else {

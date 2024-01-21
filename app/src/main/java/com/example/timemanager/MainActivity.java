@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -57,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
             int pos=bundle.getInt("PresentPage");
             viewPager.setCurrentItem(pos);
         }
+
+//        Drawable self_comment = getResources().getDrawable(R.drawable.self_comment);
+//        self_comment.setBounds(0, 0, 48, 48);
+
     }
     @Override
     public void onPause(){

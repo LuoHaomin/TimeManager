@@ -2,14 +2,16 @@ package com.example.timemanager.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -86,7 +88,7 @@ public class ScheduleFragment extends Fragment {
 
         calendarView.setOnDateChangeListener((calendarView1, year, month, day) -> {
             calendar.set(year, month, day);
-            Toast.makeText(getActivity(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
 //            schedules = new DailySchedule(ScheduleFragment.this.getActivity(), DB_Schedule.DB_VERSION, calendar).getScheduleList();
 //            daily_agenda.setAdapter(new HomePageScheduleAdapter(getActivity(), schedules,this));
             try {
@@ -171,6 +173,23 @@ public class ScheduleFragment extends Fragment {
 //                return null;
 //            }
 //        };
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getContext());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String msg = intent.getStringExtra("data");
+                if("refresh".equals(msg)){
+                    try {
+                        paint();
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
         return view;
     }
 

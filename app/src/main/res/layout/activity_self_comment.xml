@@ -15,6 +15,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/time_management_logo_final"
+        android:scaleType="center"
+        android:alpha="0.3"/>.
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"

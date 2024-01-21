@@ -78,12 +78,12 @@ public class HomePageScheduleAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     mSchedule.get(i).finish="1";
-                    Toast.makeText(mContext, "checked", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "checked", Toast.LENGTH_SHORT).show();
                 }
 
                 else {
                     mSchedule.get(i).finish="0";
-                    Toast.makeText(mContext, "unchecked", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "unchecked", Toast.LENGTH_SHORT).show();
                 }
 
                 dbSchedule.openWriteLink();
@@ -124,7 +124,6 @@ public class HomePageScheduleAdapter extends BaseAdapter {
                                 throw new RuntimeException(e);
                             }
                         }
-
                     }
                 });
                 builder.setNegativeButton("取消",null);

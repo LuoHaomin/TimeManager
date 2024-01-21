@@ -31,6 +31,7 @@ public class ViewByDayActivity extends AppCompatActivity {
     ListView daily_subplan;
     ListView daily_ddls;
     DailySchedule dailySchedule;
+    Boolean LongPress_Flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +65,25 @@ public class ViewByDayActivity extends AppCompatActivity {
                     EditScheduleActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-            return true;
+            LongPress_Flag = true;
+            return false;
         });
+
+        Button add_plan = findViewById(R.id.add_plan);
+        add_plan.setOnClickListener(view -> {
+            if (LongPress_Flag == false) {
+                Intent intent = new Intent(ViewByDayActivity.this, EditScheduleActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("entrance", 0);
+                bundle.putInt("year", calendar.get(Calendar.YEAR));
+                bundle.putInt("month", calendar.get(Calendar.MONTH));
+                bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
+                intent.putExtras(bundle);
+                ViewByDayActivity.this.startActivity(intent);
+            }
+            LongPress_Flag = false;
+        });
+
         daily_ddls = findViewById(R.id.daily_ddls);
         try {
             daily_ddls.setAdapter(new DDLAdapter(this,dailySchedule.getDDLsList()));
@@ -74,25 +92,14 @@ public class ViewByDayActivity extends AppCompatActivity {
         }
         Button self_comment = findViewById(R.id.self_comment);
         self_comment.setOnClickListener(view -> {
-            Intent intent = new Intent(ViewByDayActivity.this, CheckSelfCommentActivity.class);
+            Intent intent = new Intent(ViewByDayActivity.this, EditSelfCommentActivity.class);
             startActivity(intent);
-        });
-
-        Button add_plan = findViewById(R.id.add_plan);
-        add_plan.setOnClickListener(view -> {
-            Intent intent = new Intent(ViewByDayActivity.this, EditScheduleActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("entrance",0);
-            bundle.putInt("year", calendar.get(Calendar.YEAR));
-            bundle.putInt("month", calendar.get(Calendar.MONTH));
-            bundle.putInt("dayOfMonth", calendar.get(Calendar.DAY_OF_MONTH));
-            intent.putExtras(bundle);
-            ViewByDayActivity.this.startActivity(intent);
         });
 
         Button school_bus = findViewById(R.id.school_bus);
         school_bus.setOnClickListener(view -> {
 //            ComponentDialog
+
         });
     }
     @Override

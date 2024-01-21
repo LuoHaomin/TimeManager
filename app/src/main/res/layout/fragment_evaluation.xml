@@ -62,119 +62,16 @@
                 android:background="@android:color/holo_blue_dark"
                 tools:ignore="MissingConstraints" />
 
-            <GridLayout
+            <GridView
                 android:id="@+id/self_comment_month_picker"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                app:layout_constraintVertical_weight="1"
                 app:layout_constraintTop_toBottomOf="@+id/cut_off_2"
-                android:columnCount="3"
-                android:rowCount="4"
-                android:padding="4dp"
-                android:orientation="horizontal"
-
+                android:padding="6dp"
+                android:numColumns="3"
                 tools:ignore="MissingConstraints">
 
-                <TextView
-                    android:id="@+id/Jan"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:fadingEdge="none"
-                    android:text="Jan"
-                    android:textSize="32sp"
-                    android:textColor="#2a6d6d"/>.
-                <TextView
-                    android:id="@+id/Feb"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Feb"
-                    android:textSize="32sp"
-                    android:textColor="#2f9adc"/>.
-                <TextView
-                    android:id="@+id/Mar"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Mar"
-                    android:textSize="32sp"
-                    android:textColor="#579eff"/>.
-
-                <TextView
-                    android:id="@+id/Apr"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Apr"
-                    android:textSize="32sp"
-                    android:textColor="#2a6d6d"/>.
-                <TextView
-                    android:id="@+id/May"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="May"
-                    android:textSize="32sp"
-                    android:textColor="#2f9adc"/>.
-                <TextView
-                    android:id="@+id/Jun"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Jun"
-                    android:textSize="32sp"
-                    android:textColor="#579eff"/>.
-
-                <TextView
-                    android:id="@+id/Jul"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Jul"
-                    android:textSize="32sp"
-                    android:textColor="#2a6d6d"/>.
-                <TextView
-                    android:id="@+id/Aug"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Aug"
-                    android:textSize="32sp"
-                    android:textColor="#2f9adc"/>.
-                <TextView
-                    android:id="@+id/Sep"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Sep"
-                    android:textSize="32sp"
-                    android:textColor="#579eff"/>.
-                <TextView
-                    android:id="@+id/Oct"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Oct"
-                    android:textSize="32sp"
-                    android:textColor="#2a6d6d"/>.
-                <TextView
-                    android:id="@+id/Nov"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Nov"
-                    android:textSize="32sp"
-                    android:textColor="#2f9adc"/>.
-                <TextView
-                    android:id="@+id/Dec"
-                    android:layout_columnWeight="1"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="Dec"
-                    android:textSize="32sp"
-                    android:textColor="#579eff"/>.
-            </GridLayout>
+            </GridView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

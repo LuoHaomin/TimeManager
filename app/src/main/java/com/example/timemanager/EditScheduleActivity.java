@@ -1,8 +1,11 @@
 package com.example.timemanager;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
@@ -140,9 +144,16 @@ public class EditScheduleActivity extends AppCompatActivity {
             }
         });
         //定时间
+
         Button start_btn = findViewById(R.id.edit_start_time);
-        start_btn.setText(getTimeString(start));
-        schedule.start_time=format.format(start.getTime());
+        if(entrance==0){
+            start_btn.setText(getTimeString(start));
+            schedule.start_time=format.format(start.getTime());
+        }
+        else {
+            start_btn.setText(schedule.start_time);
+        }
+
         start_btn.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -168,8 +179,13 @@ public class EditScheduleActivity extends AppCompatActivity {
         });
 
         Button end_btn = findViewById(R.id.edit_end_time);
-        end_btn.setText(getTimeString(end));
-        schedule.end_time=format.format(end.getTime());
+        if(entrance==0){
+            end_btn.setText(getTimeString(end));
+            schedule.end_time=format.format(end.getTime());
+        }else {
+            end_btn.setText(schedule.end_time);
+        }
+
         end_btn.setOnClickListener(view -> {
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
@@ -201,8 +217,13 @@ public class EditScheduleActivity extends AppCompatActivity {
         //重复模式
         RadioGroup radioGroup1 = findViewById(R.id.rg_repeat_pattern);
         Button repeat_val = findViewById(R.id.repeat_select);
-        radioGroup1.check(radioGroup1.getChildAt(0).getId());
-        schedule.repeat_mode = "0";
+        if(entrance==0){
+            radioGroup1.check(radioGroup1.getChildAt(0).getId());
+            schedule.repeat_mode = "0";
+        }
+        else {
+            radioGroup1.check((radioGroup1.getChildAt(Integer.valueOf(schedule.repeat_mode)).getId()));
+        }
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -215,7 +236,8 @@ public class EditScheduleActivity extends AppCompatActivity {
                 }
             }
         });
-
+        repeat_val.setText(schedule.repeat_time);
+        //TODO:button优化显示
         repeat_val.setOnClickListener(view -> {
             switch (Integer.parseInt(schedule.repeat_mode)){
                 case 0:
@@ -230,6 +252,7 @@ public class EditScheduleActivity extends AppCompatActivity {
         });
         //备注
         EditText edit_remark=findViewById(R.id.edit_remarks);
+        edit_remark.setText(schedule.stuff);
         edit_remark.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -275,6 +298,10 @@ public class EditScheduleActivity extends AppCompatActivity {
                 db_schedule.insert(schedule);
                 db_schedule.closeLink();
 //                Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                intent.putExtra("data","refresh");
+                LocalBroadcastManager.getInstance(EditScheduleActivity.this).sendBroadcast(intent);
+                sendBroadcast(intent);
                 finish();
             });
         }
@@ -284,9 +311,12 @@ public class EditScheduleActivity extends AppCompatActivity {
                 db_schedule.update(schedule);
                 db_schedule.closeLink();
 //                Toast.makeText(this,schedule.code(),Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                intent.putExtra("data","refresh");
+                LocalBroadcastManager.getInstance(EditScheduleActivity.this).sendBroadcast(intent);
+                sendBroadcast(intent);
                 finish();
             });
-
         }
     }
 
