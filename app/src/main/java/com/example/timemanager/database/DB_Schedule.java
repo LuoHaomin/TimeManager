@@ -108,7 +108,7 @@ public class DB_Schedule extends SQLiteOpenHelper {
 
     // 往该表添加一条记录
     public long insert(Schedule info) {
-        List<Schedule> infoList = new ArrayList<Schedule>();
+        List<Schedule> infoList = new ArrayList<>();
         infoList.add(info);
         return insert(infoList);
     }
