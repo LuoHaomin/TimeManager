@@ -28,7 +28,7 @@ public class Hello extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello);
         List<String> strings=new ArrayList<>();
-        strings.add(getString(R.string.sart_text));
+        strings.add(getString(R.string.start_text));
         strings.add("逝者如斯夫，\n不舍昼夜");
 
 

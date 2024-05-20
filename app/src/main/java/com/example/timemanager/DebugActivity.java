@@ -1,29 +1,21 @@
 package com.example.timemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.timemanager.adapter.DDLAdapter;
-import com.example.timemanager.adapter.HomePageScheduleAdapter;
 import com.example.timemanager.bean.Plan;
 import com.example.timemanager.bean.Schedule;
 import com.example.timemanager.database.DB_Plan;
-import com.example.timemanager.database.DB_Schedule;
 import com.example.timemanager.database.DailySchedule;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DebugActivity extends AppCompatActivity {
     private DB_Plan db_plan=DB_Plan.getInstance(this,1);
