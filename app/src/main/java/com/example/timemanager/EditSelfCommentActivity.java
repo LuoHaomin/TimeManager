@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import java.net.URLEncoder;
 
 import com.example.timemanager.fragment.EvaluationFragment;
 
@@ -57,4 +58,20 @@ public class EditSelfCommentActivity extends AppCompatActivity {
             builder.create().show();
         });
     }
+
+
+//    TODO:接入讯飞星火
+    //配对接口
+    public static String getParnterURL(){
+        String url="接口路径";
+        return url;
+    }
+
+    /**
+     * 加载网络数据
+     */
+    //创建自定义异步任务对象
+//    LoadDataAsyncTask task=new LoadDataAsyncTask(this,this,true);
+//    //执行异步任务
+//        task("api路径");
 }

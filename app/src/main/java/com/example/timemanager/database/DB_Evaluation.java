@@ -92,7 +92,7 @@ public class DB_Evaluation extends SQLiteOpenHelper {
     }
 
     public long insert(Evaluation info){
-        List<Evaluation> infoList = new ArrayList<Evaluation>();
+        List<Evaluation> infoList = new ArrayList<>();
         infoList.add(info);
         return insert(infoList);
     }
@@ -101,7 +101,7 @@ public class DB_Evaluation extends SQLiteOpenHelper {
         long result = -1;
         for (int i = 0; i < infoList.size(); i++){
             Evaluation info = infoList.get(i);
-            List<Evaluation> tempList = new ArrayList<Evaluation>();
+            List<Evaluation> tempList = new ArrayList<>();
 
             ContentValues cv = new ContentValues();
             cv.put("content", info.content);
