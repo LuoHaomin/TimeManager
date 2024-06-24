@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Hello extends AppCompatActivity {
+public class HelloActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class Hello extends AppCompatActivity {
     private Runnable Next= new Runnable() {
         @Override
         public void run() {
-            Intent intent= new Intent(Hello.this,MainActivity.class);
+            Intent intent= new Intent(HelloActivity.this,MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|
                     Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
