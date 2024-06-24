@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:id="@+id/container"
-    tools:context=".TomatoClockActivity">
+    tools:context="cn.edu.ustc.timemanager.activity.TomatoClockActivity">
 
     <TextView
         android:id="@+id/title"

@@ -7,7 +7,7 @@
     android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditSelfCommentActivity"
+    tools:context="cn.edu.ustc.timemanager.activity.EditSelfCommentActivity"
     tools:ignore="ExtraText">
 
     <ImageView
