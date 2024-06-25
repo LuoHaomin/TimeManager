@@ -9,6 +9,7 @@ import android.util.Log;
 
 import cn.edu.ustc.timemanager.bean.Plan;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,32 +101,34 @@ public class DB_Plan extends SQLiteOpenHelper {
     }
 
     // 往该表添加一条记录
-    public long insert(Plan info) {
+    public long insert(Plan info) throws SQLException {
         List<Plan> infoList = new ArrayList<>();
         infoList.add(info);
         return insert(infoList);
     }
 
     // 往该表添加多条记录
-    public long insert(List<Plan> infoList) {
+    public long insert(List<Plan> infoList) throws SQLException{
         long result = -1;
-        for (int i = 0; i < infoList.size(); i++) {
-            Plan info = infoList.get(i);
-            List<Plan> tempList = new ArrayList<>();
-            // 不存在唯一性重复的记录，则插入新记录
-            ContentValues cv = new ContentValues();
-            cv.put("tag", info.tag);
-            cv.put("start_time", info.start_time);
-            cv.put("end_time", info.end_time);
-            cv.put("content", info.content);
-            cv.put("finish", info.finish);
-            cv.put("breakdown", info.code_b());
-            cv.put("schedule", info.code_s());
-            // 执行插入记录动作，该语句返回插入记录的行号
-            result = mDB.insert(TABLE_NAME, "", cv);
-            if (result == -1) { // 添加成功则返回行号，添加失败则返回-1
-                return result;
+        mDB.beginTransaction();  // Start the transaction
+        try {
+            for (Plan info : infoList) {
+                ContentValues cv = new ContentValues();
+                cv.put("tag", info.tag);
+                cv.put("start_time", info.start_time);
+                cv.put("end_time", info.end_time);
+                cv.put("content", info.content);
+                cv.put("finish", info.finish);
+                cv.put("breakdown", info.code_b());
+                cv.put("schedule", info.code_s());
+                result = mDB.insert(TABLE_NAME, "", cv);
+                if (result == -1) {
+                    throw new SQLException("Failed to insert row");
+                }
             }
+            mDB.setTransactionSuccessful();  // Mark the transaction as successful
+        } finally {
+            mDB.endTransaction();  // End the transaction
         }
         return result;
     }
@@ -199,6 +202,36 @@ public class DB_Plan extends SQLiteOpenHelper {
             infoList.add(info);
         }
         cursor.close(); // 查询完毕，关闭数据库游标
+        return infoList;
+    }
+    // Use projections when querying data
+
+    /**
+     * Query the database
+     * @param projection The columns to return
+     * @param selection The columns for the WHERE clause
+     * @param selectionArgs The values for the WHERE clause
+     * @param sortOrder The sort order
+     * @return A list of plans
+     */
+    public List<Plan> query(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        List<Plan> infoList = new ArrayList<>();
+        Cursor cursor = mDB.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        while (cursor.moveToNext()) {
+            Plan info = new Plan();
+            info.id = cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
+            info.tag = cursor.getString(cursor.getColumnIndexOrThrow("tag"));
+            info.start_time = cursor.getString(cursor.getColumnIndexOrThrow("start_time"));
+            info.end_time = cursor.getString(cursor.getColumnIndexOrThrow("end_time"));
+            info.content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
+            info.finish = cursor.getString(cursor.getColumnIndexOrThrow("finish"));
+            info.code_bd = cursor.getString(cursor.getColumnIndexOrThrow("breakdown"));
+            info.decode_b();
+            info.code_sch = cursor.getString(cursor.getColumnIndexOrThrow("schedule"));
+            info.decode_s();
+            infoList.add(info);
+        }
+        cursor.close();
         return infoList;
     }
 }

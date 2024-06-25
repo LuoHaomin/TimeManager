@@ -35,8 +35,9 @@ import cn.edu.ustc.timemanager.adapter.BreakdownAdapter;
 import cn.edu.ustc.timemanager.adapter.ScheduleAdapter;
 import cn.edu.ustc.timemanager.database.DB_Plan;
 import cn.edu.ustc.timemanager.database.DB_Schedule;
-import cn.edu.ustc.timemanager.util.TagManeger;
+import cn.edu.ustc.timemanager.util.TagManager;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -276,7 +277,11 @@ public class CreatePlanActivity extends AppCompatActivity {
                 db_schedule.closeLink();
 
                 db_plan.openWriteLink();
-                db_plan.insert(plan);
+                try {
+                    db_plan.insert(plan);
+                } catch (SQLException ignored) {
+
+                }
                 db_plan.closeLink();
                 finish();
             });
@@ -364,7 +369,8 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         //create a new tag
         button.setOnClickListener(view1 -> {
-            TagManeger.AddTag(this,newTag);
+            TagManager tagManeger = TagManager.getInstance(this);
+            tagManeger.addTag(newTag);
             setTag();
             dialog.dismiss();
         });

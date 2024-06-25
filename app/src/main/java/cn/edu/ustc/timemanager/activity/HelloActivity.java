@@ -18,7 +18,7 @@ import android.provider.Settings;
 import com.example.timemanager.R;
 
 import cn.edu.ustc.timemanager.database.DB_Plan;
-import cn.edu.ustc.timemanager.util.TagManeger;
+import cn.edu.ustc.timemanager.util.TagManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ public class HelloActivity extends AppCompatActivity {
         strings.add(getString(R.string.start_text));
         strings.add("逝者如斯夫，\n不舍昼夜");
 
-
-        TagManeger.InitTag(this);
+        TagManager tagManager = TagManager.getInstance(this);
+        tagManager.initTag();
 
 //        if(!checkNotificationPermission(this)){
 //            requestPermission(this);
