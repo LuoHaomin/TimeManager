@@ -35,6 +35,7 @@ import cn.edu.ustc.timemanager.adapter.BreakdownAdapter;
 import cn.edu.ustc.timemanager.adapter.ScheduleAdapter;
 import cn.edu.ustc.timemanager.database.DB_Plan;
 import cn.edu.ustc.timemanager.database.DB_Schedule;
+import cn.edu.ustc.timemanager.util.TagManeger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -363,13 +364,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         //create a new tag
         button.setOnClickListener(view1 -> {
-            SharedPreferences tag_in_share = getSharedPreferences("tag",MODE_PRIVATE);
-            SharedPreferences.Editor editor =tag_in_share.edit();
-            String s = tag_in_share.getString("tag","");
-            int num = tag_in_share.getInt("num",0);
-            editor.putInt("num",num+1);
-            editor.putString("tag",s+newTag+"|");
-            editor.commit();
+            TagManeger.AddTag(this,newTag);
             setTag();
             dialog.dismiss();
         });

@@ -114,13 +114,13 @@ public class DB_Plan extends SQLiteOpenHelper {
             List<Plan> tempList = new ArrayList<>();
             // 不存在唯一性重复的记录，则插入新记录
             ContentValues cv = new ContentValues();
-            cv.put("tag",info.tag);
+            cv.put("tag", info.tag);
             cv.put("start_time", info.start_time);
-            cv.put("end_time",info.end_time);
-            cv.put("content",info.content);
-            cv.put("finish",info.finish);
-            cv.put("breakdown",info.code_b());
-            cv.put("schedule",info.code_s());
+            cv.put("end_time", info.end_time);
+            cv.put("content", info.content);
+            cv.put("finish", info.finish);
+            cv.put("breakdown", info.code_b());
+            cv.put("schedule", info.code_s());
             // 执行插入记录动作，该语句返回插入记录的行号
             result = mDB.insert(TABLE_NAME, "", cv);
             if (result == -1) { // 添加成功则返回行号，添加失败则返回-1
@@ -133,13 +133,13 @@ public class DB_Plan extends SQLiteOpenHelper {
     // 根据条件更新指定的表记录
     public int update(Plan info, String condition) {
         ContentValues cv = new ContentValues();
-        cv.put("tag",info.tag);
+        cv.put("tag", info.tag);
         cv.put("start_time", info.start_time);
-        cv.put("end_time",info.end_time);
-        cv.put("content",info.content);
-        cv.put("finish",info.finish);
-        cv.put("breakdown",info.code_b());
-        cv.put("schedule",info.code_s());
+        cv.put("end_time", info.end_time);
+        cv.put("content", info.content);
+        cv.put("finish", info.finish);
+        cv.put("breakdown", info.code_b());
+        cv.put("schedule", info.code_s());
         // 执行更新记录动作，该语句返回更新的记录数量
         return mDB.update(TABLE_NAME, cv, condition, null);
     }
@@ -161,8 +161,8 @@ public class DB_Plan extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             Plan info = new Plan();
             info.id = cursor.getLong(0);
-            info.tag=cursor.getString(1);
-            info.start_time= cursor.getString(2);
+            info.tag = cursor.getString(1);
+            info.start_time = cursor.getString(2);
             info.end_time = cursor.getString(3);
             info.content = cursor.getString(4);
             info.finish = cursor.getString(5);
@@ -175,19 +175,20 @@ public class DB_Plan extends SQLiteOpenHelper {
         cursor.close(); // 查询完毕，关闭数据库游标
         return infoList;
     }
+
     public List<Plan> query() {
         String sql = String.format("select * " +
                 "from %s ;", TABLE_NAME);
 
         List<Plan> infoList = new ArrayList<>();
         // 执行记录查询动作，该语句返回结果集的游标
-         Cursor cursor = mDB.rawQuery(sql, null);
-       // 循环取出游标指向的每条记录
+        Cursor cursor = mDB.rawQuery(sql, null);
+        // 循环取出游标指向的每条记录
         while (cursor.moveToNext()) {
             Plan info = new Plan();
             info.id = cursor.getLong(0);
-            info.tag=cursor.getString(1);
-            info.start_time= cursor.getString(2);
+            info.tag = cursor.getString(1);
+            info.start_time = cursor.getString(2);
             info.end_time = cursor.getString(3);
             info.content = cursor.getString(4);
             info.finish = cursor.getString(5);

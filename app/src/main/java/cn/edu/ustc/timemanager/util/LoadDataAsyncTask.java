@@ -1,8 +1,10 @@
-package cn.edu.ustc.timemanager.activity;
+package cn.edu.ustc.timemanager.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import cn.edu.ustc.timemanager.util.HttpsUtils;
 
 public class LoadDataAsyncTask extends AsyncTask<String,Void,String> {
     Context context;
@@ -29,7 +31,7 @@ public class LoadDataAsyncTask extends AsyncTask<String,Void,String> {
     //运行在子线程中,进行耗时操作等逻辑
     @Override
     protected String doInBackground(String... params) {
-        String json=HttpsUtils.getJSON(params[0]);
+        String json= HttpsUtils.getJSON(params[0]);
         return json;
     }
     //运行主线程中,通常用来进行控件的初始化

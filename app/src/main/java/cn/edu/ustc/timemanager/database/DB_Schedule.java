@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressLint("DefaultLocale")
+/**
+ * 数据库帮助类
+ * 用于创建数据库，创建表，更新表
+ * 用于对数据库进行增删改查操作
+ */
 public class DB_Schedule extends SQLiteOpenHelper {
     private static final String TAG = "DB_Schedule";
     private static final String DB_NAME = "Schedule.db"; // 数据库的名称

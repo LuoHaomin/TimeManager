@@ -21,7 +21,18 @@ import cn.edu.ustc.timemanager.database.DailySchedule;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
-
+/**
+ * This is the ViewByDayActivity class which extends AppCompatActivity.
+ * It represents a screen in the application where the user can view their schedules by day.
+ * <p>
+ * The class contains methods for creating the activity, setting up the UI, and handling user interactions.
+ * It uses the DailySchedule class to fetch the schedule data for the current day and displays it in a ListView.
+ * <p>
+ * The class also handles user interactions such as long-clicking on a schedule item to edit it,
+ * and clicking on a button to add a new schedule.
+ * <p>
+ * The class also overrides the onResume method to refresh the schedule data when the activity is resumed.
+ */
 public class ViewByDayActivity extends AppCompatActivity {
 
     Bundle bundle;

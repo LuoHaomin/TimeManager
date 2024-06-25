@@ -1,4 +1,4 @@
-package cn.edu.ustc.timemanager.activity;
+package cn.edu.ustc.timemanager.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
