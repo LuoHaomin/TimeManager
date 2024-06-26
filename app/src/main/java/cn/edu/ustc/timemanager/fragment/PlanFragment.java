@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import cn.edu.ustc.timemanager.activity.CreatePlanActivity;
+import cn.edu.ustc.timemanager.activity.EditPlanActivity;
 import cn.edu.ustc.timemanager.bean.Plan;
 
 import com.example.timemanager.R;
@@ -66,7 +66,7 @@ public class PlanFragment extends Fragment {
         //click the button and jump
         Button create_btn =view.findViewById(R.id.CreatePlan);
         create_btn.setOnClickListener(view1 -> {
-            Intent intent=new Intent(getActivity(), CreatePlanActivity.class);
+            Intent intent=new Intent(getActivity(), EditPlanActivity.class);
             Bundle bundle=new Bundle();
             bundle.putBoolean("is_creating",true);
             intent.putExtras(bundle);
@@ -200,7 +200,7 @@ public class PlanFragment extends Fragment {
                     Bundle bundle=new Bundle();
                     bundle.putBoolean("is_creating",false);
                     bundle.putLong("id",pl.id);
-                    Intent intent = new Intent(getActivity(), CreatePlanActivity.class);
+                    Intent intent = new Intent(getActivity(), EditPlanActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     return true;

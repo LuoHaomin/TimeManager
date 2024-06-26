@@ -45,7 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class CreatePlanActivity extends AppCompatActivity {
+public class EditPlanActivity extends AppCompatActivity {
 
     private Plan plan = new Plan();
     List<String> tagss=new ArrayList<>();
@@ -219,7 +219,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         breakdownList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreatePlanActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditPlanActivity.this);
                 builder.setTitle("提示：");
                 builder.setMessage("确认删除？");
                 int t=pos;
@@ -227,7 +227,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         plan.breakdowns.remove(t);
-                        breakdownList.setAdapter(new BreakdownAdapter(CreatePlanActivity.this,plan.breakdowns));
+                        breakdownList.setAdapter(new BreakdownAdapter(EditPlanActivity.this,plan.breakdowns));
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -248,7 +248,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         schList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreatePlanActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditPlanActivity.this);
                 builder.setTitle("提示：");
                 builder.setMessage("确认删除？");
                 int t=pos;
@@ -260,7 +260,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                         db_schedule.delete(String.format("content = '%s' AND root ='%s'",plan.schedules.get(t).content,plan.content));
                         db_schedule.closeLink();
                         plan.schedules.remove(t);
-                        schList.setAdapter(new ScheduleAdapter(CreatePlanActivity.this,plan.schedules));
+                        schList.setAdapter(new ScheduleAdapter(EditPlanActivity.this,plan.schedules));
                     }
                 });
                 builder.setNegativeButton("取消",null);
@@ -408,7 +408,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     end.set(Calendar.MINUTE,i1);
                     btn_end.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=end.getTime();
-//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+//                    Toast.makeText(EditPlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
                     newSchedule.end_time=format.format(date);
                 }
             },end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE),true);
@@ -571,7 +571,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                     cld.set(Calendar.MINUTE,i1);
                     btn_time.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=cld.getTime();
-//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+//                    Toast.makeText(EditPlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
                     newSchedule.start_time=format.format(date);
                 }
             },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);

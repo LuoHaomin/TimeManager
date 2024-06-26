@@ -65,7 +65,7 @@ public class DDLAdapter extends BaseAdapter {
 //        holder.ddl_show.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Intent intent = new Intent(mContext, CreatePlanActivity.class);
+//                Intent intent = new Intent(mContext, EditPlanActivity.class);
 ////                Bundle bundle = new Bundle();
 //                //todo:params here
 ////                intent.putExtras(bundle);

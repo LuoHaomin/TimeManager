@@ -424,7 +424,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                     cld.set(Calendar.MINUTE,i1);
                     btn_time.setText(String.format("%d年%d月%d日 %d: %d",end.get(Calendar.YEAR),end.get(Calendar.MONTH)+1,end.get(Calendar.DAY_OF_MONTH),end.get(Calendar.HOUR_OF_DAY),end.get(Calendar.MINUTE)));
                     date=cld.getTime();
-//                    Toast.makeText(CreatePlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
+//                    Toast.makeText(EditPlanActivity.this,format.format(date),Toast.LENGTH_SHORT);
                     schedule.start_time=format.format(date);
                 }
             },cld.get(Calendar.HOUR_OF_DAY),cld.get(Calendar.MINUTE),true);

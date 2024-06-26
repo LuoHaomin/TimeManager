@@ -46,7 +46,7 @@
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name="cn.edu.ustc.timemanager.activity.CreatePlanActivity"
+            android:name="cn.edu.ustc.timemanager.activity.EditPlanActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
