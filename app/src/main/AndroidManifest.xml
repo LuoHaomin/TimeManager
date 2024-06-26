@@ -18,52 +18,51 @@
         android:theme="@style/Theme.TimeManager"
         tools:targetApi="31">
         <activity
-            android:name=".TomatoClockActivity"
+            android:name="cn.edu.ustc.timemanager.activity.TomatoClockActivity"
             android:exported="false"
             android:theme="@style/AppCompatTheme"/>
         <activity
-            android:name=".EditSelfCommentActivity"
+            android:name="cn.edu.ustc.timemanager.activity.EditSelfCommentActivity"
             android:exported="false"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".CheckSelfCommentActivity"
+            android:name="cn.edu.ustc.timemanager.activity.CheckSelfCommentActivity"
             android:exported="false"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".ViewByMonthActivity"
+            android:name="cn.edu.ustc.timemanager.activity.ViewByMonthActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".ViewByWeekActivity"
+            android:name="cn.edu.ustc.timemanager.activity.ViewByWeekActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".DebugActivity"
+            android:name="cn.edu.ustc.timemanager.activity.DebugActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".ViewByDayActivity"
+            android:name="cn.edu.ustc.timemanager.activity.ViewByDayActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".CreatePlanActivity"
+            android:name="cn.edu.ustc.timemanager.activity.EditPlanActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name="cn.edu.ustc.timemanager.activity.MainActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".EditScheduleActivity"
+            android:name="cn.edu.ustc.timemanager.activity.EditScheduleActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme" />
         <activity
-            android:name=".Hello"
+            android:name="cn.edu.ustc.timemanager.activity.HelloActivity"
             android:exported="true"
             android:theme="@style/AppCompatTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Hello">
+    tools:context="cn.edu.ustc.timemanager.activity.HelloActivity">
 
     <ImageView
         android:layout_width="300dp"

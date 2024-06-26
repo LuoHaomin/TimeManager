@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePlanActivity">
+    tools:context="cn.edu.ustc.timemanager.activity.EditPlanActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/title_in_c"
