@@ -1,4 +1,4 @@
-package edu.ustc.timemanager.timemanager;
+package edu.ustc.timemanager;
 
 import android.content.Context;
 
